@@ -35,7 +35,7 @@ not from `file://`.
 |---|---|
 | `assets/icon-512.png`, `icon-128.png`, `favicon.png` | `apple/Icon/build/concept-c/art-512.png`, `art-128.png`, `art-32.png` |
 | `assets/hero-gearbox.png` | `apple/Icon/build/hero/hero.png` (2026-09-28; times in `hero/times.txt`); also the hero video's poster |
-| `assets/hero-gearbox.mp4`, `hero-gearbox.webm` | `apple/Icon/build/hero-video/` (`scripts/apple/build-hero-video.sh`; caption times from the same `hero/times.txt`) |
+| `assets/hero-gearbox.mp4`, `hero-share.mp4` | `apple/Icon/build/hero-video/` (`scripts/apple/build-hero-video.sh`; caption times from the same `hero/times.txt`): the page's 120 s loop, and the 4.8 s `og:video` clip for link previews |
 | `assets/bench-20260928-98f90d8.png` | `conformance bench-chart` of `progress/bench/20260928T130500Z-dca0882.json` (the run log's file names keep the commit ids from before history was rewritten; its `short_sha` and `subject` were set to commit `98f90d8`) |
 | `assets/progress.mp4` | `progress/video/progress.mp4` (`conformance video`, default options: no agent-eval interlude, since eval results are not published) |
 | `assets/snapshot-adapter.png` | `neoscad snapshot examples/site/hose_adapter.scad --dims --size 1280x1280` |

@@ -12,6 +12,18 @@
   <meta property="og:title" content="NeoSCAD">
   <meta property="og:description" content="OpenSCAD's language, rebuilt for speed and for agents.">
   <meta property="og:image" content="https://neoscad.org/assets/hero-gearbox.png">
+  <meta property="og:image:width" content="2400">
+  <meta property="og:image:height" content="1350">
+  <meta property="og:image:alt" content="A herringbone planetary gearbox. Rendered in 2.09 s by NeoSCAD, OpenSCAD nightly: 5.85 s.">
+  <!-- Link previews that play video (Messages autoplays it muted and loops
+       it): one sun turn of the hero, 4.8 s, 1280x720 H.264, caption and
+       all (scripts/apple/build-hero-video.sh). The image above is for the
+       rest. -->
+  <meta property="og:video" content="https://neoscad.org/assets/hero-share.mp4">
+  <meta property="og:video:secure_url" content="https://neoscad.org/assets/hero-share.mp4">
+  <meta property="og:video:type" content="video/mp4">
+  <meta property="og:video:width" content="1280">
+  <meta property="og:video:height" content="720">
   <meta property="og:url" content="https://neoscad.org/">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
   <link rel="apple-touch-icon" href="/assets/icon-512.png">
@@ -61,8 +73,14 @@
 
         <div class="hero-actions">
           <a class="button button-primary" href="/download.html">Downloads and status</a>
+          <a class="button button-agent" href="/try/#agent"><span class="agent-spark" aria-hidden="true">✦</span> <span class="grad">Connect your AI agent</span></a>
           <a class="button button-secondary" href="/try/">Try it in the browser</a>
         </div>
+        <p class="agent-pitch">
+          <span class="grad">Bring your agent to the model.</span> Claude Code,
+          Cursor or any MCP agent can edit the model open in your browser, see
+          the 3D view and point at what it means, while you watch.
+        </p>
         <p class="small muted">
           macOS (Apple silicon, macOS 15 or later) comes first, as an app and a
           command-line tool. Linux and Windows command-line builds are planned.
@@ -78,14 +96,12 @@
           <!-- A two-minute seamless loop, rendered by NeoSCAD's --animate
                (scripts/apple/build-hero-video.sh). The poster is the still.
                site.js adds a Pause button and, under prefers-reduced-motion,
-               stops the autoplay so the still is what shows. AV1 first (the
-               smaller file) for browsers that can decode it; the codecs
-               string makes the rest, Safari without AV1 hardware among
-               them, skip to the H.264 MP4. -->
+               stops the autoplay so the still is what shows. One H.264
+               MP4, which every browser plays: at the chosen quality AV1
+               was no smaller. -->
           <video autoplay muted loop playsinline poster="/assets/hero-gearbox.png"
                  width="1920" height="1080"
                  aria-label="A herringbone planetary gearbox turning: a red sun gear drives four teal planet gears, spinning on fixed pins, and a blue ring gear on a grey plinth with a gyroid core. Text in the video: Rendered in 2.09 s by NeoSCAD, OpenSCAD nightly: 5.85 s.">
-            <source src="/assets/hero-gearbox.webm" type='video/webm; codecs="av01.0.08M.08"'>
             <source src="/assets/hero-gearbox.mp4" type='video/mp4; codecs="avc1.640032"'>
             <img src="/assets/hero-gearbox.png" width="2400" height="1350"
                  alt="A herringbone planetary gearbox: a blue ring gear, four teal planet gears and a red sun gear on a grey plinth with a gyroid core. Text in the image: Rendered in 2.09 s by NeoSCAD, OpenSCAD nightly: 5.85 s.">
