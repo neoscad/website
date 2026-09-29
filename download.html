@@ -134,8 +134,16 @@
     <section class="section section-alt platform" id="windows" aria-labelledby="windows-title">
       <div class="wrap">
         <h2 id="windows-title">Windows <span class="badge badge-soon">Available soon</span></h2>
-        <p class="muted">Command-line tool only, as a portable zip. <code>neoscad serve</code>
-          works over stdio; socket mode is Unix-only for now.</p>
+        <p class="muted">Command-line tool only, as a portable zip or an MSI.
+          <code>neoscad serve</code> listens on a named pipe.</p>
+        <p class="small">
+          The Windows builds are <strong>not code-signed</strong>. Opening a
+          downloaded <code>.exe</code> or <code>.msi</code> shows SmartScreen's
+          &ldquo;Windows protected your PC&rdquo;: choose <em>More info</em>, then
+          <em>Run anyway</em>. The PowerShell install script avoids the prompt.
+          To check a file came from NeoSCAD's own build, compare its sha256, or
+          run <code>gh attestation verify &lt;file&gt; -R neoscad/neoscad</code>.
+        </p>
         <ul class="dl-list">
           <li>
             <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">x86_64 (.zip)</a>
@@ -149,8 +157,8 @@
           </li>
           <li>
             <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">Installer (.msi)</a>
-              <span class="dl-note">Adds <code>neoscad</code> to your PATH; needs code signing first.</span></span>
-            <span class="badge badge-planned">Planned</span>
+              <span class="dl-note">Adds <code>neoscad</code> to your PATH. Unsigned (see above).</span></span>
+            <span class="badge badge-soon">Available soon</span>
           </li>
         </ul>
       </div>
