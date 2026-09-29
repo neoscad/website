@@ -36,16 +36,14 @@ not from `file://`.
 | `assets/hero-gearbox.png` | `apple/Icon/build/hero/hero.png` (2026-09-28; times in `hero/times.txt`) |
 | `assets/bench-20260928-98f90d8.png` | `conformance bench-chart` of `progress/bench/20260928T130500Z-dca0882.json` (the run log's file names keep the commit ids from before history was rewritten; its `short_sha` and `subject` were set to commit `98f90d8`) |
 | `assets/progress.mp4` | `progress/video/progress.mp4` (`conformance video`, default options: no agent-eval interlude, since eval results are not published) |
-| `assets/snapshot-adapter.png` | A `neoscad snapshot` of a hose-barb adapter model (not tracked in the repo); regenerate it from a tracked model before launch |
+| `assets/snapshot-adapter.png` | `neoscad snapshot examples/site/hose_adapter.scad --dims --size 1280x1280` |
+| `assets/snapshot-issues.png` | `neoscad snapshot examples/site/phone_stand.scad --issues --size 1600x1600` |
 
 The benchmark table in `benchmarks.html` was filled from
 `progress/bench/20260928T130500Z-dca0882.json` (commit `98f90d8` after the
 history rewrite), and the claims follow
 `docs/audits/final.md`. When the benchmark is re-run, replace the chart,
 the table and every quoted mean together, from one run.
-
-The home page still has one labelled placeholder: a `snapshot --issues`
-sheet for the printability section (search for `PLACEHOLDER`).
 
 ## Preview locally
 
@@ -173,7 +171,7 @@ The site and its history are public, so every commit:
 - [ ] Replace the placeholder links on `download.html` as artifacts are
       published. The "Source" links point at
       `https://github.com/neoscad/neoscad`; make sure it is public first.
-- [ ] Replace the printability placeholder with a `snapshot --issues`
+- [x] Replace the printability placeholder with a `snapshot --issues`
       sheet, and regenerate `assets/snapshot-adapter.png` from a tracked model.
 - [ ] Drop in the `/try` bundle when it exists.
 - [ ] Check the pages yourself in light and dark mode, and at phone width.

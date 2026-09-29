@@ -214,18 +214,22 @@ neoscad snapshot part.scad --issues</code></pre>
         </div>
         <div>
           <figure>
-            <img src="/assets/snapshot-adapter.png" width="640" height="640" loading="lazy"
-                 alt="A NeoSCAD snapshot sheet of a yellow threaded hose-barb adapter in three views, iso, front and top, on a grid, with dimension lines: 34.64 by 30 by 49.4 mm, volume 13,788.73 cubic millimetres, 11,116 triangles.">
+            <img src="/assets/snapshot-adapter.png" width="1280" height="1280" loading="lazy"
+                 alt="A NeoSCAD snapshot sheet of a yellow threaded hose-barb adapter in four views, iso, front, top and right, on a grid, with dimension lines: 34.64 by 30 by 45 mm, volume 12,123.82 cubic millimetres, 19,840 triangles.">
             <figcaption>
-              <code>neoscad snapshot</code> of a threaded hose-barb adapter: three
+              <code>neoscad snapshot</code> of a threaded hose-barb adapter: four
               views with dimensions, one PNG an agent can read.
             </figcaption>
           </figure>
-          <!-- PLACEHOLDER: replace with a `neoscad snapshot --issues` sheet that
-               shows thin-wall, overhang and floating markers. -->
-          <div class="placeholder" style="aspect-ratio: 16 / 7; margin-top: 1.25rem;" role="img" aria-label="Placeholder for a check image">
-            Image to come: a <code>snapshot --issues</code> sheet with findings marked
-          </div>
+          <figure style="margin-top: 1.25rem;">
+            <img src="/assets/snapshot-issues.png" width="1600" height="1600" loading="lazy"
+                 alt="A NeoSCAD snapshot sheet with check findings marked on a phone stand in four views: the front lip drawn red as a wall 0.3 mm thick, a cable clip drawn purple as a piece floating above the bed, and numbered markers on the lip, the clip and an unsupported shelf. The header reads check: 2 errors, 2 warnings, with a legend for thin wall, overhang and floating.">
+            <figcaption>
+              <code>neoscad snapshot --issues</code> of a phone stand with three
+              printing problems: a 0.3 mm lip (red), a floating clip (purple)
+              and an unsupported shelf (marker 3).
+            </figcaption>
+          </figure>
         </div>
       </div>
     </section>
