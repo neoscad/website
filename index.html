@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Pre-launch: keep this page out of search engines. At launch, delete
+       this tag and allow crawling in robots.txt (see the comment there). -->
+  <meta name="robots" content="noindex">
+  <title>NeoSCAD: OpenSCAD's language, rebuilt for speed and for agents</title>
+  <meta name="description" content="NeoSCAD is a new implementation of the OpenSCAD language. It passes 1,773 of OpenSCAD's in-scope regression tests and is about 2.8× faster than the OpenSCAD nightly (Manifold) on heavy models.">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:title" content="NeoSCAD">
+  <meta property="og:description" content="OpenSCAD's language, rebuilt for speed and for agents.">
+  <meta property="og:image" content="https://neoscad.org/assets/hero-gearbox.png">
+  <meta property="og:url" content="https://neoscad.org/">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/icon-512.png">
+  <link rel="stylesheet" href="/theme.css">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/site.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/assets/icon-128.png" alt="" width="30" height="30">NeoSCAD</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="/" aria-current="page">Home</a></li>
+          <li><a href="/download.html">Download</a></li>
+          <li><a href="/benchmarks.html">Benchmarks</a></li>
+          <li><a href="/try/">Try it</a></li>
+          <li><a href="https://github.com/neoscad/neoscad">Source</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- Hero ------------------------------------------------------------ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap">
+        <p class="eyebrow">A new implementation of OpenSCAD, in Rust</p>
+        <h1 id="hero-title">OpenSCAD's language, <span class="grad">rebuilt for speed and for agents.</span></h1>
+        <p class="lede">
+          NeoSCAD runs your <code>.scad</code> files and libraries as they are.
+          It passes 1,773 of OpenSCAD's in-scope regression tests, and it is
+          about 2.8× faster than the OpenSCAD nightly (Manifold) on heavy models.
+        </p>
+
+        <!-- The tap name follows the GitHub org proposed in the NeoSCAD repo's
+             docs/packaging.md; it is not created yet. Keep the command struck
+             through until `brew install` really works. -->
+        <div class="install unavailable" role="group" aria-label="Install with Homebrew (coming soon)">
+          <code>brew install neoscad/tap/neoscad</code>
+          <span class="badge badge-soon">Coming soon</span>
+        </div>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="/download.html">Downloads and status</a>
+          <a class="button button-secondary" href="/try/">Try it in the browser (soon)</a>
+        </div>
+        <p class="small muted">
+          macOS (Apple silicon, macOS 15 or later) comes first, as an app and a
+          command-line tool. Linux and Windows command-line builds are planned.
+        </p>
+        <p class="small muted">
+          Built on the work of <a href="https://openscad.org/">OpenSCAD</a>, whose
+          test suite is NeoSCAD's specification, and the
+          <a href="https://github.com/elalish/manifold">Manifold</a> geometry
+          kernel. <a href="#credits">Credits</a>.
+        </p>
+
+        <figure>
+          <img src="/assets/hero-gearbox.png" width="2400" height="1350"
+               alt="A herringbone planetary gearbox: a blue ring gear, four teal planet gears and a red sun gear on a grey plinth with a gyroid core. Text in the image: Rendered in 2.09 s by NeoSCAD, OpenSCAD nightly: 5.85 s.">
+          <figcaption>
+            A BOSL2 herringbone planetary gearbox on a gyroid plinth, rendered
+            to STL in <strong>2.09 s</strong> by NeoSCAD and <strong>5.85 s</strong>
+            by the OpenSCAD nightly 2026.09.23 with <code>--backend=manifold</code>:
+            full render, best of 3, Apple M4 Pro. The model is
+            <code>apple/Icon/hero.scad</code> in the NeoSCAD repository.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Numbers strip (at most four) ------------------------------------- -->
+    <section class="section section-alt" aria-labelledby="numbers-title">
+      <div class="wrap">
+        <h2 id="numbers-title" class="eyebrow">In numbers</h2>
+        <ul class="numbers">
+          <li>
+            <span class="num">1,773</span>
+            <span class="what">of OpenSCAD's in-scope regression tests pass.
+              <a href="#faq-scope">What's in scope?</a></span>
+          </li>
+          <li>
+            <span class="num">~2.8×</span>
+            <span class="what">faster than the OpenSCAD nightly (Manifold) on
+              heavy models; 3.7× geometric mean over 14 models including
+              startup, on an Apple M4 Pro. <a href="/benchmarks.html">Method</a></span>
+          </li>
+          <li>
+            <span class="num">~0.25 s</span>
+            <span class="what">An edit to one part re-renders in about 0.25 s,
+              in a warm <code>neoscad serve</code> (the planet carrier of the gearbox above;
+              an edit to its gyroid plinth takes 1.55 s).</span>
+          </li>
+          <li>
+            <span class="num">3,569</span>
+            <span class="what">BOSL2 example and test files, all giving the
+              same <code>echo</code> output as the OpenSCAD nightly.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- One benchmark ------------------------------------------------------ -->
+    <section class="section" aria-labelledby="bench-title">
+      <div class="wrap">
+        <p class="eyebrow">Benchmark</p>
+        <h2 id="bench-title">One chart, with its method</h2>
+        <figure>
+          <a href="/assets/bench-20260928-98f90d8.png">
+            <img src="/assets/bench-20260928-98f90d8.png" width="1920" height="1080" loading="lazy"
+                 alt="Bar chart of render times on a log scale for 14 models and a cold start, for NeoSCAD, the OpenSCAD nightly with Manifold, the nightly with CGAL, and OpenSCAD 2021.01. NeoSCAD is fastest on every row; on the 14 models its speedup over the nightly with Manifold ranges from 1.27× (Menger sponge) to 8.79× (CSG example). Full numbers are in the table on the benchmarks page.">
+          </a>
+          <figcaption>
+            Wall time of <code>-o out.stl</code> for 14 models, including process
+            startup; best of 3; one Apple M4 Pro (14 cores, 48 GB, macOS 27.0);
+            NeoSCAD at <code>98f90d8</code> against the OpenSCAD nightly 2026.09.23.
+            The geometric mean is 3.7× against the nightly with Manifold. Half the
+            models finish in under 0.13 s, where startup counts for a lot: with
+            startup subtracted, or over the four models that take longer than
+            0.3 s, it is 2.8×. The nightly's times come from a cache measured with
+            the same, SHA-pinned binary.
+            <a href="/benchmarks.html">Full table, method and caveats</a>.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Three pillars ------------------------------------------------------ -->
+    <section class="section section-alt" aria-labelledby="pillars-title">
+      <div class="wrap">
+        <p class="eyebrow">What it's for</p>
+        <h2 id="pillars-title">Three things NeoSCAD is built to do</h2>
+        <div class="grid-3">
+          <article class="card">
+            <h3><span class="pillar-mark" style="background: var(--ns-cyan)" aria-hidden="true"></span>Your models, unchanged</h3>
+            <p>
+              Open your existing <code>.scad</code> files. NeoSCAD reads OpenSCAD's
+              language and uses OpenSCAD's own regression tests as its
+              specification. MCAD and OpenSCAD's default Liberation fonts are
+              built in, and BOSL2 works from your library path, as it does in
+              OpenSCAD.
+            </p>
+          </article>
+          <article class="card">
+            <h3><span class="pillar-mark" style="background: var(--ns-violet)" aria-hidden="true"></span>Live editing</h3>
+            <p>
+              <code>neoscad serve</code> keeps a model warm and re-renders only what
+              an edit changed: about 0.25 s for an edit to the carrier of the gearbox above. The
+              macOS app is built on the same engine, and
+              <code>neoscad lsp</code> brings diagnostics and completion to any
+              editor that speaks the Language Server Protocol.
+            </p>
+          </article>
+          <article class="card">
+            <h3><span class="pillar-mark" style="background: var(--ns-magenta)" aria-hidden="true"></span>Built for agents</h3>
+            <p>
+              An MCP server (<code>neoscad mcp</code>), JSON output from every
+              command, and tools an agent can look through: <code>snapshot</code>
+              renders a dimensioned four-view sheet, <code>measure</code> and
+              <code>check</code> report sizes and printability. Resource limits stop
+              a runaway model with an error instead of filling the machine.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Printability check ------------------------------------------------ -->
+    <section class="section" aria-labelledby="check-title">
+      <div class="wrap grid-2">
+        <div>
+          <p class="eyebrow">Before you print</p>
+          <h2 id="check-title">Check a model for printing</h2>
+          <p>
+            <code>neoscad check</code> renders the model and reports what would go
+            wrong on an FDM printer, each finding with where it is and how to fix it:
+          </p>
+          <ul>
+            <li>a solid that isn't manifold, or breaks when written at STL's 32-bit precision;</li>
+            <li>pieces floating above the bed, and surfaces that would print fused;</li>
+            <li>walls thinner than the nozzle or your minimum wall;</li>
+            <li>overhangs steeper than your limit;</li>
+            <li>parts that intersect, and a model that doesn't fit your bed.</li>
+          </ul>
+<pre><code>neoscad check part.scad --nozzle 0.4 --min-wall 1.2 --bed 256x256x256
+neoscad snapshot part.scad --issues</code></pre>
+          <p class="small muted">
+            <code>snapshot --issues</code> paints the findings onto the sheet: thin
+            walls red, overhangs amber, floating pieces purple, with a numbered
+            marker at each one. Add <code>--format json</code> for machine-readable
+            output.
+          </p>
+        </div>
+        <div>
+          <figure>
+            <img src="/assets/snapshot-adapter.png" width="640" height="640" loading="lazy"
+                 alt="A NeoSCAD snapshot sheet of a yellow threaded hose-barb adapter in three views, iso, front and top, on a grid, with dimension lines: 34.64 by 30 by 49.4 mm, volume 13,788.73 cubic millimetres, 11,116 triangles.">
+            <figcaption>
+              <code>neoscad snapshot</code> of a threaded hose-barb adapter: three
+              views with dimensions, one PNG an agent can read.
+            </figcaption>
+          </figure>
+          <!-- PLACEHOLDER: replace with a `neoscad snapshot --issues` sheet that
+               shows thin-wall, overhang and floating markers. -->
+          <div class="placeholder" style="aspect-ratio: 16 / 7; margin-top: 1.25rem;" role="img" aria-label="Placeholder for a check image">
+            Image to come: a <code>snapshot --issues</code> sheet with findings marked
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Built in the open ------------------------------------------------- -->
+    <section class="section section-alt" aria-labelledby="open-title" id="built">
+      <div class="wrap grid-2">
+        <div>
+          <p class="eyebrow">Built in the open</p>
+          <h2 id="open-title">How NeoSCAD was made, and how it's checked</h2>
+          <p>
+            <strong>NeoSCAD was written by AI coding agents.</strong> Almost all of
+            its code was written by Anthropic's Claude, working as coding agents
+            under the direction of one person, who set the plan, reviewed each
+            change and committed it. The first commit is from 25 September 2026,
+            and the full history is public, with each change and the tests it
+            had to pass. Built by The Ned Workshop (Matt Robinson); built with
+            Claude.
+          </p>
+          <p>
+            You shouldn't have to trust it because of who, or what, wrote it, so
+            its behaviour is checked against OpenSCAD's:
+          </p>
+          <ul>
+            <li><strong>OpenSCAD's regression suite is the specification.</strong>
+              1,773 in-scope tests pass, and a change may not make a passing test fail.</li>
+            <li><strong>BOSL2:</strong> all 3,569 example and test files give the
+              same <code>echo</code> output as the OpenSCAD nightly, and BOSL2's
+              own 976 tests pass.</li>
+            <li><strong>Differential tests</strong> compare NeoSCAD's parse tree,
+              echo and CSG output with the nightly's, and every benchmark model's
+              mesh with the nightly's (volume, area and bounding box).</li>
+            <li><strong>Fuzzing:</strong> the polygon tessellator was fuzzed
+              against OpenSCAD's C libtess2, and an evaluator prototype against
+              the tree-walking evaluator.</li>
+          </ul>
+          <p class="small muted">
+            The source is at <a href="https://github.com/neoscad/neoscad">github.com/neoscad/neoscad</a>,
+            under GPL-2.0-or-later, OpenSCAD's licence.
+          </p>
+        </div>
+        <div>
+          <figure>
+            <video controls preload="metadata" playsinline width="1920" height="1080"
+                   aria-label="Progress video: OpenSCAD's regression tests turning from failing to passing, run by run">
+              <source src="/assets/progress.mp4" type="video/mp4">
+              <a href="/assets/progress.mp4">Download the progress video (MP4, 8 MB)</a>.
+            </video>
+            <figcaption>
+              Every recorded conformance run, from the first on 26 September 2026:
+              the grid of OpenSCAD's tests, the commit that ran them, and the pass
+              count over time. It is generated from the project's run log by
+              <code>conformance video</code>.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- From OpenSCAD ------------------------------------------------------ -->
+    <section class="section" aria-labelledby="from-title">
+      <div class="wrap grid-2">
+        <div>
+          <p class="eyebrow">Coming from OpenSCAD</p>
+          <h2 id="from-title">What's the same, and what isn't</h2>
+          <p>
+            The language, the libraries and the command line
+            (<code>neoscad model.scad -o model.stl</code>) work as you know them.
+            The differences today:
+          </p>
+          <ul>
+            <li>Geometry uses Manifold only; there is no CGAL backend.</li>
+            <li><code>text()</code> uses the bundled Liberation fonts; system fonts aren't found yet.</li>
+            <li>The macOS app has no Animate panel, and the customizer is partial.</li>
+            <li>It is slower than the nightly on some models: deep unions, the
+              Menger sponge at level 4, and models with many <code>text()</code> nodes.</li>
+            <li>Only macOS on Apple silicon for now.</li>
+          </ul>
+          <p class="small">
+            NeoSCAD is an independent project. It is not affiliated with or
+            endorsed by the OpenSCAD project.
+          </p>
+        </div>
+        <div id="credits">
+          <p class="eyebrow">Credits</p>
+          <h2>Standing on OpenSCAD and Manifold</h2>
+          <p>
+            NeoSCAD exists because of <a href="https://openscad.org/">OpenSCAD</a>:
+            its language, its examples and, above all, its regression test suite,
+            which is NeoSCAD's specification. Thank you to its maintainers and
+            contributors.
+          </p>
+          <p>
+            Geometry is <a href="https://github.com/elalish/manifold">Manifold</a>,
+            by Emmett Lalish and contributors, through Lars Brubaker's Rust port,
+            <a href="https://github.com/larsbrubaker/manifold-rust">manifold-rust</a>.
+            Manifold is also what makes the OpenSCAD nightly fast.
+          </p>
+          <p class="small muted">
+            Also: Clipper2, through Lars Brubaker's
+            <a href="https://github.com/larsbrubaker/clipper2-rust">clipper2-rust</a>;
+            libtess2 (Mikko Mononen's packaging of the SGI GLU tessellator);
+            <a href="https://github.com/BelfrySCAD/BOSL2">BOSL2</a> by Revar Desmera
+            and contributors; MCAD; and the Liberation fonts.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -------------------------------------------------------------- -->
+    <section class="section section-alt faq" aria-labelledby="faq-title">
+      <div class="wrap">
+        <h2 id="faq-title">Questions</h2>
+
+        <details>
+          <summary>Why not CadQuery or build123d?</summary>
+          <p>
+            They're good tools. They are Python libraries on a B-rep kernel, so they
+            give you fillets on real edges and STEP output, which NeoSCAD, a mesh
+            modeller like OpenSCAD, does not. NeoSCAD is for people and agents who
+            already have OpenSCAD models and libraries such as BOSL2, or who want
+            OpenSCAD's small declarative language and a fast edit-and-see loop.
+          </p>
+        </details>
+
+        <details id="faq-scope">
+          <summary>Is it a drop-in replacement for OpenSCAD?</summary>
+          <p>
+            Not a claim we make. OpenSCAD's suite registers 3,258 tests. In the
+            latest run 1,773 pass and 1,485 are skipped as out of scope: duplicates
+            that only run on the CGAL backend (NeoSCAD uses Manifold only),
+            experimental features, and tests that OpenSCAD itself marks as known
+            bugs or disabled. The GUI is less complete than the command line.
+          </p>
+        </details>
+
+        <details>
+          <summary>Is it faster on every model?</summary>
+          <p>
+            No. On the 14-model benchmark it is about 2.8× faster than the nightly
+            with Manifold on the heavy models, and 3.7× as a geometric mean
+            including startup. It is slower on some deep unions, on the Menger
+            sponge at level 4 and on models with many <code>text()</code> nodes.
+            <a href="/benchmarks.html">The benchmarks page</a> has every number.
+          </p>
+        </details>
+
+        <details>
+          <summary>Which platforms does it run on?</summary>
+          <p>
+            The first release will be for macOS 15 or later on Apple silicon;
+            it isn't out yet. Linux and Windows command-line builds (x86_64 and ARM) are planned, and
+            an in-browser version is in progress. See <a href="/download.html">downloads</a>.
+          </p>
+        </details>
+
+        <details>
+          <summary>Who wrote it?</summary>
+          <p>
+            AI coding agents, directed by one person. <a href="#built">How it was
+            made and how it's checked</a> covers it.
+          </p>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="cols">
+        <div>
+          <h2>NeoSCAD</h2>
+          <p>A new implementation of the OpenSCAD language. GPL-2.0-or-later.
+            Not affiliated with the OpenSCAD project.</p>
+          <p>Built by The Ned Workshop (Matt Robinson); built with Claude.</p>
+        </div>
+        <div>
+          <h2>Site</h2>
+          <ul>
+            <li><a href="/download.html">Download</a></li>
+            <li><a href="/benchmarks.html">Benchmarks</a></li>
+            <li><a href="/try/">Try it</a></li>
+            <li><a href="https://github.com/neoscad/neoscad">Source</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Upstream</h2>
+          <ul>
+            <li><a href="https://openscad.org/">OpenSCAD</a></li>
+            <li><a href="https://github.com/elalish/manifold">Manifold</a></li>
+            <li><a href="https://github.com/BelfrySCAD/BOSL2">BOSL2</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="small">No cookies, trackers or analytics.</p>
+    </div>
+  </footer>
+</body>
+</html>

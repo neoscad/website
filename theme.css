@@ -1,0 +1,77 @@
+/*
+ * NeoSCAD theme: design tokens only, no layout.
+ *
+ * This file is a contract. The /try demo bundle (built in the NeoSCAD repo,
+ * see docs/web-demo-plan.md there) links /theme.css and reads these custom
+ * properties for its thin top bar, so renaming or removing one breaks the
+ * demo's styling silently. Add new tokens freely; rename only together with
+ * the bundle.
+ *
+ * Colours come from the app icon ("Threaded ring", apple/Icon/concept-c.scad):
+ * its palette sweeps #19c3d6 -> #3f8ff0 -> #6a5cf2 -> #9b4de6 -> #d04fc4 ->
+ * #ff5a8a, on the tile colours #1f2238 / #0a0b14.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* Icon palette, fixed in both schemes. */
+  --ns-cyan: #19c3d6;
+  --ns-blue: #3f8ff0;
+  --ns-violet: #6a5cf2;
+  --ns-purple: #9b4de6;
+  --ns-magenta: #d04fc4;
+  --ns-pink: #ff5a8a;
+  --ns-gradient: linear-gradient(90deg, #19c3d6, #6a5cf2 50%, #d04fc4);
+
+  /* Light scheme (default). Text colours meet WCAG AA on --ns-bg and --ns-surface. */
+  --ns-bg: #f7f7fb;
+  --ns-surface: #ffffff;
+  --ns-surface-2: #eeeef6;
+  --ns-border: #d9d9e6;
+  --ns-text: #14152a;
+  --ns-text-muted: #4a4c66;
+  --ns-accent: #5a48e0;        /* links and focus; 6.1:1 on white, 5.7:1 on --ns-bg */
+  --ns-accent-strong: #3f2fc2;
+  --ns-accent-text: #ffffff;   /* text on --ns-accent */
+  --ns-teal-text: #07707c;     /* teal usable as text on light backgrounds */
+  --ns-magenta-text: #a3308f;
+  /* Gradient for large text: the icon's sweep, darkened so each stop keeps
+     at least 5:1 on the light background (the raw cyan is under 3:1). */
+  --ns-text-gradient: linear-gradient(90deg, #07707c, #5a48e0 50%, #a3308f);
+  --ns-warn-bg: #fff4d6;
+  --ns-warn-text: #6b4a00;
+  --ns-code-bg: #1f2238;
+  --ns-code-text: #e8e9f5;
+
+  --ns-font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --ns-font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  --ns-radius: 10px;
+  --ns-radius-small: 6px;
+  --ns-maxwidth: 72rem;
+  --ns-topbar-height: 3.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ns-bg: #0a0b14;
+    --ns-surface: #14162a;
+    --ns-surface-2: #1f2238;
+    --ns-border: #2e3252;
+    --ns-text: #e8e9f5;
+    --ns-text-muted: #a9abc6;
+    --ns-accent: #8f84ff;        /* 6.4:1 on --ns-bg */
+    --ns-accent-strong: #b3abff;
+    --ns-accent-text: #0a0b14;
+    --ns-teal-text: #4fd8e6;
+    --ns-magenta-text: #ec7fdc;
+    --ns-text-gradient: linear-gradient(90deg, #4fd8e6, #8f84ff 50%, #ec7fdc);
+    --ns-warn-bg: #3a2e0a;
+    --ns-warn-text: #ffd97a;
+    --ns-code-bg: #05060d;
+    --ns-code-text: #e8e9f5;
+  }
+}

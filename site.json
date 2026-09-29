@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "name": "NeoSCAD",
+  "home": "/",
+  "theme": "/theme.css",
+  "nav": [
+    { "label": "Home", "href": "/" },
+    { "label": "Download", "href": "/download.html" },
+    { "label": "Benchmarks", "href": "/benchmarks.html" },
+    { "label": "Try it", "href": "/try/" }
+  ]
+}

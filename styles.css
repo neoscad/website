@@ -1,0 +1,725 @@
+/*
+ * Site layout and components. Colours and fonts come from theme.css; this
+ * file only refers to its custom properties, so the light and dark schemes
+ * are defined in one place.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ns-bg);
+  color: var(--ns-text);
+  font-family: var(--ns-font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  /* Long commands and table cells must never widen the page past a
+     390 px phone; they scroll inside their own boxes instead. */
+  overflow-wrap: anywhere;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--ns-accent);
+  text-underline-offset: 0.15em;
+}
+
+a:hover {
+  color: var(--ns-accent-strong);
+}
+
+:focus-visible {
+  outline: 3px solid var(--ns-accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--ns-font-mono);
+  font-size: 0.92em;
+}
+
+:not(pre) > code {
+  background: var(--ns-surface-2);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  overflow-wrap: anywhere;
+}
+
+pre {
+  background: var(--ns-code-bg);
+  color: var(--ns-code-text);
+  padding: 1rem 1.1rem;
+  border-radius: var(--ns-radius);
+  overflow-x: auto;
+  line-height: 1.5;
+  overflow-wrap: normal;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw + 0.5rem, 3.4rem);
+  margin: 0 0 1rem;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 2.5vw + 0.6rem, 2.1rem);
+  margin: 0 0 1rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0.5rem;
+  background: var(--ns-accent);
+  color: var(--ns-accent-text);
+  padding: 0.5rem 1rem;
+  border-radius: var(--ns-radius-small);
+  z-index: 10;
+}
+
+.skip-link:focus {
+  left: 0.5rem;
+}
+
+.wrap {
+  max-width: var(--ns-maxwidth);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* ---- Top bar and navigation ------------------------------------------ */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: color-mix(in srgb, var(--ns-bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--ns-border);
+}
+
+.topbar::after {
+  /* A hairline of the icon's sweep under the bar. */
+  content: "";
+  display: block;
+  height: 2px;
+  background: var(--ns-gradient);
+  opacity: 0.8;
+}
+
+.topbar .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: var(--ns-topbar-height);
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--ns-text);
+  font-weight: 700;
+  font-size: 1.15rem;
+  text-decoration: none;
+}
+
+.brand img {
+  width: 30px;
+  height: 30px;
+}
+
+.brand:hover {
+  color: var(--ns-text);
+}
+
+.nav-toggle {
+  display: none;
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--ns-text);
+  background: var(--ns-surface);
+  border: 1px solid var(--ns-border);
+  border-radius: var(--ns-radius-small);
+  padding: 0.35rem 0.8rem;
+  cursor: pointer;
+}
+
+.site-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav a {
+  color: var(--ns-text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.35rem 0;
+  display: inline-block;
+}
+
+.site-nav a:hover,
+.site-nav a[aria-current="page"] {
+  color: var(--ns-text);
+}
+
+.site-nav a[aria-current="page"] {
+  box-shadow: inset 0 -2px 0 var(--ns-magenta);
+}
+
+/* With JavaScript, small screens collapse the links behind a button.
+   Without it (the class is never added) the links simply wrap, so the
+   navigation still works. */
+@media (max-width: 40rem) {
+  .js .nav-toggle {
+    display: inline-block;
+  }
+
+  .js .site-nav {
+    display: none;
+    width: 100%;
+    padding-bottom: 0.75rem;
+  }
+
+  .js .site-nav.open {
+    display: block;
+  }
+
+  .js .site-nav ul {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .js .site-nav a {
+    padding: 0.55rem 0;
+    width: 100%;
+  }
+}
+
+/* ---- Sections ----------------------------------------------------------- */
+
+main {
+  display: block;
+}
+
+.section {
+  padding: 4rem 0;
+}
+
+.section + .section {
+  border-top: 1px solid var(--ns-border);
+}
+
+.section-alt {
+  background: var(--ns-surface);
+}
+
+.lede {
+  font-size: 1.2rem;
+  color: var(--ns-text-muted);
+  max-width: 44rem;
+}
+
+.eyebrow {
+  font-family: var(--ns-font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ns-teal-text);
+  margin: 0 0 0.6rem;
+}
+
+.prose {
+  max-width: 46rem;
+}
+
+.muted {
+  color: var(--ns-text-muted);
+}
+
+.small {
+  font-size: 0.9rem;
+}
+
+/* ---- Hero -------------------------------------------------------------- */
+
+.hero {
+  padding: 3.5rem 0 3rem;
+}
+
+.hero h1 .grad {
+  background: var(--ns-text-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin: 1.5rem 0 0;
+}
+
+.hero figure {
+  margin: 2.5rem 0 0;
+}
+
+figure {
+  margin: 0;
+}
+
+figure img,
+figure video {
+  border-radius: var(--ns-radius);
+  border: 1px solid var(--ns-border);
+  width: 100%;
+}
+
+figcaption {
+  font-size: 0.9rem;
+  color: var(--ns-text-muted);
+  margin-top: 0.6rem;
+  max-width: 52rem;
+}
+
+/* ---- Buttons ----------------------------------------------------------- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.65rem 1.1rem;
+  border-radius: var(--ns-radius-small);
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.button-primary {
+  background: var(--ns-accent);
+  color: var(--ns-accent-text);
+}
+
+.button-primary:hover {
+  background: var(--ns-accent-strong);
+  color: var(--ns-accent-text);
+}
+
+.button-secondary {
+  background: transparent;
+  color: var(--ns-text);
+  border-color: var(--ns-border);
+}
+
+.button-secondary:hover {
+  color: var(--ns-text);
+  border-color: var(--ns-text-muted);
+}
+
+/* ---- Install line and "coming soon" state ------------------------------ */
+
+.install {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+  background: var(--ns-code-bg);
+  color: var(--ns-code-text);
+  border-radius: var(--ns-radius);
+  padding: 0.8rem 1rem;
+  max-width: 44rem;
+}
+
+.install code {
+  /* Override the inline-code chip: its light background would hide the
+     light text of this dark box in the light scheme. */
+  background: none;
+  padding: 0;
+  color: inherit;
+  font-family: var(--ns-font-mono);
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
+/* A command that doesn't work yet is struck through and dimmed, so no one
+   copies it into a terminal and concludes the project is broken. */
+.install.unavailable code,
+.cmd-unavailable {
+  opacity: 0.6;
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.badge {
+  display: inline-block;
+  font-family: var(--ns-font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.badge-soon {
+  background: var(--ns-warn-bg);
+  color: var(--ns-warn-text);
+  border: 1px solid color-mix(in srgb, var(--ns-warn-text) 35%, transparent);
+}
+
+.badge-planned {
+  background: var(--ns-surface-2);
+  color: var(--ns-text-muted);
+  border: 1px solid var(--ns-border);
+}
+
+.badge-exists {
+  background: color-mix(in srgb, var(--ns-cyan) 18%, transparent);
+  color: var(--ns-teal-text);
+  border: 1px solid color-mix(in srgb, var(--ns-cyan) 45%, transparent);
+}
+
+/* Placeholder links: they are real <a> elements (so the layout is final)
+   but point nowhere, are removed from the tab order and say so. */
+a[aria-disabled="true"] {
+  pointer-events: none;
+  cursor: not-allowed;
+  color: var(--ns-text-muted);
+  text-decoration: line-through;
+}
+
+.notice {
+  border-left: 4px solid var(--ns-magenta);
+  background: var(--ns-surface-2);
+  padding: 0.9rem 1.1rem;
+  border-radius: 0 var(--ns-radius-small) var(--ns-radius-small) 0;
+  max-width: 50rem;
+}
+
+/* ---- Numbers strip ------------------------------------------------------ */
+
+.numbers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.numbers li {
+  background: var(--ns-surface);
+  border: 1px solid var(--ns-border);
+  border-radius: var(--ns-radius);
+  padding: 1.25rem;
+}
+
+.section-alt .numbers li {
+  background: var(--ns-bg);
+}
+
+.numbers .num {
+  display: block;
+  font-size: 2.2rem;
+  font-weight: 750;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+}
+
+.numbers li:nth-child(1) .num { color: var(--ns-teal-text); }
+.numbers li:nth-child(2) .num { color: var(--ns-accent); }
+.numbers li:nth-child(3) .num { color: var(--ns-magenta-text); }
+.numbers li:nth-child(4) .num { color: var(--ns-text); }
+
+.numbers .what {
+  display: block;
+  color: var(--ns-text-muted);
+  font-size: 0.95rem;
+}
+
+/* ---- Cards (pillars, download entries) ---------------------------------- */
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.25rem;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 26rem) {
+  /* 20rem columns plus padding would overflow a 390 px screen. */
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: var(--ns-surface);
+  border: 1px solid var(--ns-border);
+  border-radius: var(--ns-radius);
+  padding: 1.4rem;
+}
+
+.section-alt .card {
+  background: var(--ns-bg);
+}
+
+.card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.pillar-mark {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  flex: none;
+}
+
+.card p:last-child,
+.card ul:last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Placeholder media -------------------------------------------------- */
+
+.placeholder {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  aspect-ratio: 1 / 1;
+  border: 2px dashed var(--ns-border);
+  border-radius: var(--ns-radius);
+  background: var(--ns-surface-2);
+  color: var(--ns-text-muted);
+  padding: 1.5rem;
+  font-family: var(--ns-font-mono);
+  font-size: 0.9rem;
+}
+
+/* ---- Tables -------------------------------------------------------------- */
+
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--ns-border);
+  border-radius: var(--ns-radius);
+  background: var(--ns-surface);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.92rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.55rem 0.8rem;
+  border-bottom: 1px solid var(--ns-border);
+  vertical-align: top;
+  overflow-wrap: normal;
+}
+
+thead th {
+  background: var(--ns-surface-2);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+tbody tr:last-child th,
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+td.n,
+th.n {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+td.model {
+  min-width: 14rem;
+}
+
+td.model code {
+  white-space: nowrap;
+}
+
+.table-scroll table caption {
+  caption-side: bottom;
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  color: var(--ns-text-muted);
+  font-size: 0.85rem;
+}
+
+/* ---- Download page -------------------------------------------------------- */
+
+.platform {
+  scroll-margin-top: calc(var(--ns-topbar-height) + 1rem);
+}
+
+.platform h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.dl-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.dl-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.4rem 1rem;
+  background: var(--ns-surface);
+  border: 1px solid var(--ns-border);
+  border-radius: var(--ns-radius-small);
+  padding: 0.8rem 1rem;
+}
+
+.dl-list .dl-main {
+  flex: 1 1 18rem;
+  min-width: 0;
+}
+
+.dl-list .dl-note {
+  display: block;
+  color: var(--ns-text-muted);
+  font-size: 0.9rem;
+}
+
+.toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+}
+
+/* ---- FAQ ----------------------------------------------------------------- */
+
+.faq details {
+  border-bottom: 1px solid var(--ns-border);
+  padding: 0.9rem 0;
+  max-width: 50rem;
+}
+
+.faq summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.faq details[open] summary {
+  margin-bottom: 0.5rem;
+}
+
+/* ---- Footer --------------------------------------------------------------- */
+
+.site-footer {
+  border-top: 1px solid var(--ns-border);
+  padding: 2.5rem 0 3rem;
+  color: var(--ns-text-muted);
+  font-size: 0.9rem;
+}
+
+.site-footer .cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1.5rem;
+}
+
+.site-footer h2 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+  color: var(--ns-text);
+}
+
+.site-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.site-footer li {
+  margin: 0.25rem 0;
+}
+
+.site-footer a {
+  color: var(--ns-text-muted);
+}
+
+.site-footer a:hover {
+  color: var(--ns-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+}

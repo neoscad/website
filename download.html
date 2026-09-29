@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Pre-launch: keep this page out of search engines. At launch, delete
+       this tag and allow crawling in robots.txt (see the comment there). -->
+  <meta name="robots" content="noindex">
+  <title>Download NeoSCAD</title>
+  <meta name="description" content="NeoSCAD downloads for macOS, Linux and Windows, package managers, source and nightly builds, and the status of each.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/icon-512.png">
+  <link rel="stylesheet" href="/theme.css">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/site.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/assets/icon-128.png" alt="" width="30" height="30">NeoSCAD</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/download.html" aria-current="page">Download</a></li>
+          <li><a href="/benchmarks.html">Benchmarks</a></li>
+          <li><a href="/try/">Try it</a></li>
+          <li><a href="https://github.com/neoscad/neoscad">Source</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!--
+    Every download link on this page but the Git repository is a
+    placeholder: href="#",
+    aria-disabled="true", tabindex="-1", and struck through by styles.css.
+    When an artifact is published, replace its href, drop those two
+    attributes and change the badge to <span class="badge badge-exists">Available</span>.
+    Statuses follow docs/packaging.md in the NeoSCAD repo:
+    "Now" = available soon, "Later" = planned.
+  -->
+
+  <main id="main">
+    <section class="hero" aria-labelledby="dl-title">
+      <div class="wrap">
+        <p class="eyebrow">Download</p>
+        <h1 id="dl-title">Download NeoSCAD</h1>
+        <p class="lede">
+          Nothing is published yet. This page shows what will ship and in what
+          order, so you know what to expect.
+        </p>
+        <p class="notice">
+          <strong>No download works yet.</strong> Entries marked
+          <span class="badge badge-soon">Available soon</span> are built for the
+          first release; <span class="badge badge-planned">Planned</span> ones come
+          after it. Their links are placeholders.
+        </p>
+        <p>
+          <code>neoscad</code>, the command-line tool, includes the language server
+          (<code>neoscad lsp</code>), the MCP server (<code>neoscad mcp</code>) and
+          <code>neoscad serve</code> on every platform. The app is macOS-only for now.
+          Fonts and MCAD are built in; BOSL2 and your other libraries load from
+          <code>OPENSCADPATH</code>, as in OpenSCAD.
+        </p>
+        <ul class="toc" aria-label="On this page">
+          <li><a href="#macos">macOS</a></li>
+          <li><a href="#linux">Linux</a></li>
+          <li><a href="#windows">Windows</a></li>
+          <li><a href="#packages">Package managers</a></li>
+          <li><a href="#source">Source</a></li>
+          <li><a href="#nightly">Nightly builds</a></li>
+          <li><a href="#browser">In the browser</a></li>
+          <li><a href="#vs-openscad">Compared with OpenSCAD</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section-alt platform" id="macos" aria-labelledby="macos-title">
+      <div class="wrap">
+        <h2 id="macos-title">macOS <span class="badge badge-soon">Available soon</span></h2>
+        <p class="muted">Apple silicon (arm64), macOS 15 or later. The release will be
+          signed with a Developer ID and notarized, so Gatekeeper accepts it.</p>
+        <ul class="dl-list">
+          <li>
+            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">NeoSCAD for macOS (.dmg)</a>
+              <span class="dl-note">The app: editor, 3D view, console, check and
+                measure panels, a customizer (partial) and Quick Look previews.</span></span>
+            <span class="badge badge-soon">Available soon</span>
+          </li>
+          <li>
+            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">Command-line tool, arm64 (.tar.gz)</a>
+              <span class="dl-note">A single <code>neoscad</code> binary, with sha256.</span></span>
+            <span class="badge badge-soon">Available soon</span>
+          </li>
+          <li>
+            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">Command-line tool, Intel x86_64 or universal</a>
+              <span class="dl-note">Needs a CI build; the app stays arm64 at first.</span></span>
+            <span class="badge badge-planned">Planned</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section platform" id="linux" aria-labelledby="linux-title">
+      <div class="wrap">
+        <h2 id="linux-title">Linux <span class="badge badge-soon">Available soon</span></h2>
+        <p class="muted">Command-line tool only. glibc 2.28 or later. PNG export and
+          <code>snapshot</code> need a Vulkan driver; Mesa's works without a GPU.</p>
+        <ul class="dl-list">
+          <li>
+            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">x86_64 (.tar.gz)</a>
+              <span class="dl-note">A single binary, with sha256 and an install script.</span></span>
+            <span class="badge badge-soon">Available soon</span>
+          </li>
+          <li>
+            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">aarch64 (.tar.gz)</a>
+              <span class="dl-note">Built natively on ARM.</span></span>
+            <span class="badge badge-soon">Available soon</span>
+          </li>
+          <li>
+            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">Static musl build</a>
+              <span class="dl-note">Portable, but without PNG export.</span></span>
+            <span class="badge badge-planned">Planned</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section-alt platform" id="windows" aria-labelledby="windows-title">
+      <div class="wrap">
+        <h2 id="windows-title">Windows <span class="badge badge-soon">Available soon</span></h2>
+        <p class="muted">Command-line tool only, as a portable zip. <code>neoscad serve</code>
+          works over stdio; socket mode is Unix-only for now.</p>
+        <ul class="dl-list">
+          <li>
+            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">x86_64 (.zip)</a>
+              <span class="dl-note">With sha256 and a PowerShell install script.</span></span>
+            <span class="badge badge-soon">Available soon</span>
+          </li>
+          <li>
+            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">ARM64 (.zip)</a>
+              <span class="dl-note">Built natively on Windows on ARM.</span></span>
+            <span class="badge badge-soon">Available soon</span>
+          </li>
+          <li>
+            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">Installer (.msi)</a>
+              <span class="dl-note">Adds <code>neoscad</code> to your PATH; needs code signing first.</span></span>
+            <span class="badge badge-planned">Planned</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section platform" id="packages" aria-labelledby="packages-title">
+      <div class="wrap">
+        <h2 id="packages-title">Package managers</h2>
+        <p class="muted">Commands are shown struck through until they work. Names
+          aren't final.</p>
+        <ul class="dl-list">
+          <li>
+            <span class="dl-main"><strong>Homebrew tap</strong> (macOS and Linux)
+              <span class="dl-note"><code class="cmd-unavailable">brew install neoscad/tap/neoscad</code>
+                for the command-line tool; a cask for the app follows notarization.</span></span>
+            <span class="badge badge-soon">Available soon</span>
+          </li>
+          <li>
+            <span class="dl-main"><strong>cargo binstall</strong>
+              <span class="dl-note"><code class="cmd-unavailable">cargo binstall neoscad</code>
+                fetches the prebuilt binary from the release.</span></span>
+            <span class="badge badge-soon">Available soon</span>
+          </li>
+          <li>
+            <span class="dl-main"><strong>.deb and .rpm</strong> packages
+              <span class="dl-note">Attached to each release, for x86_64 and aarch64.
+                A signed apt/rpm repository comes later.</span></span>
+            <span class="badge badge-soon">Available soon</span>
+          </li>
+          <li>
+            <span class="dl-main"><strong>AUR</strong> (<code>neoscad-bin</code>)
+              <span class="dl-note">After the first public release.</span></span>
+            <span class="badge badge-planned">Planned</span>
+          </li>
+          <li>
+            <span class="dl-main"><strong>Nix</strong>
+              <span class="dl-note">A flake first, then nixpkgs.</span></span>
+            <span class="badge badge-planned">Planned</span>
+          </li>
+          <li>
+            <span class="dl-main"><strong>winget and Scoop</strong>
+              <span class="dl-note">Manifests for the portable zip; winget wants signed binaries.</span></span>
+            <span class="badge badge-planned">Planned</span>
+          </li>
+          <li>
+            <span class="dl-main"><strong>Docker</strong> (<code>ghcr.io</code>)
+              <span class="dl-note">A small Debian image with Mesa's Vulkan driver, so PNG export works headless.</span></span>
+            <span class="badge badge-planned">Planned</span>
+          </li>
+          <li>
+            <span class="dl-main"><strong>cargo install</strong> from crates.io
+              <span class="dl-note">Blocked until NeoSCAD's patched geometry dependencies are published.</span></span>
+            <span class="badge badge-planned">Planned</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section-alt platform" id="source" aria-labelledby="source-title">
+      <div class="wrap">
+        <h2 id="source-title">Source <span class="badge badge-soon">Available soon</span></h2>
+        <p class="muted">GPL-2.0-or-later. Builds with Rust 1.98.</p>
+        <ul class="dl-list">
+          <li>
+            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">Source tarball</a>
+              <span class="dl-note">Each release's source, with sha256.</span></span>
+            <span class="badge badge-soon">Available soon</span>
+          </li>
+          <li>
+            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">Vendored source tarball</a>
+              <span class="dl-note">Includes every Rust dependency (<code>cargo vendor</code>), for offline builds.</span></span>
+            <span class="badge badge-soon">Available soon</span>
+          </li>
+          <li>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad">Git repository</a>
+              <span class="dl-note">github.com/neoscad/neoscad: the full history.</span></span>
+            <span class="badge badge-exists">Available</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section platform" id="nightly" aria-labelledby="nightly-title">
+      <div class="wrap">
+        <h2 id="nightly-title">Nightly builds <span class="badge badge-planned">Planned</span></h2>
+        <p>
+          Builds of the latest commit, for testing. They aren't scheduled yet: the
+          first step is tagged releases from CI.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section-alt platform" id="browser" aria-labelledby="browser-title">
+      <div class="wrap">
+        <h2 id="browser-title">In the browser <span class="badge badge-planned">In progress</span></h2>
+        <p>
+          NeoSCAD's library crates already build for WebAssembly. An in-browser
+          editor with examples is being built, and will live at
+          <a href="/try/">neoscad.org/try</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="section platform" id="vs-openscad" aria-labelledby="vs-title">
+      <div class="wrap prose">
+        <h2 id="vs-title">Compared with OpenSCAD's downloads</h2>
+        <p>
+          <a href="https://openscad.org/downloads.html">OpenSCAD's downloads</a>
+          reach many more places today: installers and the GUI on every desktop
+          platform, AppImage, Snap, Flatpak, the Linux distributions, the BSDs,
+          Docker Hub and a WebAssembly build. If you need the OpenSCAD GUI on
+          Linux or Windows, use OpenSCAD.
+        </p>
+        <p>A few differences in NeoSCAD's plan:</p>
+        <ul>
+          <li><strong>Windows on ARM:</strong> NeoSCAD plans a native ARM64 build.
+            OpenSCAD's nightly for Windows is x86_64 only.</li>
+          <li><strong>Linux on ARM:</strong> a native aarch64 build with each
+            release. OpenSCAD's aarch64 AppImage nightly hasn't been updated since 2023.09.</li>
+          <li><strong>One binary:</strong> fonts and MCAD are compiled in, so the
+            command-line tool needs nothing else installed.</li>
+        </ul>
+        <p class="small muted">OpenSCAD's channels were checked on 28 September 2026.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="cols">
+        <div>
+          <h2>NeoSCAD</h2>
+          <p>A new implementation of the OpenSCAD language. GPL-2.0-or-later.
+            Not affiliated with the OpenSCAD project.</p>
+          <p>Built by The Ned Workshop (Matt Robinson); built with Claude.</p>
+        </div>
+        <div>
+          <h2>Site</h2>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/benchmarks.html">Benchmarks</a></li>
+            <li><a href="/try/">Try it</a></li>
+            <li><a href="https://github.com/neoscad/neoscad">Source</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Upstream</h2>
+          <ul>
+            <li><a href="https://openscad.org/">OpenSCAD</a></li>
+            <li><a href="https://github.com/elalish/manifold">Manifold</a></li>
+            <li><a href="https://github.com/BelfrySCAD/BOSL2">BOSL2</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="small">No cookies, trackers or analytics.</p>
+    </div>
+  </footer>
+</body>
+</html>
