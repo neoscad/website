@@ -3,7 +3,8 @@
 The NeoSCAD website: hand-written static HTML and CSS, served by GitHub
 Pages at the apex domain `neoscad.org`. There is no build step, no
 framework and no package manager. The only script is `site.js`, a mobile
-menu toggle; the pages work without it.
+menu toggle and the hero video's Pause button and reduced-motion stop;
+the pages work without it.
 
 ## Structure
 
@@ -16,7 +17,7 @@ menu toggle; the pages work without it.
 | `404.html` | GitHub Pages' not-found page (root-relative URLs only) |
 | `theme.css` | Design tokens (colours, fonts, sizes) as CSS custom properties, light and dark. **A contract with the `/try` bundle**: rename a token only together with the bundle |
 | `styles.css` | Layout and components; uses only `theme.css`'s properties |
-| `site.js` | Mobile navigation toggle |
+| `site.js` | Mobile navigation toggle; hero video Pause/Play button, and no autoplay under `prefers-reduced-motion` |
 | `site.json` | Site name, home, theme and nav links, read by the `/try` bundle's top bar |
 | `favicon.png` | 32×32 icon |
 | `assets/` | Images and video, copied unchanged from the NeoSCAD repo (below) |
@@ -33,7 +34,8 @@ not from `file://`.
 | File | Source in the NeoSCAD repo |
 |---|---|
 | `assets/icon-512.png`, `icon-128.png`, `favicon.png` | `apple/Icon/build/concept-c/art-512.png`, `art-128.png`, `art-32.png` |
-| `assets/hero-gearbox.png` | `apple/Icon/build/hero/hero.png` (2026-09-28; times in `hero/times.txt`) |
+| `assets/hero-gearbox.png` | `apple/Icon/build/hero/hero.png` (2026-09-28; times in `hero/times.txt`); also the hero video's poster |
+| `assets/hero-gearbox.mp4`, `hero-gearbox.webm` | `apple/Icon/build/hero-video/` (`scripts/apple/build-hero-video.sh`; caption times from the same `hero/times.txt`) |
 | `assets/bench-20260928-98f90d8.png` | `conformance bench-chart` of `progress/bench/20260928T130500Z-dca0882.json` (the run log's file names keep the commit ids from before history was rewritten; its `short_sha` and `subject` were set to commit `98f90d8`) |
 | `assets/progress.mp4` | `progress/video/progress.mp4` (`conformance video`, default options: no agent-eval interlude, since eval results are not published) |
 | `assets/snapshot-adapter.png` | `neoscad snapshot examples/site/hose_adapter.scad --dims --size 1280x1280` |

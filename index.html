@@ -74,9 +74,22 @@
           kernel. <a href="#credits">Credits</a>.
         </p>
 
-        <figure>
-          <img src="/assets/hero-gearbox.png" width="2400" height="1350"
-               alt="A herringbone planetary gearbox: a blue ring gear, four teal planet gears and a red sun gear on a grey plinth with a gyroid core. Text in the image: Rendered in 2.09 s by NeoSCAD, OpenSCAD nightly: 5.85 s.">
+        <figure class="hero-media">
+          <!-- A two-minute seamless loop, rendered by NeoSCAD's --animate
+               (scripts/apple/build-hero-video.sh). The poster is the still.
+               site.js adds a Pause button and, under prefers-reduced-motion,
+               stops the autoplay so the still is what shows. AV1 first (the
+               smaller file) for browsers that can decode it; the codecs
+               string makes the rest, Safari without AV1 hardware among
+               them, skip to the H.264 MP4. -->
+          <video autoplay muted loop playsinline poster="/assets/hero-gearbox.png"
+                 width="1920" height="1080"
+                 aria-label="A herringbone planetary gearbox turning: a red sun gear drives four teal planet gears, spinning on fixed pins, and a blue ring gear on a grey plinth with a gyroid core. Text in the video: Rendered in 2.09 s by NeoSCAD, OpenSCAD nightly: 5.85 s.">
+            <source src="/assets/hero-gearbox.webm" type='video/webm; codecs="av01.0.08M.08"'>
+            <source src="/assets/hero-gearbox.mp4" type='video/mp4; codecs="avc1.640032"'>
+            <img src="/assets/hero-gearbox.png" width="2400" height="1350"
+                 alt="A herringbone planetary gearbox: a blue ring gear, four teal planet gears and a red sun gear on a grey plinth with a gyroid core. Text in the image: Rendered in 2.09 s by NeoSCAD, OpenSCAD nightly: 5.85 s.">
+          </video>
           <figcaption>
             A BOSL2 herringbone planetary gearbox on a gyroid plinth, rendered
             to STL in <strong>2.09 s</strong> by NeoSCAD and <strong>5.85 s</strong>

@@ -311,6 +311,32 @@ main {
   margin: 2.5rem 0 0;
 }
 
+/* The hero video's Pause/Play button (added by site.js) sits in the
+   video's top-right corner, clear of the caption burned into its
+   bottom-left. Fixed light-on-dark colours, not theme tokens: it is drawn
+   over the video's dark backdrop in both themes. */
+.hero-media {
+  position: relative;
+}
+
+.hero-motion {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  font: inherit;
+  font-size: 0.8rem;
+  color: #e8e9f5;
+  background: rgba(10, 11, 20, 0.6);
+  border: 1px solid rgba(232, 233, 245, 0.35);
+  border-radius: var(--ns-radius-small);
+  padding: 0.25rem 0.7rem;
+  cursor: pointer;
+}
+
+.hero-motion:hover {
+  background: rgba(10, 11, 20, 0.85);
+}
+
 figure {
   margin: 0;
 }
