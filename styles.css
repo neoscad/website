@@ -73,6 +73,15 @@ pre {
   overflow-wrap: normal;
 }
 
+@media (max-width: 26rem) {
+  /* Commands on a phone: a little smaller and tighter, so a 35-character
+     line fits a 320 px screen without scrolling. */
+  pre {
+    font-size: 0.8em;
+    padding: 0.85rem 0.9rem;
+  }
+}
+
 h1,
 h2,
 h3 {
@@ -494,6 +503,14 @@ a[aria-disabled="true"] {
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   gap: 2rem;
   align-items: start;
+}
+
+/* A grid item's minimum width is its content's by default, so one long
+   unbreakable line (a <pre> command) would widen the column past the
+   screen. Let items shrink; <pre> then scrolls inside its own box. */
+.grid-2 > *,
+.grid-3 > * {
+  min-width: 0;
 }
 
 @media (max-width: 26rem) {

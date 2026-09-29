@@ -201,7 +201,9 @@
             <li>overhangs steeper than your limit;</li>
             <li>parts that intersect, and a model that doesn't fit your bed.</li>
           </ul>
-<pre><code>neoscad check part.scad --nozzle 0.4 --min-wall 1.2 --bed 256x256x256
+<pre><code>neoscad check part.scad \
+  --nozzle 0.4 --min-wall 1.2 \
+  --bed 256x256x256
 neoscad snapshot part.scad --issues</code></pre>
           <p class="small muted">
             <code>snapshot --issues</code> paints the findings onto the sheet: thin
