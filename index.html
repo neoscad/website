@@ -333,8 +333,9 @@ neoscad snapshot part.scad --issues</code></pre>
             <li>Geometry uses Manifold only; there is no CGAL backend.</li>
             <li><code>text()</code> uses the bundled Liberation fonts; system fonts aren't found yet.</li>
             <li>The macOS app has no Animate panel, and the customizer is partial.</li>
-            <li>It is slower than the nightly on some models: deep unions, the
-              Menger sponge at level 4, and models with many <code>text()</code> nodes.</li>
+            <li>It is slower than the nightly on some models: large nested
+              differences such as the Menger sponge at level 4 (about 1.4&times;),
+              and models with many <code>text()</code> nodes (about 1.2&times;).</li>
             <li>Only macOS on Apple silicon for now.</li>
           </ul>
           <p class="small">

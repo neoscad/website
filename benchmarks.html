@@ -230,8 +230,10 @@
             0.3 s it is also 2.77×; the gearbox on the home page is 2.79×. That is
             why we say "about 2.8× on heavy models".</li>
           <li><strong>NeoSCAD is slower on some models</strong> that this set doesn't
-            include: some deep unions, the Menger sponge at level 4 (level 3, in the
-            table, is only 1.27× faster), and models with many <code>text()</code> nodes.</li>
+            include: large nested differences such as the Menger sponge at level 4,
+            about 1.4× slower (level 3, in the table, is only 1.27× faster), and
+            models with many <code>text()</code> nodes, about 1.2× slower. Deep unions
+            are not among them: <code>csg_deep_union</code> above is 3.7× faster.</li>
           <li><strong>One machine.</strong> An Apple M4 Pro, arm64. Other machines,
             and x86_64 in particular, haven't been measured.</li>
           <li><strong>The references weren't interleaved.</strong> OpenSCAD's times
