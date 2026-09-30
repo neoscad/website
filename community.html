@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Pre-launch: keep this page out of search engines. At launch, delete
+       this tag and allow crawling in robots.txt (see the comment there). -->
+  <meta name="robots" content="noindex">
+  <!-- This is the only page that talks to another origin: community.js
+       fetches summary.json from the neoscad/benchmarks repository on
+       raw.githubusercontent.com, and nothing else may be fetched. Results
+       are submitted by anyone, so the page also refuses inline script and
+       markup-injected resources should a rendering bug ever let some
+       through. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src https://raw.githubusercontent.com; script-src 'self'; style-src 'self'; img-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>NeoSCAD community benchmarks: results from other machines</title>
+  <meta name="description" content="Timings of official NeoSCAD releases on contributors' own machines, most alongside OpenSCAD, per release and platform.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/icon-512.png">
+  <link rel="stylesheet" href="/theme.css">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/site.js"></script>
+  <script src="/community.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/assets/icon-128.png" alt="" width="30" height="30">NeoSCAD</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/download.html">Download</a></li>
+          <li><a href="/benchmarks.html">Benchmarks</a></li>
+          <li><a href="/try/">Try it</a></li>
+          <li><a href="https://github.com/neoscad/neoscad">Source</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="community-title">
+      <div class="wrap">
+        <p class="eyebrow"><a href="/benchmarks.html">Benchmarks</a></p>
+        <h1 id="community-title">Results from other machines</h1>
+        <p class="lede">
+          Official NeoSCAD releases, timed by their users with
+          <code>neoscad bench</code>, most alongside OpenSCAD on the same
+          machine. Each result is checked automatically against its release
+          before it appears here.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="results-title">
+      <div class="wrap">
+        <div class="community-head">
+          <h2 id="results-title">Results</h2>
+          <div class="version-picker" id="version-picker" hidden>
+            <label for="version">Release</label>
+            <select id="version"></select>
+          </div>
+        </div>
+
+        <p id="status" class="notice" role="status" aria-live="polite">Loading results…</p>
+        <noscript>
+          <p class="notice">This page needs JavaScript to show the results. They
+            are all in the
+            <a href="https://github.com/neoscad/benchmarks">neoscad/benchmarks</a>
+            repository, with a summary in <code>summary.json</code>.</p>
+        </noscript>
+
+        <div id="results" hidden>
+          <h3 id="platforms-title">By platform</h3>
+          <div class="grid-3 platform-cards" id="platforms" aria-labelledby="platforms-title"></div>
+
+          <h3 id="runs-title">Every run</h3>
+          <p class="small muted">
+            <strong>Speedup</strong> is OpenSCAD's time over NeoSCAD's: the
+            geometric mean over the models both finished, as
+            <code>neoscad bench</code> prints it (above 1× means NeoSCAD is
+            faster). <strong>Geometric mean</strong> is NeoSCAD's own time over
+            the models it finished. Quick runs (<code>--quick</code>) time a subset of
+            the models once each, so they are only comparable with other quick runs.
+          </p>
+          <div class="table-scroll">
+            <table id="runs">
+              <caption>Users' runs of this release, fastest geometric mean first. Show a run for its per-model times.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">CPU</th>
+                  <th scope="col">OS</th>
+                  <th scope="col">OpenSCAD</th>
+                  <th scope="col" class="n">Models</th>
+                  <th scope="col" class="n">Geometric mean</th>
+                  <th scope="col" class="n">Speedup</th>
+                  <th scope="col"><span class="visually-hidden">Details</span></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <div id="baselines-block" hidden>
+            <h3 id="baselines-title">Release baseline</h3>
+            <p class="small muted">
+              Every release times itself on GitHub's shared runners, without
+              OpenSCAD: the same machine types for every version, so these
+              compare releases with each other rather than showing any
+              machine's best.
+            </p>
+            <div class="table-scroll">
+              <table id="baselines">
+                <caption>The release workflow's own runs, one per target.</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Target</th>
+                    <th scope="col">CPU</th>
+                    <th scope="col" class="n">Models</th>
+                    <th scope="col" class="n">Geometric mean</th>
+                    <th scope="col" class="n">Cold start</th>
+                    <th scope="col"><span class="visually-hidden">Details</span></th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="add-title">
+      <div class="wrap grid-2">
+        <div class="prose">
+          <h2 id="add-title">How to add yours</h2>
+          <p>
+            Install an official release (the
+            <a href="/download.html">downloads</a>, Homebrew, Scoop, the
+            <code>.deb</code> and <code>.rpm</code> packages or Docker) and run:
+          </p>
+          <p class="install"><code>neoscad bench --submit</code></p>
+          <p>
+            It downloads the release's bench kit, times its models (a few minutes),
+            and shows you
+            the exact result before asking to submit it as an issue on
+            <a href="https://github.com/neoscad/benchmarks">neoscad/benchmarks</a>.
+            If OpenSCAD is installed it offers to time that too; please say yes.
+            A result without OpenSCAD is accepted, but the comparison on the
+            same machine is what makes it most useful.
+          </p>
+        </div>
+        <div class="prose">
+          <h2>What's checked, and what's public</h2>
+          <ul>
+            <li>Only <strong>official release binaries</strong>: the executable's
+              SHA-256 must be the one the release publishes for its platform,
+              and the kit must be the release's own.</li>
+            <li>No host name, user name, file path or network address is
+              collected. The result, and your GitHub account as the issue's
+              author, are public.</li>
+            <li>The rules, the checks and every result are in the
+              <a href="https://github.com/neoscad/benchmarks#readme">repository</a>;
+              the data is CC0.</li>
+          </ul>
+          <p class="small muted">This page loads the results' summary from
+            GitHub (<code>raw.githubusercontent.com</code>) when it opens.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="cols">
+        <div>
+          <h2>NeoSCAD</h2>
+          <p>A new implementation of the OpenSCAD language. GPL-2.0-or-later.
+            Not affiliated with the OpenSCAD project.</p>
+          <p>Built by Matt Robinson with Claude, supported by <a href="/#supporters">The Ned Workshop</a>.</p>
+        </div>
+        <div>
+          <h2>Site</h2>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/download.html">Download</a></li>
+            <li><a href="/try/">Try it</a></li>
+            <li><a href="https://github.com/neoscad/neoscad">Source</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Upstream</h2>
+          <ul>
+            <li><a href="https://openscad.org/">OpenSCAD</a></li>
+            <li><a href="https://github.com/elalish/manifold">Manifold</a></li>
+            <li><a href="https://github.com/BelfrySCAD/BOSL2">BOSL2</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="small">No cookies, trackers or analytics. This page fetches one file from GitHub.</p>
+    </div>
+  </footer>
+</body>
+</html>

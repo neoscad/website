@@ -2,9 +2,10 @@
 
 The NeoSCAD website: hand-written static HTML and CSS, served by GitHub
 Pages at the apex domain `neoscad.org`. There is no build step, no
-framework and no package manager. The only script is `site.js`, a mobile
-menu toggle and the hero video's Pause button and reduced-motion stop;
-the pages work without it.
+framework and no package manager. The scripts are `site.js`, a mobile
+menu toggle and the hero video's Pause button and reduced-motion stop,
+which the pages work without; and `community.js`, which
+`community.html` needs to show its results.
 
 ## Structure
 
@@ -13,6 +14,7 @@ the pages work without it.
 | `index.html` | Home: hero, numbers, one benchmark chart, three pillars, the printability check, "built in the open" (progress video and AI-authorship disclosure), coming from OpenSCAD, credits, FAQ |
 | `download.html` | Downloads by platform (links to the v0.1.1 GitHub release), package managers, source, nightly, with a status on every entry |
 | `benchmarks.html` | Method, machine, chart, the full results table, the edit loop and caveats |
+| `community.html`, `community.js` | Community benchmark results: fetches `summary.json` from the `neoscad/benchmarks` repository (raw.githubusercontent.com, the only other origin any page contacts; the page's CSP allows only that) and renders it per release, platform and run |
 | `try/index.html` | Placeholder for the in-browser demo; the whole `try/` directory is replaced by the demo bundle |
 | `404.html` | GitHub Pages' not-found page (root-relative URLs only) |
 | `theme.css` | Design tokens (colours, fonts, sizes) as CSS custom properties, light and dark. **A contract with the `/try` bundle**: rename a token only together with the bundle |
