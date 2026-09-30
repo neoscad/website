@@ -27,6 +27,7 @@ which the pages work without; and `community.js`, which
 | `.nojekyll` | Tells Pages to serve the files as they are, without Jekyll |
 | `robots.txt` | Allows every crawler and agent, and points to `sitemap.xml` |
 | `sitemap.xml` | The site's pages, for crawlers; add a line for a new page |
+| `donate/` | `neoscad.org/donate`, a redirect to the Givebutter campaign (givebutter.com/neoscad): a stable link for the README, release notes and apps |
 
 All internal links are root-relative (`/download.html`, `/try/`), which
 works on Pages at the apex domain and under `python3 -m http.server`, but
