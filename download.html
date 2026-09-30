@@ -41,7 +41,7 @@
     For a new release, change v0.1.0 and the version inside the .deb and
     .rpm names together.
     Badges: <span class="badge badge-exists">Available</span> works now;
-    badge-soon "Pending" waits on notarization or a review; badge-planned
+    badge-soon "Pending" waits on a package manager's review; badge-planned
     "Planned" comes later. Statuses follow docs/packaging.md in the NeoSCAD
     repo.
   -->
@@ -56,14 +56,6 @@
           <a href="https://github.com/neoscad/neoscad/releases/tag/v0.1.0">GitHub release</a>,
           with its sha256; this page lists them by platform, with the package
           managers and what is still to come.
-        </p>
-        <!-- DMG pending: when NeoSCAD-0.1.0-<build>.dmg is attached to the
-             release, delete this notice (and the one in #macos). -->
-        <p class="notice">
-          <strong>The macOS app's DMG isn't attached yet</strong>: Apple's
-          notarization is in progress. Until it is, install the app with
-          <code>brew install --cask neoscad/tap/neoscad-app</code>. The command-line
-          tool is available everywhere now.
         </p>
         <p>Install the command-line tool with Homebrew, on macOS or Linux:</p>
 <pre><code>brew install neoscad/tap/neoscad</code></pre>
@@ -80,7 +72,7 @@
         </p>
         <p class="small muted">
           Entries marked <span class="badge badge-soon">Pending</span> are waiting
-          on notarization or a review; <span class="badge badge-planned">Planned</span>
+          on a package manager's review; <span class="badge badge-planned">Planned</span>
           ones come later.
         </p>
         <ul class="toc" aria-label="On this page">
@@ -104,20 +96,15 @@
           it. The command-line tool comes as one archive per architecture.</p>
         <ul class="dl-list">
           <li>
-            <!-- DMG pending (Apple notarization). When it is attached, set the
-                 href to
-                 https://github.com/neoscad/neoscad/releases/download/v0.1.0/NeoSCAD-0.1.0-<build>.dmg
-                 (<build> is the app's build number, as in the cask), make the
-                 badge "Available" (badge-exists) and drop the second sentence
-                 of the note. -->
-            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/tag/v0.1.0">NeoSCAD for macOS (.dmg)</a>
+            <!-- The DMG's name carries the app's build number (as in the cask);
+                 a new release changes it. -->
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/NeoSCAD-0.1.0-134.dmg">NeoSCAD for macOS (.dmg)</a>
               <span class="dl-note">The app: editor, 3D view, console, check and
-                measure panels, a customizer (partial) and Quick Look previews,
-                with a universal command-line tool beside it. The notarized DMG
-                will be attached to the release page; until then,
-                <code>brew install --cask neoscad/tap/neoscad-app</code> installs
-                the app (for now the 0.1.0-rc.3 build).</span></span>
-            <span class="badge badge-soon">Pending</span>
+                measure panels, a customizer (partial) and Quick Look previews.
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/NeoSCAD-macos-app.sha256">sha256</a>.
+                Or <code>brew install --cask neoscad/tap/neoscad-app</code>. The
+                command-line tool is a separate download below.</span></span>
+            <span class="badge badge-exists">Available</span>
           </li>
           <li>
             <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-aarch64-apple-darwin.tar.xz">Command-line tool, Apple silicon (.tar.xz)</a>

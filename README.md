@@ -179,9 +179,8 @@ The site and its history are public, so every commit:
       `download.html`.
 - [x] `download.html` links the v0.1.0 release's files;
       `github.com/neoscad/neoscad` is public.
-- [ ] When the notarized DMG is attached to v0.1.0, link it on
-      `download.html` (the comments marked "DMG pending" say where; the
-      name is `NeoSCAD-0.1.0-<build>.dmg`) and delete the hero notice.
+- [x] Link the notarized v0.1.0 DMG (`NeoSCAD-0.1.0-134.dmg`) on
+      `download.html`. A new release's DMG name carries its build number.
 - [ ] As they land, mark winget (microsoft/winget-pkgs#443995), nixpkgs
       and the AUR `neoscad-bin` package "Available" on `download.html`;
       `cargo binstall` waits for crates.io.
