@@ -11,7 +11,7 @@ the pages work without it.
 | Path | What |
 |---|---|
 | `index.html` | Home: hero, numbers, one benchmark chart, three pillars, the printability check, "built in the open" (progress video and AI-authorship disclosure), coming from OpenSCAD, credits, FAQ |
-| `download.html` | Downloads by platform (links to the v0.1.0 GitHub release), package managers, source, nightly, with a status on every entry |
+| `download.html` | Downloads by platform (links to the v0.1.1 GitHub release), package managers, source, nightly, with a status on every entry |
 | `benchmarks.html` | Method, machine, chart, the full results table, the edit loop and caveats |
 | `try/index.html` | Placeholder for the in-browser demo; the whole `try/` directory is replaced by the demo bundle |
 | `404.html` | GitHub Pages' not-found page (root-relative URLs only) |
@@ -36,16 +36,16 @@ not from `file://`.
 | `assets/icon-512.png`, `icon-128.png`, `favicon.png` | `apple/Icon/build/concept-c/art-512.png`, `art-128.png`, `art-32.png` |
 | `assets/hero-gearbox.png` | `apple/Icon/build/hero/hero.png` (2026-09-28; times in `hero/times.txt`); also the hero video's poster |
 | `assets/hero-gearbox.mp4`, `hero-share.mp4` | `apple/Icon/build/hero-video/` (`scripts/apple/build-hero-video.sh`; caption times from the same `hero/times.txt`): the page's 120 s loop, and the 4.8 s `og:video` clip for link previews |
-| `assets/bench-20260930-e15eef7.png` | `progress/bench/20260930T054922Z-e15eef7.png`, the chart `conformance bench` wrote with `progress/bench/20260930T054922Z-e15eef7.json` |
+| `assets/bench-20260930-7c4ebc0.png` | `progress/bench/20260930T150757Z-7c4ebc0.png`, the chart `conformance bench` wrote with `progress/bench/20260930T150757Z-7c4ebc0.json` |
 | `assets/progress.mp4` | `progress/video/progress.mp4` (`conformance video`, default options: no agent-eval interlude, since eval results are not published) |
 | `assets/snapshot-adapter.png` | `neoscad snapshot examples/site/hose_adapter.scad --dims --size 1280x1280` |
 | `assets/snapshot-issues.png` | `neoscad snapshot examples/site/phone_stand.scad --issues --size 1600x1600` |
 
 The benchmark table in `benchmarks.html` was filled from
-`progress/bench/20260930T054922Z-e15eef7.json` (NeoSCAD 0.1.0's code; the
-OpenSCAD times in it are cached from 27 and 28 September), and the claims
-follow `docs/audits/final.md`. The quoted means are the file's
-`geomean_speedup`; "about 2.9× on heavy models" is the geometric mean with
+`progress/bench/20260930T150757Z-7c4ebc0.json` (NeoSCAD 0.1.1, the tag's
+commit; the OpenSCAD times in it are cached from 27 and 28 September), and the
+claims follow `docs/audits/final.md`. The quoted means are the file's
+`geomean_speedup`; "about 3.6× on heavy models" is the geometric mean with
 each binary's `cold_start` time subtracted from both sides. When the
 benchmark is re-run, replace the chart, the table and every quoted mean
 (on `index.html` too) together, from one run.
@@ -177,10 +177,13 @@ The site and its history are public, so every commit:
 - [x] Homebrew tap: `neoscad/tap/neoscad` (formula) and
       `neoscad/tap/neoscad-app` (cask), live on the home page and
       `download.html`.
-- [x] `download.html` links the v0.1.0 release's files;
+- [x] `download.html` links the v0.1.1 release's files;
       `github.com/neoscad/neoscad` is public.
-- [x] Link the notarized v0.1.0 DMG (`NeoSCAD-0.1.0-134.dmg`) on
-      `download.html`. A new release's DMG name carries its build number.
+- [ ] When the notarized DMG is attached to v0.1.1, link it on
+      `download.html` (the comment marked "DMG pending v0.1.1" says how; the
+      name is `NeoSCAD-0.1.1-<build>.dmg`, with `NeoSCAD-macos-app.sha256`),
+      and drop the notes that the cask installs 0.1.0 (the DMG entry and the
+      Homebrew entry).
 - [ ] As they land, mark winget (microsoft/winget-pkgs#443995), nixpkgs
       and the AUR `neoscad-bin` package "Available" on `download.html`;
       `cargo binstall` waits for crates.io.
