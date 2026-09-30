@@ -1,10 +1,6 @@
-# Pre-launch: keep the whole site out of search engines. Every page also
-# carries <meta name="robots" content="noindex">.
-#
-# At launch, flip both: replace "Disallow: /" below with "Allow: /", and
-# delete the robots meta tag from index.html, download.html and
-# benchmarks.html (404.html keeps its own noindex; it is not a page to
-# index). A crawler that obeys "Disallow" never fetches a page, so it never
-# sees the meta tag: the two cover each other while both are in place.
+# Everything on neoscad.org may be crawled, indexed and read by search
+# engines, AI crawlers and agents. 404.html carries its own noindex.
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://neoscad.org/sitemap.xml

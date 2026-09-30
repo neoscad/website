@@ -25,7 +25,8 @@ which the pages work without; and `community.js`, which
 | `assets/` | Images and video, copied unchanged from the NeoSCAD repo (below) |
 | `CNAME` | `neoscad.org`, the Pages custom domain |
 | `.nojekyll` | Tells Pages to serve the files as they are, without Jekyll |
-| `robots.txt` | Disallows everything until launch (with a `noindex` meta tag on every page; the file says how to flip both) |
+| `robots.txt` | Allows every crawler and agent, and points to `sitemap.xml` |
+| `sitemap.xml` | The site's pages, for crawlers; add a line for a new page |
 
 All internal links are root-relative (`/download.html`, `/try/`), which
 works on Pages at the apex domain and under `python3 -m http.server`, but
@@ -166,9 +167,8 @@ The site and its history are public, so every commit:
 - [x] Settings → Pages: deploy from `main` / root; custom domain
       `neoscad.org`; Enforce HTTPS. (The Pages API reports all three,
       2026-09-30.)
-- [ ] At launch, allow indexing: `robots.txt` to `Allow: /` and remove
-      the `noindex` meta tag from each page (the comment in `robots.txt`
-      lists them).
+- [x] Allow indexing: `robots.txt` allows every crawler and points to
+      `sitemap.xml`; the pages' `noindex` tags are gone (2026-09-30).
 - [x] The AI-authorship paragraph and the footers name the builder:
       "Built by Matt Robinson with Claude, supported by The Ned Workshop",
       with the workshop's wordmark in the home page's Supporters section
