@@ -450,6 +450,35 @@ figcaption {
   font-weight: 650;
 }
 
+/* ---- Supporters ------------------------------------------------------- */
+
+.supporter-logos {
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+  align-items: center;
+}
+
+.supporter-logos img {
+  display: block;
+  height: 4.5rem;
+  width: auto;
+  max-width: 100%;
+}
+
+.supporter-logos a {
+  display: block;
+  border-radius: var(--ns-radius-small);
+}
+
+.supporter-logos a:focus-visible {
+  outline: 2px solid var(--ns-accent);
+  outline-offset: 4px;
+}
+
 /* ---- Install line and "coming soon" state ------------------------------ */
 
 .install {

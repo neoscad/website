@@ -165,7 +165,10 @@ The site and its history are public, so every commit:
       the `noindex` meta tag from each page (the comment in `robots.txt`
       lists them).
 - [x] The AI-authorship paragraph and the footers name the builder:
-      "Built by The Ned Workshop (Matt Robinson); built with Claude".
+      "Built by Matt Robinson with Claude, supported by The Ned Workshop",
+      with the workshop's wordmark in the home page's Supporters section
+      (`assets/supporters/ned-workshop.svg`, the workshop site's
+      `public/images/brand/wordmark-wide.svg`).
 - [ ] Decide the name question with OpenSCAD's maintainers before
       publicising the site.
 - [ ] Confirm the Homebrew tap name (`neoscad/tap/neoscad` is shown struck
