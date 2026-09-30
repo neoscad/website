@@ -35,13 +35,15 @@
   </header>
 
   <!--
-    Every download link on this page but the Git repository is a
-    placeholder: href="#",
-    aria-disabled="true", tabindex="-1", and struck through by styles.css.
-    When an artifact is published, replace its href, drop those two
-    attributes and change the badge to <span class="badge badge-exists">Available</span>.
-    Statuses follow docs/packaging.md in the NeoSCAD repo:
-    "Now" = available soon, "Later" = planned.
+    Files link to the v0.1.0 GitHub release,
+    https://github.com/neoscad/neoscad/releases/download/v0.1.0/<name>,
+    with the asset names cargo-dist and publish-packages.yml give them.
+    For a new release, change v0.1.0 and the version inside the .deb and
+    .rpm names together.
+    Badges: <span class="badge badge-exists">Available</span> works now;
+    badge-soon "Pending" waits on notarization or a review; badge-planned
+    "Planned" comes later. Statuses follow docs/packaging.md in the NeoSCAD
+    repo.
   -->
 
   <main id="main">
@@ -50,22 +52,36 @@
         <p class="eyebrow">Download</p>
         <h1 id="dl-title">Download NeoSCAD</h1>
         <p class="lede">
-          No installable release is published yet; the source and the
-          in-browser demo are live. This page shows what will ship and in what
-          order, so you know what to expect.
+          NeoSCAD 0.1.0 is out for macOS, Linux and Windows. Every file is on the
+          <a href="https://github.com/neoscad/neoscad/releases/tag/v0.1.0">GitHub release</a>,
+          with its sha256; this page lists them by platform, with the package
+          managers and what is still to come.
         </p>
+        <!-- DMG pending: when NeoSCAD-0.1.0-<build>.dmg is attached to the
+             release, delete this notice (and the one in #macos). -->
         <p class="notice">
-          <strong>No installable download works yet.</strong> Entries marked
-          <span class="badge badge-soon">Available soon</span> are built for the
-          first release; <span class="badge badge-planned">Planned</span> ones come
-          after it. Their links are placeholders.
+          <strong>The macOS app's DMG isn't attached yet</strong>: Apple's
+          notarization is in progress. Until it is, install the app with
+          <code>brew install --cask neoscad/tap/neoscad-app</code>. The command-line
+          tool is available everywhere now.
         </p>
+        <p>Install the command-line tool with Homebrew, on macOS or Linux:</p>
+<pre><code>brew install neoscad/tap/neoscad</code></pre>
+        <p>or with the install script (macOS and Linux; it installs to <code>~/.cargo/bin</code>):</p>
+<pre><code>curl --proto '=https' --tlsv1.2 -LsSf https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-installer.sh | sh</code></pre>
+        <p>or on Windows, in PowerShell:</p>
+<pre><code>powershell -ExecutionPolicy Bypass -c "irm https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-installer.ps1 | iex"</code></pre>
         <p>
           <code>neoscad</code>, the command-line tool, includes the language server
           (<code>neoscad lsp</code>), the MCP server (<code>neoscad mcp</code>) and
-          <code>neoscad serve</code> on every platform. The app is macOS-only for now.
+          <code>neoscad serve</code> on every platform. The app is macOS-only.
           Fonts and MCAD are built in; BOSL2 and your other libraries load from
           <code>OPENSCADPATH</code>, as in OpenSCAD.
+        </p>
+        <p class="small muted">
+          Entries marked <span class="badge badge-soon">Pending</span> are waiting
+          on notarization or a review; <span class="badge badge-planned">Planned</span>
+          ones come later.
         </p>
         <ul class="toc" aria-label="On this page">
           <li><a href="#macos">macOS</a></li>
@@ -82,25 +98,38 @@
 
     <section class="section section-alt platform" id="macos" aria-labelledby="macos-title">
       <div class="wrap">
-        <h2 id="macos-title">macOS <span class="badge badge-soon">Available soon</span></h2>
-        <p class="muted">Apple silicon (arm64), macOS 15 or later. The release will be
-          signed with a Developer ID and notarized, so Gatekeeper accepts it.</p>
+        <h2 id="macos-title">macOS <span class="badge badge-exists">Available</span></h2>
+        <p class="muted">macOS 15 or later. The app is universal (Apple silicon and
+          Intel), signed with a Developer ID and notarized, so Gatekeeper accepts
+          it. The command-line tool comes as one archive per architecture.</p>
         <ul class="dl-list">
           <li>
-            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">NeoSCAD for macOS (.dmg)</a>
+            <!-- DMG pending (Apple notarization). When it is attached, set the
+                 href to
+                 https://github.com/neoscad/neoscad/releases/download/v0.1.0/NeoSCAD-0.1.0-<build>.dmg
+                 (<build> is the app's build number, as in the cask), make the
+                 badge "Available" (badge-exists) and drop the second sentence
+                 of the note. -->
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/tag/v0.1.0">NeoSCAD for macOS (.dmg)</a>
               <span class="dl-note">The app: editor, 3D view, console, check and
-                measure panels, a customizer (partial) and Quick Look previews.</span></span>
-            <span class="badge badge-soon">Available soon</span>
+                measure panels, a customizer (partial) and Quick Look previews,
+                with a universal command-line tool beside it. The notarized DMG
+                will be attached to the release page; until then,
+                <code>brew install --cask neoscad/tap/neoscad-app</code> installs
+                the app (for now the 0.1.0-rc.3 build).</span></span>
+            <span class="badge badge-soon">Pending</span>
           </li>
           <li>
-            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">Command-line tool, arm64 (.tar.gz)</a>
-              <span class="dl-note">A single <code>neoscad</code> binary, with sha256.</span></span>
-            <span class="badge badge-soon">Available soon</span>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-aarch64-apple-darwin.tar.xz">Command-line tool, Apple silicon (.tar.xz)</a>
+              <span class="dl-note">A single <code>neoscad</code> binary.
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-aarch64-apple-darwin.tar.xz.sha256">sha256</a></span></span>
+            <span class="badge badge-exists">Available</span>
           </li>
           <li>
-            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">Command-line tool, Intel x86_64 or universal</a>
-              <span class="dl-note">Needs a CI build; the app stays arm64 at first.</span></span>
-            <span class="badge badge-planned">Planned</span>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-x86_64-apple-darwin.tar.xz">Command-line tool, Intel x86_64 (.tar.xz)</a>
+              <span class="dl-note">The same, for Intel Macs.
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-x86_64-apple-darwin.tar.xz.sha256">sha256</a></span></span>
+            <span class="badge badge-exists">Available</span>
           </li>
         </ul>
       </div>
@@ -108,24 +137,40 @@
 
     <section class="section platform" id="linux" aria-labelledby="linux-title">
       <div class="wrap">
-        <h2 id="linux-title">Linux <span class="badge badge-soon">Available soon</span></h2>
+        <h2 id="linux-title">Linux <span class="badge badge-exists">Available</span></h2>
         <p class="muted">Command-line tool only. glibc 2.28 or later. PNG export and
           <code>snapshot</code> need a Vulkan driver; Mesa's works without a GPU.</p>
         <ul class="dl-list">
           <li>
-            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">x86_64 (.tar.gz)</a>
-              <span class="dl-note">A single binary, with sha256 and an install script.</span></span>
-            <span class="badge badge-soon">Available soon</span>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-x86_64-unknown-linux-gnu.tar.xz">x86_64 (.tar.xz)</a>
+              <span class="dl-note">A single binary; the install script above fetches it.
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-x86_64-unknown-linux-gnu.tar.xz.sha256">sha256</a></span></span>
+            <span class="badge badge-exists">Available</span>
           </li>
           <li>
-            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">aarch64 (.tar.gz)</a>
-              <span class="dl-note">Built natively on ARM.</span></span>
-            <span class="badge badge-soon">Available soon</span>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-aarch64-unknown-linux-gnu.tar.xz">aarch64 (.tar.xz)</a>
+              <span class="dl-note">Built natively on ARM.
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-aarch64-unknown-linux-gnu.tar.xz.sha256">sha256</a></span></span>
+            <span class="badge badge-exists">Available</span>
           </li>
           <li>
-            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">Static musl build</a>
-              <span class="dl-note">Portable, but without PNG export.</span></span>
-            <span class="badge badge-planned">Planned</span>
+            <span class="dl-main">Debian and Ubuntu (.deb):
+              <a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad_0.1.0-1_amd64.deb">amd64</a>
+              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad_0.1.0-1_amd64.deb.sha256">sha256</a>),
+              <a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad_0.1.0-1_arm64.deb">arm64</a>
+              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad_0.1.0-1_arm64.deb.sha256">sha256</a>)
+              <span class="dl-note">With the man page and bash, zsh and fish completions.
+                <code>sudo apt install ./neoscad_0.1.0-1_amd64.deb</code></span></span>
+            <span class="badge badge-exists">Available</span>
+          </li>
+          <li>
+            <span class="dl-main">Fedora and RHEL (.rpm):
+              <a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-0.1.0-1.x86_64.rpm">x86_64</a>
+              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-0.1.0-1.x86_64.rpm.sha256">sha256</a>),
+              <a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-0.1.0-1.aarch64.rpm">aarch64</a>
+              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-0.1.0-1.aarch64.rpm.sha256">sha256</a>)
+              <span class="dl-note">The same contents. A signed apt/rpm repository comes later.</span></span>
+            <span class="badge badge-exists">Available</span>
           </li>
         </ul>
       </div>
@@ -133,9 +178,9 @@
 
     <section class="section section-alt platform" id="windows" aria-labelledby="windows-title">
       <div class="wrap">
-        <h2 id="windows-title">Windows <span class="badge badge-soon">Available soon</span></h2>
-        <p class="muted">Command-line tool only, as a portable zip or an MSI.
-          <code>neoscad serve</code> listens on a named pipe.</p>
+        <h2 id="windows-title">Windows <span class="badge badge-exists">Available</span></h2>
+        <p class="muted">Command-line tool only, as a portable zip or an MSI, for
+          x86_64 and ARM64. <code>neoscad serve</code> listens on a named pipe.</p>
         <p class="small">
           The Windows builds are <strong>not code-signed</strong>. Opening a
           downloaded <code>.exe</code> or <code>.msi</code> shows SmartScreen's
@@ -146,19 +191,25 @@
         </p>
         <ul class="dl-list">
           <li>
-            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">x86_64 (.zip)</a>
-              <span class="dl-note">With sha256 and a PowerShell install script.</span></span>
-            <span class="badge badge-soon">Available soon</span>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-x86_64-pc-windows-msvc.zip">x86_64 (.zip)</a>
+              <span class="dl-note">Portable; the PowerShell install script above fetches it.
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-x86_64-pc-windows-msvc.zip.sha256">sha256</a></span></span>
+            <span class="badge badge-exists">Available</span>
           </li>
           <li>
-            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">ARM64 (.zip)</a>
-              <span class="dl-note">Built natively on Windows on ARM.</span></span>
-            <span class="badge badge-soon">Available soon</span>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-aarch64-pc-windows-msvc.zip">ARM64 (.zip)</a>
+              <span class="dl-note">Built natively on Windows on ARM.
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-aarch64-pc-windows-msvc.zip.sha256">sha256</a></span></span>
+            <span class="badge badge-exists">Available</span>
           </li>
           <li>
-            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">Installer (.msi)</a>
+            <span class="dl-main">Installer (.msi):
+              <a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-x86_64-pc-windows-msvc.msi">x86_64</a>
+              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-x86_64-pc-windows-msvc.msi.sha256">sha256</a>),
+              <a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-aarch64-pc-windows-msvc.msi">ARM64</a>
+              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-cli-aarch64-pc-windows-msvc.msi.sha256">sha256</a>)
               <span class="dl-note">Adds <code>neoscad</code> to your PATH. Unsigned (see above).</span></span>
-            <span class="badge badge-soon">Available soon</span>
+            <span class="badge badge-exists">Available</span>
           </li>
         </ul>
       </div>
@@ -167,45 +218,59 @@
     <section class="section platform" id="packages" aria-labelledby="packages-title">
       <div class="wrap">
         <h2 id="packages-title">Package managers</h2>
-        <p class="muted">Commands are shown struck through until they work. Names
-          aren't final.</p>
+        <p class="muted">Commands that don't work yet are struck through.</p>
         <ul class="dl-list">
           <li>
-            <span class="dl-main"><strong>Homebrew tap</strong> (macOS and Linux)
-              <span class="dl-note"><code class="cmd-unavailable">brew install neoscad/tap/neoscad</code>
-                for the command-line tool; a cask for the app follows notarization.</span></span>
-            <span class="badge badge-soon">Available soon</span>
+            <span class="dl-main"><strong>Homebrew</strong> (macOS and Linux)
+              <span class="dl-note"><code>brew install neoscad/tap/neoscad</code>
+                for the command-line tool;
+                <code>brew install --cask neoscad/tap/neoscad-app</code> for the macOS app.</span></span>
+            <span class="badge badge-exists">Available</span>
+          </li>
+          <li>
+            <span class="dl-main"><strong>Scoop</strong> (Windows)
+              <span class="dl-note"><code>scoop bucket add neoscad https://github.com/neoscad/scoop-bucket</code>,
+                then <code>scoop install neoscad</code>.</span></span>
+            <span class="badge badge-exists">Available</span>
+          </li>
+          <li>
+            <span class="dl-main"><strong>Docker</strong> (<code>ghcr.io</code>)
+              <span class="dl-note"><code>docker pull ghcr.io/neoscad/neoscad</code>
+                (tags <code>0.1.0</code> and <code>latest</code>, amd64 and arm64): Debian
+                slim with Mesa's software renderers, so PNG export works headless.
+                Run it in your model's directory:
+                <code>docker run --rm -v "$PWD:/work" ghcr.io/neoscad/neoscad model.scad -o model.png</code></span></span>
+            <span class="badge badge-exists">Available</span>
+          </li>
+          <li>
+            <span class="dl-main"><strong>Nix</strong> (flake)
+              <span class="dl-note"><code>nix run github:neoscad/neoscad -- model.scad -o model.stl</code></span></span>
+            <span class="badge badge-exists">Available</span>
+          </li>
+          <li>
+            <span class="dl-main"><strong>winget</strong>
+              <span class="dl-note"><code class="cmd-unavailable">winget install NeoSCAD.NeoSCAD</code>
+                once the <a href="https://github.com/microsoft/winget-pkgs/pull/443995">manifest</a>
+                is merged; it is in review.</span></span>
+            <span class="badge badge-soon">Pending</span>
+          </li>
+          <li>
+            <span class="dl-main"><strong>nixpkgs</strong>
+              <span class="dl-note">A submission is prepared; use the flake above meanwhile.</span></span>
+            <span class="badge badge-soon">Pending</span>
+          </li>
+          <li>
+            <span class="dl-main"><strong>AUR</strong> (<code>neoscad-bin</code>)
+              <span class="dl-note">Waiting for AUR registration, which is closed
+                for now. Meanwhile the
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-package-manifests.tar.gz">release's
+                PKGBUILD</a> builds with <code>makepkg -si</code>.</span></span>
+            <span class="badge badge-soon">Pending</span>
           </li>
           <li>
             <span class="dl-main"><strong>cargo binstall</strong>
               <span class="dl-note"><code class="cmd-unavailable">cargo binstall neoscad</code>
-                fetches the prebuilt binary from the release.</span></span>
-            <span class="badge badge-soon">Available soon</span>
-          </li>
-          <li>
-            <span class="dl-main"><strong>.deb and .rpm</strong> packages
-              <span class="dl-note">Attached to each release, for x86_64 and aarch64.
-                A signed apt/rpm repository comes later.</span></span>
-            <span class="badge badge-soon">Available soon</span>
-          </li>
-          <li>
-            <span class="dl-main"><strong>AUR</strong> (<code>neoscad-bin</code>)
-              <span class="dl-note">After the first public release.</span></span>
-            <span class="badge badge-planned">Planned</span>
-          </li>
-          <li>
-            <span class="dl-main"><strong>Nix</strong>
-              <span class="dl-note">A flake first, then nixpkgs.</span></span>
-            <span class="badge badge-planned">Planned</span>
-          </li>
-          <li>
-            <span class="dl-main"><strong>winget and Scoop</strong>
-              <span class="dl-note">Manifests for the portable zip; winget wants signed binaries.</span></span>
-            <span class="badge badge-planned">Planned</span>
-          </li>
-          <li>
-            <span class="dl-main"><strong>Docker</strong> (<code>ghcr.io</code>)
-              <span class="dl-note">A small Debian image with Mesa's Vulkan driver, so PNG export works headless.</span></span>
+                needs the crate on crates.io first (below).</span></span>
             <span class="badge badge-planned">Planned</span>
           </li>
           <li>
@@ -223,14 +288,20 @@
         <p class="muted">GPL-2.0-or-later. Builds with Rust 1.98.</p>
         <ul class="dl-list">
           <li>
-            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">Source tarball</a>
-              <span class="dl-note">Each release's source, with sha256.</span></span>
-            <span class="badge badge-soon">Available soon</span>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/source.tar.gz">Source tarball</a>
+              <span class="dl-note">The release's source.
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/source.tar.gz.sha256">sha256</a></span></span>
+            <span class="badge badge-exists">Available</span>
           </li>
           <li>
-            <span class="dl-main"><a href="#" aria-disabled="true" tabindex="-1">Vendored source tarball</a>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/neoscad-0.1.0-vendor.tar.gz">Vendored source tarball</a>
               <span class="dl-note">Includes every Rust dependency (<code>cargo vendor</code>), for offline builds.</span></span>
-            <span class="badge badge-soon">Available soon</span>
+            <span class="badge badge-exists">Available</span>
+          </li>
+          <li>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.1.0/sha256.sum">sha256.sum</a>
+              <span class="dl-note">The checksums of the release's archives, installers and source tarball, in one file.</span></span>
+            <span class="badge badge-exists">Available</span>
           </li>
           <li>
             <span class="dl-main"><a href="https://github.com/neoscad/neoscad">Git repository</a>
@@ -245,8 +316,8 @@
       <div class="wrap">
         <h2 id="nightly-title">Nightly builds <span class="badge badge-planned">Planned</span></h2>
         <p>
-          Builds of the latest commit, for testing. They aren't scheduled yet: the
-          first step is tagged releases from CI.
+          Builds of the latest commit, for testing. They aren't scheduled yet;
+          releases are tagged and built by CI.
         </p>
       </div>
     </section>
@@ -272,10 +343,10 @@
           Docker Hub and a WebAssembly build. If you need the OpenSCAD GUI on
           Linux or Windows, use OpenSCAD.
         </p>
-        <p>A few differences in NeoSCAD's plan:</p>
+        <p>A few differences in what NeoSCAD ships:</p>
         <ul>
-          <li><strong>Windows on ARM:</strong> NeoSCAD plans a native ARM64 build.
-            OpenSCAD's nightly for Windows is x86_64 only.</li>
+          <li><strong>Windows on ARM:</strong> a native ARM64 build, as a zip and
+            an MSI. OpenSCAD's nightly for Windows is x86_64 only.</li>
           <li><strong>Linux on ARM:</strong> a native aarch64 build with each
             release. OpenSCAD's aarch64 AppImage nightly hasn't been updated since 2023.09.</li>
           <li><strong>One binary:</strong> fonts and MCAD are compiled in, so the

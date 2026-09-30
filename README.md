@@ -11,7 +11,7 @@ the pages work without it.
 | Path | What |
 |---|---|
 | `index.html` | Home: hero, numbers, one benchmark chart, three pillars, the printability check, "built in the open" (progress video and AI-authorship disclosure), coming from OpenSCAD, credits, FAQ |
-| `download.html` | Downloads by platform, package managers, source, nightly, with a status on every entry (all placeholders for now) |
+| `download.html` | Downloads by platform (links to the v0.1.0 GitHub release), package managers, source, nightly, with a status on every entry |
 | `benchmarks.html` | Method, machine, chart, the full results table, the edit loop and caveats |
 | `try/index.html` | Placeholder for the in-browser demo; the whole `try/` directory is replaced by the demo bundle |
 | `404.html` | GitHub Pages' not-found page (root-relative URLs only) |
@@ -36,16 +36,19 @@ not from `file://`.
 | `assets/icon-512.png`, `icon-128.png`, `favicon.png` | `apple/Icon/build/concept-c/art-512.png`, `art-128.png`, `art-32.png` |
 | `assets/hero-gearbox.png` | `apple/Icon/build/hero/hero.png` (2026-09-28; times in `hero/times.txt`); also the hero video's poster |
 | `assets/hero-gearbox.mp4`, `hero-share.mp4` | `apple/Icon/build/hero-video/` (`scripts/apple/build-hero-video.sh`; caption times from the same `hero/times.txt`): the page's 120 s loop, and the 4.8 s `og:video` clip for link previews |
-| `assets/bench-20260928-98f90d8.png` | `conformance bench-chart` of `progress/bench/20260928T130500Z-dca0882.json` (the run log's file names keep the commit ids from before history was rewritten; its `short_sha` and `subject` were set to commit `98f90d8`) |
+| `assets/bench-20260930-e15eef7.png` | `progress/bench/20260930T054922Z-e15eef7.png`, the chart `conformance bench` wrote with `progress/bench/20260930T054922Z-e15eef7.json` |
 | `assets/progress.mp4` | `progress/video/progress.mp4` (`conformance video`, default options: no agent-eval interlude, since eval results are not published) |
 | `assets/snapshot-adapter.png` | `neoscad snapshot examples/site/hose_adapter.scad --dims --size 1280x1280` |
 | `assets/snapshot-issues.png` | `neoscad snapshot examples/site/phone_stand.scad --issues --size 1600x1600` |
 
 The benchmark table in `benchmarks.html` was filled from
-`progress/bench/20260928T130500Z-dca0882.json` (commit `98f90d8` after the
-history rewrite), and the claims follow
-`docs/audits/final.md`. When the benchmark is re-run, replace the chart,
-the table and every quoted mean together, from one run.
+`progress/bench/20260930T054922Z-e15eef7.json` (NeoSCAD 0.1.0's code; the
+OpenSCAD times in it are cached from 27 and 28 September), and the claims
+follow `docs/audits/final.md`. The quoted means are the file's
+`geomean_speedup`; "about 2.9× on heavy models" is the geometric mean with
+each binary's `cold_start` time subtracted from both sides. When the
+benchmark is re-run, replace the chart, the table and every quoted mean
+(on `index.html` too) together, from one run.
 
 ## Preview locally
 
@@ -65,7 +68,7 @@ Every URL in the bundle is relative, so it works under `/try/`. The bundle
 ships its own thin top bar, which reads `/site.json` for the nav and links
 `/theme.css` for colours.
 
-To update it (once the bundle exists):
+To update it:
 
     # in the NeoSCAD repo
     scripts/web/build.sh
@@ -154,13 +157,13 @@ The site and its history are public, so every commit:
 
 ## Owner actions
 
-- [ ] Decide the GitHub account or organisation (`packaging.md` suggests
-      reserving the `neoscad` org) and create the repository.
+- [x] The `neoscad` organisation; this repository is `neoscad/website`.
 - [ ] Verify `neoscad.org` for that account (TXT record).
-- [ ] Add the A, AAAA and `www` CNAME records at Namecheap; remove the
-      parking records.
-- [ ] Settings → Pages: deploy from `main` / root; custom domain
-      `neoscad.org`; Enforce HTTPS once available.
+- [x] Add the A, AAAA and `www` CNAME records at Namecheap; remove the
+      parking records. (`dig` shows all of them, 2026-09-30.)
+- [x] Settings → Pages: deploy from `main` / root; custom domain
+      `neoscad.org`; Enforce HTTPS. (The Pages API reports all three,
+      2026-09-30.)
 - [ ] At launch, allow indexing: `robots.txt` to `Allow: /` and remove
       the `noindex` meta tag from each page (the comment in `robots.txt`
       lists them).
@@ -171,12 +174,18 @@ The site and its history are public, so every commit:
       `public/images/brand/wordmark-wide.svg`).
 - [ ] Decide the name question with OpenSCAD's maintainers before
       publicising the site.
-- [ ] Confirm the Homebrew tap name (`neoscad/tap/neoscad` is shown struck
-      through as "coming soon") and the `cargo binstall` crate name.
-- [ ] Replace the placeholder links on `download.html` as artifacts are
-      published. The "Source" links point at
-      `https://github.com/neoscad/neoscad`; make sure it is public first.
+- [x] Homebrew tap: `neoscad/tap/neoscad` (formula) and
+      `neoscad/tap/neoscad-app` (cask), live on the home page and
+      `download.html`.
+- [x] `download.html` links the v0.1.0 release's files;
+      `github.com/neoscad/neoscad` is public.
+- [ ] When the notarized DMG is attached to v0.1.0, link it on
+      `download.html` (the comments marked "DMG pending" say where; the
+      name is `NeoSCAD-0.1.0-<build>.dmg`) and delete the hero notice.
+- [ ] As they land, mark winget (microsoft/winget-pkgs#443995), nixpkgs
+      and the AUR `neoscad-bin` package "Available" on `download.html`;
+      `cargo binstall` waits for crates.io.
 - [x] Replace the printability placeholder with a `snapshot --issues`
       sheet, and regenerate `assets/snapshot-adapter.png` from a tracked model.
-- [ ] Drop in the `/try` bundle when it exists.
+- [x] Drop in the `/try` bundle (`try/BUNDLE.txt` pins it).
 - [ ] Check the pages yourself in light and dark mode, and at phone width.

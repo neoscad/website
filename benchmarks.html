@@ -36,12 +36,13 @@
 
   <!--
     Every number on this page comes from one run:
-    progress/bench/20260928T130500Z-dca0882.json in the NeoSCAD repo's local
-    run log (named for the commit's id before the history was rewritten;
-    it is 98f90d8 now) (clean
-    tree, not a quick run), and the qualifications from docs/audits/final.md.
-    When the benchmark is re-run, replace the table, the chart and the
-    geometric means together, from one file.
+    progress/bench/20260930T054922Z-e15eef7.json in the NeoSCAD repo's local
+    run log (clean tree, not a quick run; e15eef7 differs from the v0.1.0
+    tag only in release-workflow and packaging files), except the slow
+    cases in the caveats, which were timed by hand the same day. The
+    qualifications follow docs/audits/final.md. When the benchmark is
+    re-run, replace the table, the chart and the geometric means together,
+    from one file.
   -->
 
   <main id="main">
@@ -50,8 +51,8 @@
         <p class="eyebrow">Benchmarks</p>
         <h1 id="bench-title">How fast, measured how</h1>
         <p class="lede">
-          NeoSCAD is about 2.8× faster than the OpenSCAD nightly (Manifold) on
-          heavy models; 3.7× geometric mean over 14 models including startup.
+          NeoSCAD is about 2.9× faster than the OpenSCAD nightly (Manifold) on
+          heavy models; 3.9× geometric mean over 14 models including startup.
           Here is the run behind those numbers, and what they leave out.
         </p>
       </div>
@@ -75,8 +76,9 @@
               with the nightly.</li>
             <li><strong>Cached references:</strong> NeoSCAD is measured on every run.
               OpenSCAD's times come from a cache measured earlier on the same machine
-              with the same binary (pinned by SHA-256), model, method and environment,
-              so they aren't interleaved with NeoSCAD's runs.</li>
+              (27 September 2026; the BOSL2 test-suite time, 28 September) with the
+              same binary (pinned by SHA-256), model, method and environment, so they
+              aren't interleaved with NeoSCAD's runs.</li>
             <li><strong>Timeouts:</strong> excluded from the geometric means. The
               nightly with CGAL and OpenSCAD 2021.01 time out on two models, so their
               means cover 12 models, which understates NeoSCAD's lead over them.</li>
@@ -92,10 +94,10 @@
               <tbody>
                 <tr><th scope="row">Machine</th><td>Mac16,7, Apple M4 Pro, 14 cores (10 performance + 4 efficiency), 48 GB, on AC power</td></tr>
                 <tr><th scope="row">OS</th><td>macOS 27.0 (26A428)</td></tr>
-                <tr><th scope="row">NeoSCAD</th><td>0.1.0 at <code>98f90d8</code>, <code>cargo build --release</code>, arm64</td></tr>
+                <tr><th scope="row">NeoSCAD</th><td>0.1.0 (commit <code>e15eef7</code>), <code>cargo build --release</code>, arm64</td></tr>
                 <tr><th scope="row">OpenSCAD nightly</th><td>2026.09.23, universal binary, run with <code>--backend=manifold</code> and <code>--backend=cgal</code></td></tr>
                 <tr><th scope="row">OpenSCAD 2021.01</th><td>x86_64 only, so it runs under Rosetta 2 on this machine</td></tr>
-                <tr><th scope="row">Measured</th><td>28 September 2026, 13:05 UTC</td></tr>
+                <tr><th scope="row">Measured</th><td>NeoSCAD: 30 September 2026, 05:49 UTC. OpenSCAD: cached from 27 and 28 September 2026</td></tr>
               </tbody>
             </table>
           </div>
@@ -107,9 +109,9 @@
       <div class="wrap">
         <h2 id="chart-title">The chart</h2>
         <figure>
-          <a href="/assets/bench-20260928-98f90d8.png">
-            <img src="/assets/bench-20260928-98f90d8.png" width="1920" height="1080" loading="lazy"
-                 alt="Bar chart of the table below on a log time scale: for each model, bars for NeoSCAD, the nightly with Manifold, the nightly with CGAL, and OpenSCAD 2021.01, with NeoSCAD's time and its speedup over the nightly with Manifold on the right. Geometric means at the bottom: nightly Manifold 3.69× over 14 models, nightly CGAL 27.73× over 12, OpenSCAD 2021.01 61.12× over 12.">
+          <a href="/assets/bench-20260930-e15eef7.png">
+            <img src="/assets/bench-20260930-e15eef7.png" width="1920" height="1080" loading="lazy"
+                 alt="Bar chart of the table below on a log time scale: for each model, bars for NeoSCAD, the nightly with Manifold, the nightly with CGAL, and OpenSCAD 2021.01, with NeoSCAD's time and its speedup over the nightly with Manifold on the right. Geometric means at the bottom: nightly Manifold 3.86× over 14 models, nightly CGAL 28.71× over 12, OpenSCAD 2021.01 63.27× over 12.">
           </a>
           <figcaption>
             Log time scale. Hatched bars are timeouts; a red mark means the mesh
@@ -130,9 +132,9 @@
             <caption>
               † OpenSCAD 2021.01's mesh differs from NeoSCAD's and the nightly's
               (extrude_twist: volume and area; text_30lines: bounding box).
-              Geometric means over the 14 models: 3.695× against the nightly with
-              Manifold (14 models), 27.731× against the nightly with CGAL (12 models;
-              bosl_fractal_tree and csg_spheres time out) and 61.116× against
+              Geometric means over the 14 models: 3.857× against the nightly with
+              Manifold (14 models), 28.71× against the nightly with CGAL (12 models;
+              bosl_fractal_tree and csg_spheres time out) and 63.273× against
               OpenSCAD 2021.01 (12 models, the same two excluded).
             </caption>
             <thead>
@@ -148,20 +150,20 @@
               </tr>
             </thead>
             <tbody>
-            <tr><td class="model"><code>bosl_fractal_tree</code><br><span class="muted small">BOSL2 examples/fractal_tree.scad (recursive attach, depth 10)</span></td><td class="n">3.411</td><td class="n">11.73</td><td class="n">3.44×</td><td class="n">timeout</td><td class="n">–</td><td class="n">timeout</td><td class="n">–</td></tr>
-            <tr><td class="model"><code>bosl_gears__003</code><br><span class="muted small">BOSL2 gears.scad doc example 3: helical spur_gear</span></td><td class="n">0.047</td><td class="n">0.214</td><td class="n">4.52×</td><td class="n">0.225</td><td class="n">4.76×</td><td class="n">0.411</td><td class="n">8.69×</td></tr>
-            <tr><td class="model"><code>bosl_isosurface__006</code><br><span class="muted small">BOSL2 isosurface.scad doc example 6: metaballs sphere with connectors</span></td><td class="n">0.624</td><td class="n">2.471</td><td class="n">3.96×</td><td class="n">2.526</td><td class="n">4.05×</td><td class="n">5.501</td><td class="n">8.82×</td></tr>
-            <tr><td class="model"><code>bosl_screws__001</code><br><span class="muted small">BOSL2 screws.scad doc example 1: selected UTS screws</span></td><td class="n">0.164</td><td class="n">0.668</td><td class="n">4.08×</td><td class="n">31.45</td><td class="n">192.13×</td><td class="n">70.91</td><td class="n">433.14×</td></tr>
-            <tr><td class="model"><code>bosl_spring_handle</code><br><span class="muted small">BOSL2 examples/spring_handle.scad</span></td><td class="n">0.202</td><td class="n">0.729</td><td class="n">3.60×</td><td class="n">13.26</td><td class="n">65.50×</td><td class="n">41.90</td><td class="n">207.02×</td></tr>
-            <tr><td class="model"><code>csg_deep_union</code><br><span class="muted small">800 rotated/translated cubes, implicit top-level union</span></td><td class="n">0.036</td><td class="n">0.134</td><td class="n">3.68×</td><td class="n">7.617</td><td class="n">209.27×</td><td class="n">20.33</td><td class="n">558.49×</td></tr>
-            <tr><td class="model"><code>csg_spheres</code><br><span class="muted small">cube(60) minus 5x5x5 grid of spheres ($fn=48)</span></td><td class="n">0.495</td><td class="n">1.130</td><td class="n">2.28×</td><td class="n">timeout</td><td class="n">–</td><td class="n">timeout</td><td class="n">–</td></tr>
-            <tr><td class="model"><code>ex_csg_basic</code><br><span class="muted small">OpenSCAD examples/Basics/CSG.scad</span></td><td class="n">0.007</td><td class="n">0.062</td><td class="n">8.79×</td><td class="n">1.127</td><td class="n">158.70×</td><td class="n">3.050</td><td class="n">429.59×</td></tr>
-            <tr><td class="model"><code>ex_menger</code><br><span class="muted small">OpenSCAD examples/Old/example024.scad (Menger sponge, n=3)</span></td><td class="n">0.126</td><td class="n">0.160</td><td class="n">1.27×</td><td class="n">15.19</td><td class="n">120.87×</td><td class="n">45.56</td><td class="n">362.49×</td></tr>
-            <tr><td class="model"><code>extrude_twist</code> <span title="mesh differs" aria-hidden="true">†</span><br><span class="muted small">linear_extrude(height=50, twist=720, slices=400) of square minus circle</span></td><td class="n">0.044</td><td class="n">0.218</td><td class="n">4.99×</td><td class="n">0.220</td><td class="n">5.03×</td><td class="n">0.327</td><td class="n">7.48×</td></tr>
-            <tr><td class="model"><code>import_stl</code><br><span class="muted small">import() of a 21 MB ASCII STL (sphere $fn=256) minus two cubes</span></td><td class="n">0.112</td><td class="n">0.544</td><td class="n">4.87×</td><td class="n">10.17</td><td class="n">91.09×</td><td class="n">37.55</td><td class="n">336.18×</td></tr>
-            <tr><td class="model"><code>mink_convex</code><br><span class="muted small">minkowski(cube([30,20,5],center=true), sphere(3,$fn=48))</span></td><td class="n">0.022</td><td class="n">0.074</td><td class="n">3.39×</td><td class="n">0.148</td><td class="n">6.78×</td><td class="n">0.102</td><td class="n">4.68×</td></tr>
-            <tr><td class="model"><code>mink_nonconvex</code><br><span class="muted small">minkowski(L of two cubes, sphere(2,$fn=24))</span></td><td class="n">0.010</td><td class="n">0.064</td><td class="n">6.65×</td><td class="n">0.361</td><td class="n">37.57×</td><td class="n">0.901</td><td class="n">93.89×</td></tr>
-            <tr><td class="model"><code>text_30lines</code> <span title="mesh differs" aria-hidden="true">†</span><br><span class="muted small">linear_extrude(2) of 30 text() lines of 58 characters (Liberation Sans)</span></td><td class="n">0.325</td><td class="n">0.618</td><td class="n">1.90×</td><td class="n">0.592</td><td class="n">1.82×</td><td class="n">1.338</td><td class="n">4.11×</td></tr>
+            <tr><td class="model"><code>bosl_fractal_tree</code><br><span class="muted small">BOSL2 examples/fractal_tree.scad (recursive attach, depth 10)</span></td><td class="n">3.455</td><td class="n">11.73</td><td class="n">3.40×</td><td class="n">timeout</td><td class="n">–</td><td class="n">timeout</td><td class="n">–</td></tr>
+            <tr><td class="model"><code>bosl_gears__003</code><br><span class="muted small">BOSL2 gears.scad doc example 3: helical spur_gear</span></td><td class="n">0.049</td><td class="n">0.214</td><td class="n">4.37×</td><td class="n">0.225</td><td class="n">4.60×</td><td class="n">0.411</td><td class="n">8.41×</td></tr>
+            <tr><td class="model"><code>bosl_isosurface__006</code><br><span class="muted small">BOSL2 isosurface.scad doc example 6: metaballs sphere with connectors</span></td><td class="n">0.629</td><td class="n">2.471</td><td class="n">3.93×</td><td class="n">2.526</td><td class="n">4.02×</td><td class="n">5.501</td><td class="n">8.75×</td></tr>
+            <tr><td class="model"><code>bosl_screws__001</code><br><span class="muted small">BOSL2 screws.scad doc example 1: selected UTS screws</span></td><td class="n">0.169</td><td class="n">0.668</td><td class="n">3.96×</td><td class="n">31.45</td><td class="n">186.32×</td><td class="n">70.91</td><td class="n">420.05×</td></tr>
+            <tr><td class="model"><code>bosl_spring_handle</code><br><span class="muted small">BOSL2 examples/spring_handle.scad</span></td><td class="n">0.205</td><td class="n">0.729</td><td class="n">3.55×</td><td class="n">13.26</td><td class="n">64.57×</td><td class="n">41.90</td><td class="n">204.10×</td></tr>
+            <tr><td class="model"><code>csg_deep_union</code><br><span class="muted small">800 rotated/translated cubes, implicit top-level union</span></td><td class="n">0.041</td><td class="n">0.134</td><td class="n">3.26×</td><td class="n">7.617</td><td class="n">185.34×</td><td class="n">20.33</td><td class="n">494.62×</td></tr>
+            <tr><td class="model"><code>csg_spheres</code><br><span class="muted small">cube(60) minus 5x5x5 grid of spheres ($fn=48)</span></td><td class="n">0.406</td><td class="n">1.130</td><td class="n">2.78×</td><td class="n">timeout</td><td class="n">–</td><td class="n">timeout</td><td class="n">–</td></tr>
+            <tr><td class="model"><code>ex_csg_basic</code><br><span class="muted small">OpenSCAD examples/Basics/CSG.scad</span></td><td class="n">0.007</td><td class="n">0.062</td><td class="n">8.91×</td><td class="n">1.127</td><td class="n">160.97×</td><td class="n">3.050</td><td class="n">435.73×</td></tr>
+            <tr><td class="model"><code>ex_menger</code><br><span class="muted small">OpenSCAD examples/Old/example024.scad (Menger sponge, n=3)</span></td><td class="n">0.103</td><td class="n">0.160</td><td class="n">1.55×</td><td class="n">15.19</td><td class="n">147.51×</td><td class="n">45.56</td><td class="n">442.37×</td></tr>
+            <tr><td class="model"><code>extrude_twist</code> <span title="mesh differs" aria-hidden="true">†</span><br><span class="muted small">linear_extrude(height=50, twist=720, slices=400) of square minus circle</span></td><td class="n">0.036</td><td class="n">0.218</td><td class="n">6.01×</td><td class="n">0.220</td><td class="n">6.05×</td><td class="n">0.327</td><td class="n">9.00×</td></tr>
+            <tr><td class="model"><code>import_stl</code><br><span class="muted small">import() of a 21 MB ASCII STL (sphere $fn=256) minus two cubes</span></td><td class="n">0.107</td><td class="n">0.544</td><td class="n">5.10×</td><td class="n">10.17</td><td class="n">95.36×</td><td class="n">37.55</td><td class="n">351.94×</td></tr>
+            <tr><td class="model"><code>mink_convex</code><br><span class="muted small">minkowski(cube([30,20,5],center=true), sphere(3,$fn=48))</span></td><td class="n">0.022</td><td class="n">0.074</td><td class="n">3.44×</td><td class="n">0.148</td><td class="n">6.87×</td><td class="n">0.102</td><td class="n">4.74×</td></tr>
+            <tr><td class="model"><code>mink_nonconvex</code><br><span class="muted small">minkowski(L of two cubes, sphere(2,$fn=24))</span></td><td class="n">0.010</td><td class="n">0.064</td><td class="n">6.44×</td><td class="n">0.361</td><td class="n">36.43×</td><td class="n">0.901</td><td class="n">91.04×</td></tr>
+            <tr><td class="model"><code>text_30lines</code> <span title="mesh differs" aria-hidden="true">†</span><br><span class="muted small">linear_extrude(2) of 30 text() lines of 58 characters (Liberation Sans)</span></td><td class="n">0.267</td><td class="n">0.618</td><td class="n">2.31×</td><td class="n">0.592</td><td class="n">2.22×</td><td class="n">1.338</td><td class="n">5.01×</td></tr>
             <tr><td class="model"><code>cold_start</code><br><span class="muted small">cube(1) to ASCII STL: process startup plus the smallest render (not in the geometric means)</span></td><td class="n">0.0024</td><td class="n">0.0455</td><td class="n">18.96×</td><td class="n">0.0464</td><td class="n">19.33×</td><td class="n">0.0701</td><td class="n">29.21×</td></tr>
             </tbody>
           </table>
@@ -192,8 +194,8 @@
               </tr>
             </thead>
             <tbody>
-            <tr><td class="model"><code>bosl2</code><br><span class="muted small">A BOSL2 part: rounded cuboid, chamfered cylinder and prismoid; the edit changes the cuboid's height</span></td><td class="n">12.3</td><td class="n">21.2</td><td class="n">37.0</td><td class="n">79.7</td><td class="n">162.7</td><td class="n">235.3</td></tr>
-            <tr><td class="model"><code>csg</code><br><span class="muted small">OpenSCAD's examples/Basics/CSG.scad; the edit moves the difference (the third object)</span></td><td class="n">0.9</td><td class="n">9.9</td><td class="n">6.8</td><td class="n">32.7</td><td class="n">59.0</td><td class="n">127.8</td></tr>
+            <tr><td class="model"><code>bosl2</code><br><span class="muted small">A BOSL2 part: rounded cuboid, chamfered cylinder and prismoid; the edit changes the cuboid's height</span></td><td class="n">12.2</td><td class="n">21.2</td><td class="n">38.9</td><td class="n">82.2</td><td class="n">168.5</td><td class="n">240.8</td></tr>
+            <tr><td class="model"><code>csg</code><br><span class="muted small">OpenSCAD's examples/Basics/CSG.scad; the edit moves the difference (the third object)</span></td><td class="n">1.0</td><td class="n">10.2</td><td class="n">6.6</td><td class="n">33.9</td><td class="n">60.3</td><td class="n">128.2</td></tr>
             </tbody>
           </table>
         </div>
@@ -213,7 +215,7 @@
         <p>
           BOSL2's 976 tests, one process per test, run one after another and
           written to <code>.echo</code>, with no geometry: NeoSCAD takes
-          <strong>29.7 s</strong> and the nightly <strong>153.6 s</strong>. Both
+          <strong>30.3 s</strong> and the nightly <strong>145.7 s</strong>. Both
           pass all 976.
         </p>
       </div>
@@ -223,19 +225,21 @@
       <div class="wrap prose">
         <h2 id="caveats-title">Caveats</h2>
         <ul>
-          <li><strong>The 3.7× is mostly small models.</strong> 7 of the 14 finish
-            in under 0.13 s in NeoSCAD, where process startup counts for a lot
+          <li><strong>The 3.9× is mostly small models.</strong> 8 of the 14 finish
+            in under 0.11 s in NeoSCAD, where process startup counts for a lot
             (2.4 ms for NeoSCAD against 45.5 ms for the nightly). Subtract startup
-            and the geometric mean is 2.77×; over the four models that take over
-            0.3 s it is also 2.77×; the gearbox on the home page is 2.79×. That is
-            why we say "about 2.8× on heavy models".</li>
-          <li><strong>NeoSCAD is slower on some models</strong> that this set doesn't
-            include: large nested differences such as the Menger sponge at level 4,
-            about 1.4× slower (level 3, in the table, is only 1.27× faster), and
-            models with many <code>text()</code> nodes, about 1.2× slower. Deep unions
-            are not among them: <code>csg_deep_union</code> above is 3.7× faster.</li>
-          <li><strong>One machine.</strong> An Apple M4 Pro, arm64. Other machines,
-            and x86_64 in particular, haven't been measured.</li>
+            and the geometric mean is 2.90×; over the three models that take over
+            0.3 s it is 3.34×; the gearbox on the home page is 2.80×. That is
+            why we say "about 2.9× on heavy models".</li>
+          <li><strong>NeoSCAD is slower on one model we know of</strong>, which this
+            set doesn't include: 200 lines of <code>text()</code> extruded to 3D,
+            35.4 s against the nightly's 33.0 s (one run each), about 7% slower.
+            The same text as 2D, exported to SVG, is faster (0.47 s against 1.38 s),
+            and so is the Menger sponge at level 4 (1.40 s against 2.01 s), which
+            earlier builds were slower on.</li>
+          <li><strong>One machine.</strong> An Apple M4 Pro, arm64, with a load
+            average of 2 to 3 while NeoSCAD was measured. Other machines, and
+            x86_64 in particular, haven't been measured.</li>
           <li><strong>The references weren't interleaved.</strong> OpenSCAD's times
             are from a cache measured earlier with the same binary, not alternated
             with NeoSCAD's runs.</li>
@@ -247,7 +251,8 @@
         </ul>
         <h2>Reproduce it</h2>
         <p>
-          Once the repository is public: build with <code>cargo build --release</code>,
+          In a clone of <a href="https://github.com/neoscad/neoscad">the repository</a>,
+          build with <code>cargo build --release</code>,
           then run <code>./target/release/conformance bench</code>. It writes a JSON
           record and a chart like the ones here to <code>progress/bench/</code>.
         </p>

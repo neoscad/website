@@ -7,7 +7,7 @@
        this tag and allow crawling in robots.txt (see the comment there). -->
   <meta name="robots" content="noindex">
   <title>NeoSCAD: OpenSCAD's language, rebuilt for speed and for agents</title>
-  <meta name="description" content="NeoSCAD is a new implementation of the OpenSCAD language. It passes 1,773 of OpenSCAD's in-scope regression tests and is about 2.8× faster than the OpenSCAD nightly (Manifold) on heavy models.">
+  <meta name="description" content="NeoSCAD is a new implementation of the OpenSCAD language. It passes 1,773 of OpenSCAD's in-scope regression tests and is about 2.9× faster than the OpenSCAD nightly (Manifold) on heavy models.">
   <meta name="color-scheme" content="light dark">
   <meta property="og:title" content="NeoSCAD">
   <meta property="og:description" content="OpenSCAD's language, rebuilt for speed and for agents.">
@@ -60,15 +60,14 @@
         <p class="lede">
           NeoSCAD runs your <code>.scad</code> files and libraries as they are.
           It passes 1,773 of OpenSCAD's in-scope regression tests, and it is
-          about 2.8× faster than the OpenSCAD nightly (Manifold) on heavy models.
+          about 2.9× faster than the OpenSCAD nightly (Manifold) on heavy models.
         </p>
 
-        <!-- The tap name follows the GitHub org proposed in the NeoSCAD repo's
-             docs/packaging.md; it is not created yet. Keep the command struck
-             through until `brew install` really works. -->
-        <div class="install unavailable" role="group" aria-label="Install with Homebrew (coming soon)">
+        <!-- The formula is cargo-dist's, pushed to github.com/neoscad/homebrew-tap
+             by each release. The .install box's "unavailable" class (and a
+             badge) strike a command through again if it ever stops working. -->
+        <div class="install" role="group" aria-label="Install with Homebrew">
           <code>brew install neoscad/tap/neoscad</code>
-          <span class="badge badge-soon">Coming soon</span>
         </div>
 
         <div class="hero-actions">
@@ -82,8 +81,8 @@
           the 3D view and point at what it means, while you watch.
         </p>
         <p class="small muted">
-          macOS (Apple silicon, macOS 15 or later) comes first, as an app and a
-          command-line tool. Linux and Windows command-line builds are planned.
+          NeoSCAD 0.1.0: a command-line tool for macOS, Linux and Windows (x86_64
+          and ARM), and an app for macOS 15 or later (Apple silicon and Intel).
         </p>
         <p class="small muted">
           Built on the work of <a href="https://openscad.org/">OpenSCAD</a>, whose
@@ -128,9 +127,9 @@
               <a href="#faq-scope">What's in scope?</a></span>
           </li>
           <li>
-            <span class="num">~2.8×</span>
+            <span class="num">~2.9×</span>
             <span class="what">faster than the OpenSCAD nightly (Manifold) on
-              heavy models; 3.7× geometric mean over 14 models including
+              heavy models; 3.9× geometric mean over 14 models including
               startup, on an Apple M4 Pro. <a href="/benchmarks.html">Method</a></span>
           </li>
           <li>
@@ -154,19 +153,19 @@
         <p class="eyebrow">Benchmark</p>
         <h2 id="bench-title">One chart, with its method</h2>
         <figure>
-          <a href="/assets/bench-20260928-98f90d8.png">
-            <img src="/assets/bench-20260928-98f90d8.png" width="1920" height="1080" loading="lazy"
-                 alt="Bar chart of render times on a log scale for 14 models and a cold start, for NeoSCAD, the OpenSCAD nightly with Manifold, the nightly with CGAL, and OpenSCAD 2021.01. NeoSCAD is fastest on every row; on the 14 models its speedup over the nightly with Manifold ranges from 1.27× (Menger sponge) to 8.79× (CSG example). Full numbers are in the table on the benchmarks page.">
+          <a href="/assets/bench-20260930-e15eef7.png">
+            <img src="/assets/bench-20260930-e15eef7.png" width="1920" height="1080" loading="lazy"
+                 alt="Bar chart of render times on a log scale for 14 models and a cold start, for NeoSCAD, the OpenSCAD nightly with Manifold, the nightly with CGAL, and OpenSCAD 2021.01. NeoSCAD is fastest on every row; on the 14 models its speedup over the nightly with Manifold ranges from 1.55× (Menger sponge) to 8.91× (CSG example). Full numbers are in the table on the benchmarks page.">
           </a>
           <figcaption>
             Wall time of <code>-o out.stl</code> for 14 models, including process
             startup; best of 3; one Apple M4 Pro (14 cores, 48 GB, macOS 27.0);
-            NeoSCAD at <code>98f90d8</code> against the OpenSCAD nightly 2026.09.23.
-            The geometric mean is 3.7× against the nightly with Manifold. Half the
-            models finish in under 0.13 s, where startup counts for a lot: with
-            startup subtracted, or over the four models that take longer than
-            0.3 s, it is 2.8×. The nightly's times come from a cache measured with
-            the same, SHA-pinned binary.
+            NeoSCAD 0.1.0 against the OpenSCAD nightly 2026.09.23.
+            The geometric mean is 3.9× against the nightly with Manifold. Eight of
+            the 14 models finish in under 0.11 s, where startup counts for a lot:
+            with startup subtracted it is 2.9×, and over the three models that take
+            longer than 0.3 s, 3.3×. The nightly's times come from a cache measured
+            with the same, SHA-pinned binary.
             <a href="/benchmarks.html">Full table, method and caveats</a>.
           </figcaption>
         </figure>
@@ -305,7 +304,7 @@ neoscad snapshot part.scad --issues</code></pre>
             <video controls preload="metadata" playsinline width="1920" height="1080"
                    aria-label="Progress video: OpenSCAD's regression tests turning from failing to passing, run by run">
               <source src="/assets/progress.mp4" type="video/mp4">
-              <a href="/assets/progress.mp4">Download the progress video (MP4, 8 MB)</a>.
+              <a href="/assets/progress.mp4">Download the progress video (MP4, 9 MB)</a>.
             </video>
             <figcaption>
               Every recorded conformance run, from the first on 26 September 2026:
@@ -333,10 +332,10 @@ neoscad snapshot part.scad --issues</code></pre>
             <li>Geometry uses Manifold only; there is no CGAL backend.</li>
             <li><code>text()</code> uses the bundled Liberation fonts; system fonts aren't found yet.</li>
             <li>The macOS app has no Animate panel, and the customizer is partial.</li>
-            <li>It is slower than the nightly on some models: large nested
-              differences such as the Menger sponge at level 4 (about 1.4&times;),
-              and models with many <code>text()</code> nodes (about 1.2&times;).</li>
-            <li>Only macOS on Apple silicon for now.</li>
+            <li>It is slower than the nightly on one model we know of: 200 lines of
+              <code>text()</code>, extruded to 3D (about 7%).</li>
+            <li>The app is macOS-only; on Linux and Windows there is the
+              command-line tool.</li>
           </ul>
           <p class="small">
             NeoSCAD is an independent project. It is not affiliated with or
@@ -416,10 +415,10 @@ neoscad snapshot part.scad --issues</code></pre>
         <details>
           <summary>Is it faster on every model?</summary>
           <p>
-            No. On the 14-model benchmark it is about 2.8× faster than the nightly
-            with Manifold on the heavy models, and 3.7× as a geometric mean
-            including startup. It is slower on some deep unions, on the Menger
-            sponge at level 4 and on models with many <code>text()</code> nodes.
+            No. On the 14-model benchmark it is about 2.9× faster than the nightly
+            with Manifold on the heavy models, and 3.9× as a geometric mean
+            including startup. It is about 7% slower on 200 lines of extruded
+            <code>text()</code>.
             <a href="/benchmarks.html">The benchmarks page</a> has every number.
           </p>
         </details>
@@ -427,9 +426,10 @@ neoscad snapshot part.scad --issues</code></pre>
         <details>
           <summary>Which platforms does it run on?</summary>
           <p>
-            The first release will be for macOS 15 or later on Apple silicon;
-            it isn't out yet. Linux and Windows command-line builds (x86_64 and ARM) are planned, and
-            an in-browser version is in progress. See <a href="/download.html">downloads</a>.
+            The command-line tool runs on macOS, Linux (glibc 2.28 or later) and
+            Windows, on x86_64 and ARM. The app needs macOS 15 or later, on Apple
+            silicon or Intel. <a href="/try/">In the browser</a>, it runs as
+            WebAssembly. See <a href="/download.html">downloads</a>.
           </p>
         </details>
 
