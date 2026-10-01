@@ -69,7 +69,7 @@ function __wbg_get_imports() {
         __wbg___wbindgen_throw_41e9ee4f547fc59a: function(arg0, arg1) {
             throw new Error(getStringFromWasm0(arg0, arg1));
         },
-        __wbg_error_02f633a4c40133b4: function(arg0, arg1) {
+        __wbg_error_9edd16d011292ec0: function(arg0, arg1) {
             console.error(getStringFromWasm0(arg0, arg1));
         },
         __wbg_get_unchecked_288889d017702237: function(arg0, arg1) {
@@ -96,7 +96,7 @@ function __wbg_get_imports() {
             const ret = new Uint8Array(getArrayU8FromWasm0(arg0, arg1));
             return addHeapObject(ret);
         },
-        __wbg_now_698acea34b1c343e: function() {
+        __wbg_now_e5d2ffc6a66829de: function() {
             const ret = performance.now();
             return ret;
         },
