@@ -146,6 +146,21 @@
             <code>neoscad bench</code>.
           </p>
           <p class="install"><code>neoscad bench --submit</code></p>
+          <ul class="small">
+            <li><strong>macOS:</strong> <code>brew install neoscad/tap/neoscad</code>
+              (or <code>brew upgrade neoscad</code>). If you downloaded the
+              <code>.tar.xz</code> in a browser instead, run
+              <code>xattr -d com.apple.quarantine neoscad</code> once first: the
+              command-line tool isn't notarized yet.</li>
+            <li><strong>Linux:</strong> <code>brew install neoscad/tap/neoscad</code>,
+              or the <code>.deb</code>/<code>.rpm</code> from the
+              <a href="/download.html#linux">downloads</a>.</li>
+            <li><strong>Windows:</strong> <code>scoop bucket add neoscad https://github.com/neoscad/scoop-bucket</code>
+              then <code>scoop install neoscad</code>, or the installer from the
+              <a href="/download.html#windows">downloads</a>.</li>
+            <li>Plug in to power and quit busy apps first; the load before and
+              after is recorded with the result.</li>
+          </ul>
           <p>
             It downloads the release's bench kit, times its models (a few minutes),
             and shows you
