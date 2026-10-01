@@ -1,11 +1,11 @@
-NeoSCAD web demo 0.2.0, built from commit 6c50a573d42df1779068658f5f6c30e688933d3a.
+NeoSCAD web demo 0.2.1, built from commit 215abc26818dd4243dde00b854ad6d320994462e.
 
 NeoSCAD is free software under the GNU General Public License, version 2
 or (at your option) any later version. The complete corresponding source
 code of this build, including the scripts used to build it
 (scripts/web/build.sh), is NeoSCAD at that commit:
 
-    https://github.com/neoscad/neoscad/tree/6c50a573d42df1779068658f5f6c30e688933d3a
+    https://github.com/neoscad/neoscad/tree/215abc26818dd4243dde00b854ad6d320994462e
 
 If you cannot obtain it there, write to source@neoscad.org, and the
 NeoSCAD project will provide it for three years from the date of this

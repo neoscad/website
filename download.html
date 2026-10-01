@@ -35,10 +35,10 @@
   </header>
 
   <!--
-    Files link to the v0.2.0 GitHub release,
-    https://github.com/neoscad/neoscad/releases/download/v0.2.0/<name>,
+    Files link to the v0.2.1 GitHub release (the macOS DMG to v0.2.0 until 0.2.1's is notarized),
+    https://github.com/neoscad/neoscad/releases/download/v0.2.1/<name>,
     with the asset names cargo-dist and publish-packages.yml give them.
-    For a new release, change v0.2.0 and the version inside the .deb and
+    For a new release, change v0.2.1 and the version inside the .deb and
     .rpm names together.
     Badges: <span class="badge badge-exists">Available</span> works now;
     badge-soon "Pending" waits on notarization or a package manager's review; badge-planned
@@ -52,17 +52,17 @@
         <p class="eyebrow">Download</p>
         <h1 id="dl-title">Download NeoSCAD</h1>
         <p class="lede">
-          NeoSCAD 0.2.0 is out for macOS, Linux and Windows, with preview apps for Windows and Linux. Every file is on the
-          <a href="https://github.com/neoscad/neoscad/releases/tag/v0.2.0">GitHub release</a>,
+          NeoSCAD 0.2.1 is out for macOS, Linux and Windows, with preview apps for Windows and Linux. Every file is on the
+          <a href="https://github.com/neoscad/neoscad/releases/tag/v0.2.1">GitHub release</a>,
           with its sha256; this page lists them by platform, with the package
           managers and what is still to come.
         </p>
         <p>Install the command-line tool with Homebrew, on macOS or Linux:</p>
 <pre><code>brew install neoscad/tap/neoscad</code></pre>
         <p>or with the install script (macOS and Linux; it installs to <code>~/.cargo/bin</code>):</p>
-<pre><code>curl --proto '=https' --tlsv1.2 -LsSf https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-installer.sh | sh</code></pre>
+<pre><code>curl --proto '=https' --tlsv1.2 -LsSf https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-installer.sh | sh</code></pre>
         <p>or on Windows, in PowerShell:</p>
-<pre><code>powershell -ExecutionPolicy Bypass -c "irm https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-installer.ps1 | iex"</code></pre>
+<pre><code>powershell -ExecutionPolicy Bypass -c "irm https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-installer.ps1 | iex"</code></pre>
         <p>
           <code>neoscad</code>, the command-line tool, includes the language server
           (<code>neoscad lsp</code>), the MCP server (<code>neoscad mcp</code>) and
@@ -106,19 +106,19 @@
             <span class="badge badge-exists">Available</span>
           </li>
           <li>
-            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-aarch64-apple-darwin.tar.xz">Command-line tool, Apple silicon (.tar.xz)</a>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-aarch64-apple-darwin.tar.xz">Command-line tool, Apple silicon (.tar.xz)</a>
               <span class="dl-note">A single <code>neoscad</code> binary. It isn't notarized
                 yet: if you download the archive in a browser, clear macOS's
                 quarantine flag before the first run with
                 <code>xattr -d com.apple.quarantine neoscad</code> (Homebrew and the
                 install script don't need this).
-                <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-aarch64-apple-darwin.tar.xz.sha256">sha256</a></span></span>
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-aarch64-apple-darwin.tar.xz.sha256">sha256</a></span></span>
             <span class="badge badge-exists">Available</span>
           </li>
           <li>
-            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-x86_64-apple-darwin.tar.xz">Command-line tool, Intel x86_64 (.tar.xz)</a>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-x86_64-apple-darwin.tar.xz">Command-line tool, Intel x86_64 (.tar.xz)</a>
               <span class="dl-note">The same, for Intel Macs.
-                <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-x86_64-apple-darwin.tar.xz.sha256">sha256</a></span></span>
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-x86_64-apple-darwin.tar.xz.sha256">sha256</a></span></span>
             <span class="badge badge-exists">Available</span>
           </li>
         </ul>
@@ -134,46 +134,46 @@
         <ul class="dl-list">
           <li>
             <span class="dl-main">NeoSCAD for Linux, preview (Flatpak):
-              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/NeoSCAD-0.2.0-linux-x86_64.flatpak">x86_64</a>
-              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/NeoSCAD-0.2.0-linux-x86_64.flatpak.sha256">sha256</a>),
-              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/NeoSCAD-0.2.0-linux-aarch64.flatpak">aarch64</a>
-              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/NeoSCAD-0.2.0-linux-aarch64.flatpak.sha256">sha256</a>)
+              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/NeoSCAD-0.2.1-linux-x86_64.flatpak">x86_64</a>
+              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/NeoSCAD-0.2.1-linux-x86_64.flatpak.sha256">sha256</a>),
+              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/NeoSCAD-0.2.1-linux-aarch64.flatpak">aarch64</a>
+              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/NeoSCAD-0.2.1-linux-aarch64.flatpak.sha256">sha256</a>)
               <span class="dl-note">A GTK 4 app: editor with the language server,
                 live preview, 3D view, console, examples and export.
-                <code>flatpak install --user NeoSCAD-0.2.0-linux-x86_64.flatpak</code>;
+                <code>flatpak install --user NeoSCAD-0.2.1-linux-x86_64.flatpak</code>;
                 it pulls the GNOME runtime from Flathub. Not on Flathub itself, and
                 <code>flatpak update</code> won't find new releases yet: install the
                 next bundle when it comes out.</span></span>
             <span class="badge badge-exists">Preview</span>
           </li>
           <li>
-            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-x86_64-unknown-linux-gnu.tar.xz">x86_64 (.tar.xz)</a>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-x86_64-unknown-linux-gnu.tar.xz">x86_64 (.tar.xz)</a>
               <span class="dl-note">A single binary; the install script above fetches it.
-                <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-x86_64-unknown-linux-gnu.tar.xz.sha256">sha256</a></span></span>
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-x86_64-unknown-linux-gnu.tar.xz.sha256">sha256</a></span></span>
             <span class="badge badge-exists">Available</span>
           </li>
           <li>
-            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-aarch64-unknown-linux-gnu.tar.xz">aarch64 (.tar.xz)</a>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-aarch64-unknown-linux-gnu.tar.xz">aarch64 (.tar.xz)</a>
               <span class="dl-note">Built natively on ARM.
-                <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-aarch64-unknown-linux-gnu.tar.xz.sha256">sha256</a></span></span>
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-aarch64-unknown-linux-gnu.tar.xz.sha256">sha256</a></span></span>
             <span class="badge badge-exists">Available</span>
           </li>
           <li>
             <span class="dl-main">Debian and Ubuntu (.deb):
-              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad_0.2.0-1_amd64.deb">amd64</a>
-              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad_0.2.0-1_amd64.deb.sha256">sha256</a>),
-              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad_0.2.0-1_arm64.deb">arm64</a>
-              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad_0.2.0-1_arm64.deb.sha256">sha256</a>)
+              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad_0.2.1-1_amd64.deb">amd64</a>
+              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad_0.2.1-1_amd64.deb.sha256">sha256</a>),
+              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad_0.2.1-1_arm64.deb">arm64</a>
+              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad_0.2.1-1_arm64.deb.sha256">sha256</a>)
               <span class="dl-note">With the man page and bash, zsh and fish completions.
-                <code>sudo apt install ./neoscad_0.2.0-1_amd64.deb</code></span></span>
+                <code>sudo apt install ./neoscad_0.2.1-1_amd64.deb</code></span></span>
             <span class="badge badge-exists">Available</span>
           </li>
           <li>
             <span class="dl-main">Fedora and RHEL (.rpm):
-              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-0.2.0-1.x86_64.rpm">x86_64</a>
-              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-0.2.0-1.x86_64.rpm.sha256">sha256</a>),
-              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-0.2.0-1.aarch64.rpm">aarch64</a>
-              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-0.2.0-1.aarch64.rpm.sha256">sha256</a>)
+              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-0.2.1-1.x86_64.rpm">x86_64</a>
+              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-0.2.1-1.x86_64.rpm.sha256">sha256</a>),
+              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-0.2.1-1.aarch64.rpm">aarch64</a>
+              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-0.2.1-1.aarch64.rpm.sha256">sha256</a>)
               <span class="dl-note">The same contents. A signed apt/rpm repository comes later.</span></span>
             <span class="badge badge-exists">Available</span>
           </li>
@@ -198,10 +198,10 @@
         <ul class="dl-list">
           <li>
             <span class="dl-main">NeoSCAD for Windows, preview (.msi):
-              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/NeoSCAD-0.2.0-windows-x64.msi">x64</a>
-              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/NeoSCAD-0.2.0-windows-x64.msi.sha256">sha256</a>),
-              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/NeoSCAD-0.2.0-windows-arm64.msi">ARM64</a>
-              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/NeoSCAD-0.2.0-windows-arm64.msi.sha256">sha256</a>)
+              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/NeoSCAD-0.2.1-windows-x64.msi">x64</a>
+              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/NeoSCAD-0.2.1-windows-x64.msi.sha256">sha256</a>),
+              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/NeoSCAD-0.2.1-windows-arm64.msi">ARM64</a>
+              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/NeoSCAD-0.2.1-windows-arm64.msi.sha256">sha256</a>)
               <span class="dl-note">A WinUI 3 app: editor, live preview, 3D view,
                 console, examples and export. Installs for all users with a
                 Start-menu entry and "Open with" for <code>.scad</code> files.
@@ -210,23 +210,23 @@
             <span class="badge badge-exists">Preview</span>
           </li>
           <li>
-            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-x86_64-pc-windows-msvc.zip">x86_64 (.zip)</a>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-x86_64-pc-windows-msvc.zip">x86_64 (.zip)</a>
               <span class="dl-note">Portable; the PowerShell install script above fetches it.
-                <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-x86_64-pc-windows-msvc.zip.sha256">sha256</a></span></span>
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-x86_64-pc-windows-msvc.zip.sha256">sha256</a></span></span>
             <span class="badge badge-exists">Available</span>
           </li>
           <li>
-            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-aarch64-pc-windows-msvc.zip">ARM64 (.zip)</a>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-aarch64-pc-windows-msvc.zip">ARM64 (.zip)</a>
               <span class="dl-note">Built natively on Windows on ARM.
-                <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-aarch64-pc-windows-msvc.zip.sha256">sha256</a></span></span>
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-aarch64-pc-windows-msvc.zip.sha256">sha256</a></span></span>
             <span class="badge badge-exists">Available</span>
           </li>
           <li>
             <span class="dl-main">Installer (.msi):
-              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-x86_64-pc-windows-msvc.msi">x86_64</a>
-              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-x86_64-pc-windows-msvc.msi.sha256">sha256</a>),
-              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-aarch64-pc-windows-msvc.msi">ARM64</a>
-              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-cli-aarch64-pc-windows-msvc.msi.sha256">sha256</a>)
+              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-x86_64-pc-windows-msvc.msi">x86_64</a>
+              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-x86_64-pc-windows-msvc.msi.sha256">sha256</a>),
+              <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-aarch64-pc-windows-msvc.msi">ARM64</a>
+              (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-aarch64-pc-windows-msvc.msi.sha256">sha256</a>)
               <span class="dl-note">The command-line tool's installer: adds <code>neoscad</code> to your PATH. Unsigned (see above).</span></span>
             <span class="badge badge-exists">Available</span>
           </li>
@@ -256,7 +256,7 @@
           <li>
             <span class="dl-main"><strong>Docker</strong> (<code>ghcr.io</code>)
               <span class="dl-note"><code>docker pull ghcr.io/neoscad/neoscad</code>
-                (tags <code>0.2.0</code> and <code>latest</code>, amd64 and arm64): Debian
+                (tags <code>0.2.1</code> and <code>latest</code>, amd64 and arm64): Debian
                 slim with Mesa's software renderers, so PNG export works headless.
                 Run it in your model's directory:
                 <code>docker run --rm -v "$PWD:/work" ghcr.io/neoscad/neoscad model.scad -o model.png</code></span></span>
@@ -283,7 +283,7 @@
             <span class="dl-main"><strong>AUR</strong> (<code>neoscad-bin</code>)
               <span class="dl-note">Waiting for AUR registration, which is closed
                 for now. Meanwhile the
-                <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-package-manifests.tar.gz">release's
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-package-manifests.tar.gz">release's
                 PKGBUILD</a> builds with <code>makepkg -si</code>.</span></span>
             <span class="badge badge-soon">Pending</span>
           </li>
@@ -308,18 +308,18 @@
         <p class="muted">GPL-2.0-or-later. Builds with Rust 1.98.</p>
         <ul class="dl-list">
           <li>
-            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/source.tar.gz">Source tarball</a>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/source.tar.gz">Source tarball</a>
               <span class="dl-note">The release's source.
-                <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/source.tar.gz.sha256">sha256</a></span></span>
+                <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/source.tar.gz.sha256">sha256</a></span></span>
             <span class="badge badge-exists">Available</span>
           </li>
           <li>
-            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/neoscad-0.2.0-vendor.tar.gz">Vendored source tarball</a>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-0.2.1-vendor.tar.gz">Vendored source tarball</a>
               <span class="dl-note">Includes every Rust dependency (<code>cargo vendor</code>), for offline builds.</span></span>
             <span class="badge badge-exists">Available</span>
           </li>
           <li>
-            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.0/sha256.sum">sha256.sum</a>
+            <span class="dl-main"><a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/sha256.sum">sha256.sum</a>
               <span class="dl-note">The checksums of the release's archives, installers and source tarball, in one file.</span></span>
             <span class="badge badge-exists">Available</span>
           </li>
