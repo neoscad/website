@@ -4,8 +4,8 @@ date: 2026-10-02
 summary: NeoSCAD runs OpenSCAD's language and libraries unchanged. Here is what stays the same, what NeoSCAD adds (printability checks, measurements, a warm render server, an MCP server for AI agents, an in-browser editor) and where it still differs from OpenSCAD.
 author: The NeoSCAD project
 tags: [openscad, features, agents]
-cover: ../media/neoscad-and-openscad/snapshot-issues.png
-cover_alt: A four-view NeoSCAD snapshot of a phone stand, with its printing problems painted on: a thin lip in red, a floating clip in purple and an unsupported shelf with a numbered marker.
+cover: ../media/neoscad-and-openscad/gearbox.jpg
+cover_alt: A BOSL2 herringbone planetary gearbox on a gyroid plinth, rendered by NeoSCAD: a red sun gear, four teal planet gears and a blue ring gear.
 ---
 
 NeoSCAD is a new implementation of [OpenSCAD](https://openscad.org)'s
