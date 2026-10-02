@@ -178,7 +178,12 @@
             <div class="tabs-panel install-panel" id="install-linux" data-tab="linux">
               <p class="tabs-label">Linux</p>
               <div class="install-cmd">
-                <span class="install-what">Command-line tool</span>
+                <span class="install-what">Install script</span>
+                <code id="install-cmd-linux-script">curl -LsSf https://neoscad.org/install.sh | sh</code>
+                <button type="button" class="copy-button" data-copy="install-cmd-linux-script" aria-describedby="install-cmd-linux-script">Copy</button>
+              </div>
+              <div class="install-cmd">
+                <span class="install-what">Homebrew</span>
                 <code id="install-cmd-linux-cli">brew install neoscad/tap/neoscad</code>
                 <button type="button" class="copy-button" data-copy="install-cmd-linux-cli" aria-describedby="install-cmd-linux-cli">Copy</button>
               </div>

@@ -38,6 +38,7 @@ which `community.html` needs to show its results.
 | `assets/` | Images and video from the NeoSCAD repo, some re-encoded to be smaller (below, with the commands) |
 | `CNAME` | `neoscad.org`, the Pages custom domain |
 | `.nojekyll` | Tells Pages to serve the files as they are, without Jekyll |
+| `install.sh` | `curl -LsSf https://neoscad.org/install.sh \| sh`, the install picker's command for macOS and Linux: runs the latest release's `neoscad-cli-installer.sh` from GitHub, passing its arguments on. It holds no version, so releases don't touch it |
 | `robots.txt` | Allows every crawler and agent, and points to `sitemap.xml` |
 | `sitemap.xml` | The site's pages, for crawlers; add a line for a new page (outside the "Blog" markers: the blog's lines are generated, with a `lastmod` from the posts' dates). The hand-written pages carry no `lastmod`: release jobs edit `download.html` without touching this file, and a stale date is worse than none |
 | `donate/` | `neoscad.org/donate`, a redirect to the Givebutter campaign (givebutter.com/neoscad): a stable link for the README, release notes and apps |
