@@ -88,7 +88,7 @@ const LANGUAGES = {
 };
 for (const [name, [, grammar]] of Object.entries(LANGUAGES)) if (grammar) hljs.registerLanguage(name, grammar);
 
-const FRONT_MATTER_KEYS = ["title", "date", "updated", "summary", "author", "tags", "cover", "cover_alt", "draft"];
+const FRONT_MATTER_KEYS = ["title", "date", "updated", "summary", "description", "author", "tags", "cover", "cover_alt", "draft"];
 const POST_FILE = /^(\d{4}-\d{2}-\d{2})-([a-z0-9]+(?:-[a-z0-9]+)*)\.md$/;
 const TAG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 // Directories under blog/ that a slug can't take.
@@ -563,6 +563,17 @@ function jsonLd(data) {
   return `\n  <script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", ...data }).replace(/</g, "\\u003c")}</script>`;
 }
 
+/// A post page's <title>: the post's title, then " · NeoSCAD" only if the
+/// two fit in TITLE_MAX characters. Search results cut titles at about 60
+/// characters, so on a long title the suffix would push out the title's own
+/// last words, which say what the post is about, for the site's name, which
+/// the result shows beside the URL anyway. og:title is the bare title.
+const TITLE_SUFFIX = " · NeoSCAD";
+const TITLE_MAX = 60;
+export function postTitle(title) {
+  return [...title].length + TITLE_SUFFIX.length <= TITLE_MAX ? `${title}${TITLE_SUFFIX}` : title;
+}
+
 const ORGANIZATION = { "@type": "Organization", "@id": `${SITE}/#organization`, name: "NeoSCAD", url: `${SITE}/` };
 
 /// Breadcrumbs for search results: Home, Blog, then the page itself, which
@@ -709,10 +720,12 @@ function postPage(ch, post) {
   return page({
     chrome: ch,
     current: true,
-    title: `${post.title} · NeoSCAD`,
+    title: postTitle(post.title),
     // The preview card shows og:site_name beside the title already.
     ogTitle: post.title,
-    description: post.summary,
+    // The line under a search result or link preview: `description` when
+    // the post has one, short enough not to be cut off; else the summary.
+    description: post.description ?? post.summary,
     path: `/blog/${post.slug}/`,
     type: "article",
     image: post.cover,
@@ -725,7 +738,7 @@ function postPage(ch, post) {
           "@type": "BlogPosting",
           "@id": `${SITE}/blog/${post.slug}/#post`,
           headline: post.title,
-          description: post.summary,
+          description: post.description ?? post.summary,
           url: `${SITE}/blog/${post.slug}/`,
           mainEntityOfPage: `${SITE}/blog/${post.slug}/`,
           datePublished: post.date,
@@ -849,8 +862,10 @@ function readPost(md, root, name, examples, errors) {
   const tags = data.tags === undefined ? [] : Array.isArray(data.tags) ? data.tags : [data.tags];
   for (const t of tags) if (!TAG.test(t)) errors.push(`${source}: tag "${t}": use lowercase letters, digits and hyphens`);
   if (data.draft !== undefined && typeof data.draft !== "boolean") errors.push(`${source}: draft is true or false`);
-  for (const k of ["title", "summary", "author", "cover", "cover_alt"])
+  for (const k of ["title", "summary", "description", "author", "cover", "cover_alt"])
     if (data[k] !== undefined && typeof data[k] !== "string") errors.push(`${source}: "${k}" is text, not a list`);
+  if (typeof data.description === "string" && !data.description.trim())
+    errors.push(`${source}: "description" is empty; leave it out to use the summary`);
 
   const env = { root, source, errors, examples, lineOffset: bodyLine - 1, ids: new Set(["main", "post-title", "site-nav"]), youtube: false };
   let cover = null;
@@ -871,6 +886,7 @@ function readPost(md, root, name, examples, errors) {
     updatedIso: `${data.updated ?? fileDate}T00:00:00Z`,
     title: data.title ?? slug,
     summary: data.summary ?? "",
+    description: typeof data.description === "string" && data.description.trim() ? data.description : null,
     author: data.author ?? null,
     tags: [...new Set(tags)].sort(),
     draft: data.draft === true,

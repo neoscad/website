@@ -34,7 +34,7 @@ which `community.html` needs to show its results.
 | `site.json` | Site name, home, theme and nav links, read by the `/try` bundle's top bar |
 | `favicon.png` | 32×32 icon |
 | `site.webmanifest` | Name, icons and colours for "Add to Home Screen" and browsers' tab colour; every page links it, with `theme-color` metas matching `theme.css`'s `--ns-bg` (light and dark) |
-| `assets/` | Images and video, copied unchanged from the NeoSCAD repo (below) |
+| `assets/` | Images and video from the NeoSCAD repo, some re-encoded to be smaller (below, with the commands) |
 | `CNAME` | `neoscad.org`, the Pages custom domain |
 | `.nojekyll` | Tells Pages to serve the files as they are, without Jekyll |
 | `robots.txt` | Allows every crawler and agent, and points to `sitemap.xml` |
@@ -61,13 +61,17 @@ not from `file://`.
 
 | File | Source in the NeoSCAD repo |
 |---|---|
-| `assets/icon-512.png`, `icon-128.png`, `favicon.png` | `apple/Icon/build/concept-c/art-512.png`, `art-128.png`, `art-32.png` |
-| `assets/hero-gearbox.png` | `apple/Icon/build/hero/hero.png` (2026-10-01, `NEOSCAD=` the v0.2.0 release binary; times in `hero/times.txt`); also the hero video's poster |
+| `assets/icon-512.png`, `icon-128.png`, `favicon.png` | `apple/Icon/build/concept-c/art-512.png`, `art-128.png`, `art-32.png` (`scripts/apple/build-icon.sh c`): the manifest's and touch icons |
+| `assets/icon-64.png` | The header's brand icon, drawn at 30 px (64 for 2x screens): `apple/Icon/build/icon-tool resize apple/Icon/build/concept-c/art-4096.png 64 icon-64.png`, the resize `build-icon.sh` uses for its other sizes (it doesn't make a 64) |
+| `assets/hero-gearbox.png` | The poster's PNG source (`apple/Icon/build/hero/hero.png`, 1.38 MB). No page uses it any more; it stays so that links to it from before the WebP (earlier link previews, the blog's first cover) keep working |
+| `assets/hero-gearbox.webp` | The hero video's poster, the page's largest paint: `apple/Icon/build/hero/hero.png` (2026-10-01, `NEOSCAD=` the v0.2.0 release binary; times in `hero/times.txt`), 2400×1350, as WebP: `cwebp -q 94 -m 6 -sharp_yuv hero.png -o hero-gearbox.webp` (libwebp 1.6.0; 1.38 MB to 193 KB). At 94 the dark gradient shows no banding; lower qualities flatten its dither into steps. Not AVIF: older Safari releases can't decode it, and `poster` takes one URL, so there is no fallback |
+| `assets/hero-gearbox.jpg` | The same PNG as JPEG, for `og:image` and the home page's JSON-LD (link-preview crawlers don't all read WebP): `ffmpeg -i hero.png hero.ppm && cjpeg -quality 90 -optimize -progressive -outfile hero-gearbox.jpg hero.ppm` (libjpeg-turbo 3.1; 239 KB) |
 | `assets/hero-gearbox.mp4`, `hero-share.mp4` | `apple/Icon/build/hero-video/` (`scripts/apple/build-hero-video.sh`; caption times from the same `hero/times.txt`): the page's 120 s loop, and the 4.8 s `og:video` clip for link previews |
 | `assets/bench-20261001-v0.2.0.png` | `conformance bench-chart` on a copy of `progress/bench/20261001T023803Z-6ffc16b.json` whose `short_sha` and `subject` say `v0.2.0` and "NeoSCAD 0.2.0 release binary (PGO build), arm64", since the binary measured is the release's, not a build of the checkout the file name carries |
-| `assets/progress.mp4` | `progress/video/progress.mp4` (`conformance video`, default options: no agent-eval interlude, since eval results are not published) |
-| `assets/snapshot-adapter.png` | `neoscad snapshot examples/site/hose_adapter.scad --dims --size 1280x1280` |
-| `assets/snapshot-issues.png` | `neoscad snapshot examples/site/phone_stand.scad --issues --size 1600x1600` |
+| `assets/progress.mp4` | `progress/video/progress.mp4` (`conformance video`, default options: no agent-eval interlude, since eval results are not published), re-encoded smaller: `ffmpeg -i progress.mp4 -an -c:v libx264 -profile:v high -level:v 4.0 -preset slow -crf 26 -pix_fmt yuv420p -threads 4 -map_metadata -1 -fflags +bitexact -flags:v +bitexact -movflags +faststart out.mp4` (9.9 MB to 6.5 MB; luma SSIM 0.998 against the CRF 20 original, text unchanged to the eye) |
+| `assets/snapshot-adapter.png`, `blog/media/neoscad-and-openscad/snapshot-adapter.png` | `neoscad snapshot examples/site/hose_adapter.scad --dims --size 1280x1280`, as a 256-colour PNG: `ffmpeg -i in.png -vf "split[a][b];[a]palettegen=max_colors=256:stats_mode=full[p];[b][p]paletteuse=dither=none" -compression_level 100 out.png` (64 KB to 37 KB; SSIMULACRA2 94, no difference visible at 2x) |
+| `assets/snapshot-issues.png` | `neoscad snapshot examples/site/phone_stand.scad --issues --size 1600x1600`, as a palette PNG by the same command (32 KB to 20 KB; it has fewer than 256 colours, so the pixels are identical) |
+| `blog/media/neoscad-and-openscad/gearbox.jpg` | The post's cover: a 16:10 crop of `hero/hero.png` above its caption, 960×600, re-encoded with `djpeg -outfile cover.ppm gearbox.jpg && cjpeg -quality 85 -optimize -progressive -outfile gearbox.jpg cover.ppm` (111 KB to 71 KB, no difference visible at 2x) |
 
 The benchmark table in `benchmarks.html` was filled from
 `progress/bench/20261001T023803Z-6ffc16b.json` (the NeoSCAD 0.2.0 release
@@ -91,7 +95,8 @@ Front matter, between `---` lines at the top:
 
 | Key | |
 |---|---|
-| `title`, `date`, `summary` | Required. `date` is `YYYY-MM-DD` and must match the file name; `summary` is the index's blurb, the meta description and the feed's summary |
+| `title`, `date`, `summary` | Required. `date` is `YYYY-MM-DD` and must match the file name; `summary` is the index's blurb and the feed's summary, and the meta description unless `description` is set. The page's `<title>` is `title` plus " · NeoSCAD" when the two fit in 60 characters (search results cut longer titles), else `title` alone; `og:title` is always `title` alone |
+| `description` | Optional, at most about 155 characters: the meta, Open Graph (which X/Twitter cards read) and `BlogPosting` description, for a post whose `summary` is longer than search results show. The summary stays the index's blurb and the feed's summary |
 | `author` | Optional; shown under the title and in the feed |
 | `tags` | Optional, `[one, two]`: lowercase letters, digits and hyphens; each gets a page at `/blog/tags/<tag>/` |
 | `cover`, `cover_alt` | Optional picture at the top of the post and in link previews (`og:image`); use a PNG or JPEG, about 1200×630. `cover_alt` is required with it |

@@ -516,9 +516,20 @@ figcaption {
    copies it into a terminal and concludes the project is broken. */
 .install.unavailable code,
 .cmd-unavailable {
-  opacity: 0.6;
   text-decoration: line-through;
   text-decoration-thickness: 1px;
+}
+
+.install.unavailable code {
+  opacity: 0.6;
+}
+
+/* Dimmed with the muted text colour rather than opacity: at 0.6 opacity the
+   chip's text fell to 2.8:1, under WCAG AA's 4.5:1, and struck-through text
+   is already harder to read. --ns-text-muted on the chip's --ns-surface-2 is
+   7.2:1 in the light scheme and 6.9:1 in the dark. */
+.cmd-unavailable {
+  color: var(--ns-text-muted);
 }
 
 .badge {

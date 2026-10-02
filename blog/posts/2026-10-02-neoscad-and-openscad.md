@@ -2,6 +2,7 @@
 title: "NeoSCAD and OpenSCAD: what's the same, and what NeoSCAD adds"
 date: 2026-10-02
 summary: NeoSCAD runs OpenSCAD's language and libraries unchanged. Here is what stays the same, what NeoSCAD adds (printability checks, measurements, a warm render server, an MCP server for AI agents, an in-browser editor) and where it still differs from OpenSCAD.
+description: NeoSCAD runs OpenSCAD's language and libraries unchanged. Here is what stays the same, what NeoSCAD adds, and where it still differs from OpenSCAD.
 author: The NeoSCAD project
 tags: [openscad, features, agents]
 cover: ../media/neoscad-and-openscad/gearbox.jpg

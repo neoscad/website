@@ -2,6 +2,7 @@
 title: An example post
 date: 2026-10-02
 summary: Placeholder text that shows every feature a post can use. It stays a draft, so it is never published.
+description: Placeholder text that shows every feature a blog post can use.
 author: The NeoSCAD project
 tags: [example, docs]
 cover: ../media/example-post/placeholder-clip.png

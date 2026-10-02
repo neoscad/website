@@ -14,6 +14,7 @@ Copy this into `blog/posts/2026-11-05-my-post.md` (date and slug yours):
 title: The post's title
 date: 2026-11-05
 summary: One or two sentences for the blog index, link previews and the feed.
+description: Optional. At most about 155 characters, for search results and link previews; without it they show the summary.
 author: Your name
 tags: [release, docs]
 cover: ../media/my-post/cover.png
@@ -52,7 +53,15 @@ A footnote.[^1]
 ````
 
 Delete `draft: true` (or set it to `false`) to publish. Optional keys you
-don't use can go: `author`, `tags`, `cover` with `cover_alt`, `updated`.
+don't use can go: `description`, `author`, `tags`, `cover` with
+`cover_alt`, `updated`.
+
+Search engines cut a description after about 155 characters and a page
+title after about 60. If the summary is longer than 155, add a
+`description` in its words that fits. The page's `<title>` is the post's
+title plus " · NeoSCAD" when the two fit in 60 characters, and the title
+alone when they don't; a title over 60 is cut in search results, so keep
+the words that matter first.
 
 ## Media
 

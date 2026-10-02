@@ -8,7 +8,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import hljs from "highlight.js/lib/core";
-import { build, imageSize, parseFrontMatter, write } from "../build.mjs";
+import { build, imageSize, parseFrontMatter, postTitle, write } from "../build.mjs";
 import openscad from "../openscad.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -124,6 +124,41 @@ test("structured data: BlogPosting and breadcrumbs on a post, Blog on the index;
   const sm = files.get("sitemap.xml");
   assert.match(sm, /<loc>https:\/\/neoscad.org\/blog\/<\/loc><lastmod>2026-10-05<\/lastmod>/);
   assert.match(sm, /blog\/tags\/news\/<\/loc><lastmod>2026-10-05<\/lastmod>/);
+});
+
+test("description: the meta, preview and structured-data line; summary stays the index blurb and feed summary", () => {
+  const { files, errors } = run({ "2026-10-03-hello.md": post("Hello.", "description: A short line.\ntags: [news]\n") });
+  assert.deepEqual(errors, []);
+  const html = files.get("blog/hello/index.html");
+  assert.match(html, /<meta name="description" content="A short line.">/);
+  assert.match(html, /<meta property="og:description" content="A short line.">/);
+  assert.doesNotMatch(html, /content="A summary."/);
+  assert.equal(ld(html)[0]["@graph"][0].description, "A short line.");
+  for (const list of ["blog/index.html", "blog/tags/news/index.html"]) {
+    assert.match(files.get(list), /<p>A summary.<\/p>/);
+    assert.doesNotMatch(files.get(list), /A short line/);
+  }
+  assert.match(files.get("blog/feed.xml"), /<summary>A summary.<\/summary>/);
+  assert.doesNotMatch(files.get("blog/feed.xml"), /A short line/);
+});
+
+test("description must be text and not empty", () => {
+  const { errors } = run({ "2026-10-03-a.md": post("x", 'description: ""\n'), "2026-10-03-b.md": post("x", "description: [a, b]\n") });
+  const text = errors.join("\n");
+  assert.match(text, /2026-10-03-a.md: "description" is empty/);
+  assert.match(text, /2026-10-03-b.md: "description" is text, not a list/);
+});
+
+test("<title>: the site suffix only when it fits in 60 characters; og:title is the bare title", () => {
+  assert.equal(postTitle("A post"), "A post · NeoSCAD");
+  assert.equal(postTitle("x".repeat(50)), `${"x".repeat(50)} · NeoSCAD`);
+  assert.equal(postTitle("x".repeat(51)), "x".repeat(51));
+  const long = "NeoSCAD and OpenSCAD: what's the same, and what NeoSCAD adds";
+  const { files, errors } = run({ "2026-10-03-a.md": post("x").replace("title: A post", `title: "${long}"`) });
+  assert.deepEqual(errors, []);
+  const html = files.get("blog/a/index.html");
+  assert.match(html, /<title>NeoSCAD and OpenSCAD: what's the same, and what NeoSCAD adds<\/title>/);
+  assert.match(html, /<meta property="og:title" content="NeoSCAD and OpenSCAD: what's the same, and what NeoSCAD adds">/);
 });
 
 test("an image without alt text fails the build", () => {

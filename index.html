@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NeoSCAD: OpenSCAD's language, rebuilt for speed and for agents</title>
-  <meta name="description" content="NeoSCAD is a new implementation of the OpenSCAD language. It passes 1,773 of OpenSCAD's in-scope regression tests and is about 3.8× faster than the OpenSCAD nightly (Manifold) on heavy models.">
+  <meta name="description" content="OpenSCAD's language, rebuilt in Rust: passes 1,773 of OpenSCAD's in-scope tests, about 3.8× faster than the OpenSCAD nightly on heavy models.">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#f7f7fb" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0a0b14" media="(prefers-color-scheme: dark)">
@@ -13,7 +13,7 @@
   <meta property="og:site_name" content="NeoSCAD">
   <meta property="og:title" content="NeoSCAD">
   <meta property="og:description" content="OpenSCAD's language, rebuilt for speed and for agents.">
-  <meta property="og:image" content="https://neoscad.org/assets/hero-gearbox.png">
+  <meta property="og:image" content="https://neoscad.org/assets/hero-gearbox.jpg">
   <meta property="og:image:width" content="2400">
   <meta property="og:image:height" content="1350">
   <meta property="og:image:alt" content="A herringbone planetary gearbox. Rendered in 1.77 s by NeoSCAD, OpenSCAD nightly: 5.89 s.">
@@ -70,7 +70,7 @@
         "license": "https://spdx.org/licenses/GPL-2.0-or-later.html",
         "isAccessibleForFree": true,
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "image": "https://neoscad.org/assets/hero-gearbox.png",
+        "image": "https://neoscad.org/assets/hero-gearbox.jpg",
         "publisher": { "@id": "https://neoscad.org/#organization" },
         "sameAs": ["https://github.com/neoscad/neoscad"]
       }
@@ -86,7 +86,7 @@
 
   <header class="topbar">
     <div class="wrap">
-      <a class="brand" href="/"><img src="/assets/icon-128.png" alt="" width="30" height="30">NeoSCAD</a>
+      <a class="brand" href="/"><img src="/assets/icon-64.png" alt="" width="30" height="30">NeoSCAD</a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav class="site-nav" id="site-nav" aria-label="Main">
         <ul>
@@ -146,16 +146,19 @@
 
         <figure class="hero-media">
           <!-- A two-minute seamless loop, rendered by NeoSCAD's --animate
-               (scripts/apple/build-hero-video.sh). The poster is the still.
-               site.js adds a Pause button and, under prefers-reduced-motion,
-               stops the autoplay so the still is what shows. One H.264
+               (scripts/apple/build-hero-video.sh). The poster is the still,
+               as WebP: it is the page's largest paint, and poster takes one
+               URL, so it can't offer a PNG fallback; every current browser
+               decodes WebP. Link previews use the JPEG copy (og:image),
+               since not every crawler reads WebP. site.js adds a Pause
+               button and, under prefers-reduced-motion, stops the autoplay so the still is what shows. One H.264
                MP4, which every browser plays: at the chosen quality AV1
                was no smaller. -->
-          <video autoplay muted loop playsinline poster="/assets/hero-gearbox.png"
+          <video autoplay muted loop playsinline poster="/assets/hero-gearbox.webp"
                  width="1920" height="1080"
                  aria-label="A herringbone planetary gearbox turning: a red sun gear drives four teal planet gears, spinning on fixed pins, and a blue ring gear on a grey plinth with a gyroid core. Text in the video: Rendered in 1.77 s by NeoSCAD, OpenSCAD nightly: 5.89 s.">
             <source src="/assets/hero-gearbox.mp4" type='video/mp4; codecs="avc1.640032"'>
-            <img src="/assets/hero-gearbox.png" width="2400" height="1350"
+            <img src="/assets/hero-gearbox.webp" width="2400" height="1350"
                  alt="A herringbone planetary gearbox: a blue ring gear, four teal planet gears and a red sun gear on a grey plinth with a gyroid core. Text in the image: Rendered in 1.77 s by NeoSCAD, OpenSCAD nightly: 5.89 s.">
           </video>
           <figcaption>
@@ -357,7 +360,7 @@ neoscad snapshot part.scad --issues</code></pre>
             <video controls preload="metadata" playsinline width="1920" height="1080"
                    aria-label="Progress video: OpenSCAD's regression tests turning from failing to passing, run by run">
               <source src="/assets/progress.mp4" type="video/mp4">
-              <a href="/assets/progress.mp4">Download the progress video (MP4, 10 MB)</a>.
+              <a href="/assets/progress.mp4">Download the progress video (MP4, 7 MB)</a>.
             </video>
             <figcaption>
               Every recorded conformance run, from the first on 26 September 2026:
