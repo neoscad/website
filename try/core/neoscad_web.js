@@ -76,6 +76,18 @@ export function framesAtLastCheck() {
 }
 
 /**
+ * Whether this core runs statements on the heap (the `heap-eval`
+ * feature): module recursion then takes no stack, and the worker's probes
+ * of it (`children`, `transform`) would only run to the counted depth
+ * limit, which in WebKit's cold tiers took 40 s at start-up.
+ * @returns {boolean}
+ */
+export function heapStatements() {
+    const ret = wasm.heapStatements();
+    return ret !== 0;
+}
+
+/**
  * The message of the panic that crashed the instance, if one did.
  * @returns {string | undefined}
  */
