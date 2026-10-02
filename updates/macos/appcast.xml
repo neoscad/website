@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+  <channel>
+    <title>NeoSCAD</title>
+    <link>https://neoscad.org/</link>
+    <description>Updates to the NeoSCAD app for macOS</description>
+    <language>en</language>
+    <item>
+      <title>NeoSCAD 0.3.0-rc.1</title>
+      <pubDate>Fri, 02 Oct 2026 16:25:56 +0000</pubDate>
+      <link>https://github.com/neoscad/neoscad/releases/tag/v0.3.0-rc.1</link>
+      <sparkle:version>238</sparkle:version>
+      <sparkle:shortVersionString>0.3.0-rc.1</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>15.0.0</sparkle:minimumSystemVersion>
+      <sparkle:channel>rc</sparkle:channel>
+      <description><![CDATA[<h2>NeoSCAD 0.3.0-rc.1</h2><p>A release candidate: a preview of the next version, for testing.</p><p><a href="https://github.com/neoscad/neoscad/releases/tag/v0.3.0-rc.1">Release notes</a></p>]]></description>
+      <enclosure url="https://github.com/neoscad/neoscad/releases/download/v0.3.0-rc.1/NeoSCAD-0.3.0-rc.1-238.dmg" length="21743937" type="application/x-apple-diskimage" sparkle:edSignature="UAZlKOSrBaWwqb4B25MfqzZGBHG7Y2ymyARtZx+jiR6c2a0n/mqaopLhKXiVW283vCxeBR/IwLw9jdw0dU2oDQ=="/>
+    </item>
+  </channel>
+</rss>
+<!-- sparkle-signatures:
+edSignature: LAMRaIsr8/BTnUsACQl4yhbus6cBB9nAmCJspPJQTHbapZV1qLRhzvuKJA3mE/fvXm3plAkkACwOoou/ynqKBQ==
+length: 1277
+-->
