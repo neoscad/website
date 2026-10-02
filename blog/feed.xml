@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>NeoSCAD blog</title>
-  <subtitle>Posts from the NeoSCAD project.</subtitle>
+  <subtitle>Posts from NeoSCAD, a new implementation of the OpenSCAD language.</subtitle>
   <link rel="alternate" type="text/html" href="https://neoscad.org/blog/"/>
   <link rel="self" type="application/atom+xml" href="https://neoscad.org/blog/feed.xml"/>
   <id>https://neoscad.org/blog/</id>

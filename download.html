@@ -3,13 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Pre-launch: keep this page out of search engines. At launch, delete
-       this tag and allow crawling in robots.txt (see the comment there). -->
-  <title>Download NeoSCAD</title>
+  <title>Download NeoSCAD for macOS, Linux and Windows</title>
   <meta name="description" content="NeoSCAD downloads for macOS, Linux and Windows, package managers, source and nightly builds, and the status of each.">
   <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f7f7fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0b14" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://neoscad.org/download.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="NeoSCAD">
+  <meta property="og:title" content="Download NeoSCAD for macOS, Linux and Windows">
+  <meta property="og:description" content="NeoSCAD downloads for macOS, Linux and Windows, package managers, source and nightly builds, and the status of each.">
+  <meta property="og:url" content="https://neoscad.org/download.html">
+  <meta property="og:image" content="https://neoscad.org/assets/icon-512.png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta property="og:image:alt" content="The NeoSCAD icon: a threaded ring">
+  <meta name="twitter:card" content="summary">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
   <link rel="apple-touch-icon" href="/assets/icon-512.png">
+  <link rel="manifest" href="/site.webmanifest">
   <link rel="stylesheet" href="/theme.css">
   <link rel="stylesheet" href="/styles.css">
   <script src="/site.js"></script>
@@ -140,7 +152,8 @@
               <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/NeoSCAD-0.2.1-linux-aarch64.flatpak">aarch64</a>
               (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/NeoSCAD-0.2.1-linux-aarch64.flatpak.sha256">sha256</a>)
               <span class="dl-note">A GTK 4 app: editor with the language server,
-                live preview, 3D view, console, examples and export.
+                live preview, 3D view, console, examples, export, and check,
+                measure and customizer panels.
                 <code>flatpak install --user NeoSCAD-0.2.1-linux-x86_64.flatpak</code>;
                 it pulls the GNOME runtime from Flathub. Not on Flathub itself, and
                 <code>flatpak update</code> won't find new releases yet: install the
@@ -204,7 +217,8 @@
               <a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/NeoSCAD-0.2.1-windows-arm64.msi">ARM64</a>
               (<a href="https://github.com/neoscad/neoscad/releases/download/v0.2.1/NeoSCAD-0.2.1-windows-arm64.msi.sha256">sha256</a>)
               <span class="dl-note">A WinUI 3 app: editor, live preview, 3D view,
-                console, examples and export. Installs for all users with a
+                console, examples, export, and check, measure and customizer
+                panels. Installs for all users with a
                 Start-menu entry and "Open with" for <code>.scad</code> files.
                 Needs the WebView2 runtime, which Windows 11 has. Unsigned (see
                 above).</span></span>

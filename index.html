@@ -3,11 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Pre-launch: keep this page out of search engines. At launch, delete
-       this tag and allow crawling in robots.txt (see the comment there). -->
   <title>NeoSCAD: OpenSCAD's language, rebuilt for speed and for agents</title>
   <meta name="description" content="NeoSCAD is a new implementation of the OpenSCAD language. It passes 1,773 of OpenSCAD's in-scope regression tests and is about 3.8× faster than the OpenSCAD nightly (Manifold) on heavy models.">
   <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f7f7fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0b14" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://neoscad.org/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="NeoSCAD">
   <meta property="og:title" content="NeoSCAD">
   <meta property="og:description" content="OpenSCAD's language, rebuilt for speed and for agents.">
   <meta property="og:image" content="https://neoscad.org/assets/hero-gearbox.png">
@@ -24,8 +27,56 @@
   <meta property="og:video:width" content="1280">
   <meta property="og:video:height" content="720">
   <meta property="og:url" content="https://neoscad.org/">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
   <link rel="apple-touch-icon" href="/assets/icon-512.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <!-- Structured data for search engines: who publishes the site, the
+       site's name, and the software itself. Every fact here is also on
+       this page (licence, platforms, free, downloads); keep the two in
+       step. Google shows no rich result for SoftwareApplication without
+       a rating or review, and none is invented here: the markup still
+       tells it what NeoSCAD is. A JSON-LD block is data, not script, so
+       no CSP blocks it. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://neoscad.org/#organization",
+        "name": "NeoSCAD",
+        "url": "https://neoscad.org/",
+        "logo": "https://neoscad.org/assets/icon-512.png",
+        "sameAs": ["https://github.com/neoscad"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://neoscad.org/#website",
+        "name": "NeoSCAD",
+        "url": "https://neoscad.org/",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://neoscad.org/#organization" }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://neoscad.org/#software",
+        "name": "NeoSCAD",
+        "description": "A new implementation of the OpenSCAD language, in Rust: a command-line tool, desktop apps and an in-browser editor that run your .scad files and libraries as they are.",
+        "url": "https://neoscad.org/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "macOS, Linux, Windows",
+        "downloadUrl": "https://neoscad.org/download.html",
+        "license": "https://spdx.org/licenses/GPL-2.0-or-later.html",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "image": "https://neoscad.org/assets/hero-gearbox.png",
+        "publisher": { "@id": "https://neoscad.org/#organization" },
+        "sameAs": ["https://github.com/neoscad/neoscad"]
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="/theme.css">
   <link rel="stylesheet" href="/styles.css">
   <script src="/site.js"></script>
@@ -82,7 +133,7 @@
           the 3D view and point at what it means, while you watch.
         </p>
         <p class="small muted">
-          NeoSCAD 0.2.0: a command-line tool for macOS, Linux and Windows (x86_64
+          NeoSCAD 0.2.1: a command-line tool for macOS, Linux and Windows (x86_64
           and ARM), an app for macOS 15 or later (Apple silicon and Intel), and
           preview apps for Windows and Linux.
         </p>
@@ -337,9 +388,9 @@ neoscad snapshot part.scad --issues</code></pre>
             <li>We don't know of a model where it is slower than the nightly, but
               we have measured only so many; if you find one, please
               <a href="https://github.com/neoscad/neoscad/issues">open an issue</a>.</li>
-            <li>The Windows and Linux apps are previews: editor, live preview,
-              3D view, console and export, but not yet the macOS app's check,
-              measure and customizer panels.</li>
+            <li>The Windows and Linux apps are still previews, though since
+              0.2.1 they have the macOS app's check, measure and customizer
+              panels too.</li>
           </ul>
           <p class="small">
             NeoSCAD is an independent project. It is not affiliated with or

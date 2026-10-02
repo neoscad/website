@@ -1,0 +1,13 @@
+{
+  "name": "NeoSCAD",
+  "short_name": "NeoSCAD",
+  "description": "A new implementation of the OpenSCAD language.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#f7f7fb",
+  "theme_color": "#f7f7fb",
+  "icons": [
+    { "src": "/assets/icon-128.png", "sizes": "128x128", "type": "image/png" },
+    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

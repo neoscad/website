@@ -28,7 +28,7 @@ const INDEX = `<!doctype html><html><body>
 function site(posts = {}) {
   const root = mkdtempSync(join(tmpdir(), "blog-test-"));
   writeFileSync(join(root, "index.html"), INDEX);
-  for (const f of ["theme.css", "styles.css", "site.js", "blog.js", "favicon.png", "download.html"]) writeFileSync(join(root, f), "");
+  for (const f of ["theme.css", "styles.css", "site.js", "blog.js", "favicon.png", "download.html", "site.webmanifest"]) writeFileSync(join(root, f), "");
   mkdirSync(join(root, "assets"));
   writeFileSync(join(root, "assets/icon-512.png"), "");
   writeFileSync(join(root, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset>\n  <url><loc>https://neoscad.org/</loc></url>\n</urlset>\n`);
@@ -88,6 +88,42 @@ test("a published post: page, feed entry, sitemap line, tag page, meta tags", ()
   assert.match(files.get("blog/feed.xml"), /href=&quot;https:\/\/neoscad.org\/&quot;/);
   assert.match(files.get("sitemap.xml"), /blog\/hello\/<\/loc><lastmod>2026-10-03/);
   assert.ok(files.has("blog/tags/news/index.html"));
+});
+
+// Every JSON-LD block on a page, parsed: a block that isn't valid JSON fails here.
+const ld = (html) => [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));
+
+test("structured data: BlogPosting and breadcrumbs on a post, Blog on the index; lastmod on list pages", () => {
+  const { files, errors } = run({
+    "2026-10-03-hello.md": post("Hello.", "tags: [news]\nauthor: Ada </script><b>\nupdated: 2026-10-05\n"),
+    "2026-10-04-two.md": post("Two.", "author: The NeoSCAD project\n").replace("2026-10-03", "2026-10-04"),
+  });
+  assert.deepEqual(errors, []);
+  const html = files.get("blog/hello/index.html");
+  // The author's "</script>" can't end the block early.
+  assert.doesNotMatch(html, /Ada <\/script>/);
+  const [data] = ld(html);
+  assert.equal(data["@context"], "https://schema.org");
+  const [article, crumbs] = data["@graph"];
+  assert.equal(article["@type"], "BlogPosting");
+  assert.equal(article.headline, "A post");
+  assert.equal(article.datePublished, "2026-10-03");
+  assert.equal(article.dateModified, "2026-10-05");
+  assert.deepEqual(article.author, { "@type": "Person", name: "Ada </script><b>" });
+  assert.equal(article.image, "https://neoscad.org/assets/icon-512.png");
+  assert.deepEqual(crumbs.itemListElement.map((i) => [i.position, i.name, i.item]), [
+    [1, "Home", "https://neoscad.org/"],
+    [2, "Blog", "https://neoscad.org/blog/"],
+    [3, "A post", undefined],
+  ]);
+  assert.match(html, /<meta property="og:title" content="A post">/);
+  assert.match(html, /<meta property="article:modified_time" content="2026-10-05">/);
+  assert.equal(ld(files.get("blog/two/index.html"))[0]["@graph"][0].author["@type"], "Organization");
+  assert.equal(ld(files.get("blog/index.html"))[0]["@graph"][0]["@type"], "Blog");
+  assert.equal(ld(files.get("blog/tags/news/index.html"))[0]["@type"], "BreadcrumbList");
+  const sm = files.get("sitemap.xml");
+  assert.match(sm, /<loc>https:\/\/neoscad.org\/blog\/<\/loc><lastmod>2026-10-05<\/lastmod>/);
+  assert.match(sm, /blog\/tags\/news\/<\/loc><lastmod>2026-10-05<\/lastmod>/);
 });
 
 test("an image without alt text fails the build", () => {

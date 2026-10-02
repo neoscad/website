@@ -46,7 +46,10 @@ import openscad from "./openscad.mjs";
 
 export const SITE = "https://neoscad.org";
 const BLOG_TITLE = "NeoSCAD blog";
-const BLOG_SUMMARY = "Posts from the NeoSCAD project.";
+// The blog index's lede, meta description and the feed's subtitle. It
+// says what NeoSCAD is, in the home page's words, because a search result
+// for /blog/ shows this line to readers who have never heard of it.
+const BLOG_SUMMARY = "Posts from NeoSCAD, a new implementation of the OpenSCAD language.";
 // The feed's <updated> while there are no posts. Atom requires the element
 // and the output must not depend on the clock, so it is the day the blog
 // was added; the first post replaces it.
@@ -552,7 +555,40 @@ function csp({ youtube }) {
   ].join("; ");
 }
 
-function page({ chrome: ch, current, title, description, path, type, image, published, noindex, youtube, source, body }) {
+/// A JSON-LD block for the head. JSON can hold "</script>", which would
+/// end the element early and let the rest be read as markup, so "<" is
+/// written as its JSON escape. A browser treats the block as data, not
+/// script: the pages' CSP (script-src 'self') neither blocks nor reports it.
+function jsonLd(data) {
+  return `\n  <script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", ...data }).replace(/</g, "\\u003c")}</script>`;
+}
+
+const ORGANIZATION = { "@type": "Organization", "@id": `${SITE}/#organization`, name: "NeoSCAD", url: `${SITE}/` };
+
+/// Breadcrumbs for search results: Home, Blog, then the page itself, which
+/// needs no URL (Google uses the page's own). `trail` is [name, path] pairs.
+function breadcrumbs(trail) {
+  return {
+    "@type": "BreadcrumbList",
+    itemListElement: trail.map(([name, path], i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name,
+      ...(path ? { item: `${SITE}${path}` } : {}),
+    })),
+  };
+}
+
+/// A post's author for structured data. Front matter gives only a name;
+/// the project's own name ("The NeoSCAD project") is the organisation
+/// that publishes the site, anything else a person. Google's guidelines ask
+/// for the right type, and an organisation marked as a Person is wrong.
+function authorLd(name) {
+  if (!name || /neoscad/i.test(name)) return ORGANIZATION;
+  return { "@type": "Person", name };
+}
+
+function page({ chrome: ch, current, title, ogTitle, description, path, type, image, published, modified, noindex, youtube, source, structured, body }) {
   const img = image ?? DEFAULT_IMAGE;
   const header = current ? ch.header.replace('<a href="/blog/">', '<a href="/blog/" aria-current="page">') : ch.header;
   return `<!doctype html>
@@ -564,25 +600,28 @@ function page({ chrome: ch, current, title, description, path, type, image, publ
   <meta http-equiv="Content-Security-Policy" content="${csp({ youtube })}">
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(description)}">
-  <meta name="color-scheme" content="light dark">${noindex ? '\n  <meta name="robots" content="noindex">' : ""}
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f7f7fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0b14" media="(prefers-color-scheme: dark)">${noindex ? '\n  <meta name="robots" content="noindex">' : ""}
   <link rel="canonical" href="${SITE}${path}">
   <meta property="og:type" content="${type}">
   <meta property="og:site_name" content="NeoSCAD">
-  <meta property="og:title" content="${esc(title)}">
+  <meta property="og:title" content="${esc(ogTitle ?? title)}">
   <meta property="og:description" content="${esc(description)}">
   <meta property="og:url" content="${SITE}${path}">
   <meta property="og:image" content="${SITE}${esc(img.url)}">
   <meta property="og:image:width" content="${img.width}">
   <meta property="og:image:height" content="${img.height}">
-  <meta property="og:image:alt" content="${esc(img.alt)}">${published ? `\n  <meta property="article:published_time" content="${published}">` : ""}
+  <meta property="og:image:alt" content="${esc(img.alt)}">${published ? `\n  <meta property="article:published_time" content="${published}">` : ""}${modified && modified !== published ? `\n  <meta property="article:modified_time" content="${modified}">` : ""}
   <meta name="twitter:card" content="${image ? "summary_large_image" : "summary"}">
   <link rel="alternate" type="application/atom+xml" title="${BLOG_TITLE}" href="/blog/feed.xml">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
   <link rel="apple-touch-icon" href="/assets/icon-512.png">
+  <link rel="manifest" href="/site.webmanifest">
   <link rel="stylesheet" href="/theme.css">
   <link rel="stylesheet" href="/styles.css">
   <script src="/site.js"></script>
-  <script src="/blog.js" defer></script>
+  <script src="/blog.js" defer></script>${structured ? jsonLd(structured) : ""}
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -632,7 +671,7 @@ function postList(posts, empty) {
   return `      <ol class="post-list">\n${items.join("\n")}\n      </ol>`;
 }
 
-function listPage(ch, { title, eyebrow, heading, lede, path, posts, empty, noindex }) {
+function listPage(ch, { title, eyebrow, heading, lede, path, posts, empty, noindex, structured }) {
   return page({
     chrome: ch,
     current: true,
@@ -641,6 +680,7 @@ function listPage(ch, { title, eyebrow, heading, lede, path, posts, empty, noind
     path,
     type: "website",
     noindex,
+    structured,
     body: `    <section class="hero blog-hero" aria-labelledby="blog-title">
       <div class="wrap prose">
         <p class="eyebrow">${eyebrow}</p>
@@ -670,12 +710,36 @@ function postPage(ch, post) {
     chrome: ch,
     current: true,
     title: `${post.title} · NeoSCAD`,
+    // The preview card shows og:site_name beside the title already.
+    ogTitle: post.title,
     description: post.summary,
     path: `/blog/${post.slug}/`,
     type: "article",
     image: post.cover,
     published: post.date,
+    modified: post.updatedIso.slice(0, 10),
     noindex: post.draft,
+    structured: {
+      "@graph": [
+        {
+          "@type": "BlogPosting",
+          "@id": `${SITE}/blog/${post.slug}/#post`,
+          headline: post.title,
+          description: post.summary,
+          url: `${SITE}/blog/${post.slug}/`,
+          mainEntityOfPage: `${SITE}/blog/${post.slug}/`,
+          datePublished: post.date,
+          dateModified: post.updatedIso.slice(0, 10),
+          image: `${SITE}${(post.cover ?? DEFAULT_IMAGE).url}`,
+          author: authorLd(post.author),
+          publisher: { ...ORGANIZATION, logo: `${SITE}/assets/icon-512.png` },
+          inLanguage: "en",
+          ...(post.tags.length ? { keywords: post.tags.join(", ") } : {}),
+          isPartOf: { "@type": "Blog", "@id": `${SITE}/blog/#blog` },
+        },
+        breadcrumbs([["Home", "/"], ["Blog", "/blog/"], [post.title]]),
+      ],
+    },
     youtube: post.youtube,
     source: post.source,
     body: `    <article class="post" aria-labelledby="post-title">
@@ -732,10 +796,18 @@ ${entries.join("\n")}${entries.length ? "\n" : ""}</feed>
 const SITEMAP_START = "  <!-- Blog: written by tools/blog/build.mjs; edit outside these markers. -->";
 const SITEMAP_END = "  <!-- /Blog -->";
 
+/// A list page changes when one of its posts does, so its lastmod is the
+/// newest of theirs. Without one, a crawler has no hint that /blog/ has a
+/// new post until it happens to revisit.
+function lastmod(posts) {
+  const latest = posts.map((p) => p.updatedIso.slice(0, 10)).sort().at(-1);
+  return latest ? `<lastmod>${latest}</lastmod>` : "";
+}
+
 function sitemap(text, posts, tags, errors) {
-  const lines = [`  <url><loc>${SITE}/blog/</loc></url>`];
-  for (const p of posts) lines.push(`  <url><loc>${SITE}/blog/${p.slug}/</loc><lastmod>${p.updatedIso.slice(0, 10)}</lastmod></url>`);
-  for (const t of tags) lines.push(`  <url><loc>${SITE}/blog/tags/${t}/</loc></url>`);
+  const lines = [`  <url><loc>${SITE}/blog/</loc>${lastmod(posts)}</url>`];
+  for (const p of posts) lines.push(`  <url><loc>${SITE}/blog/${p.slug}/</loc>${lastmod([p])}</url>`);
+  for (const t of tags) lines.push(`  <url><loc>${SITE}/blog/tags/${t}/</loc>${lastmod(posts.filter((p) => p.tags.includes(t)))}</url>`);
   const block = `${SITEMAP_START}\n${lines.join("\n")}\n${SITEMAP_END}\n`;
   const start = text.indexOf(SITEMAP_START);
   const end = text.indexOf(SITEMAP_END);
@@ -856,6 +928,20 @@ export function build({ root, drafts = false }) {
       posts: shown,
       empty: "No posts yet. The Atom feed will have them as they're published.",
       noindex: drafts && shown.some((p) => p.draft),
+      structured: {
+        "@graph": [
+          {
+            "@type": "Blog",
+            "@id": `${SITE}/blog/#blog`,
+            name: BLOG_TITLE,
+            description: BLOG_SUMMARY,
+            url: `${SITE}/blog/`,
+            inLanguage: "en",
+            publisher: ORGANIZATION,
+          },
+          breadcrumbs([["Home", "/"], ["Blog"]]),
+        ],
+      },
     }),
   );
   for (const p of shown) files.set(`blog/${p.slug}/index.html`, postPage(ch, p));
@@ -873,6 +959,7 @@ export function build({ root, drafts = false }) {
         posts: tagged,
         empty: "",
         noindex: tagged.every((p) => p.draft),
+        structured: breadcrumbs([["Home", "/"], ["Blog", "/blog/"], [`Tagged “${t}”`]]),
       }),
     );
   }

@@ -17,7 +17,7 @@ which `community.html` needs to show its results.
 | Path | What |
 |---|---|
 | `index.html` | Home: hero, numbers, one benchmark chart, three pillars, the printability check, "built in the open" (progress video and AI-authorship disclosure), coming from OpenSCAD, credits, FAQ |
-| `download.html` | Downloads by platform (links to the v0.1.1 GitHub release), package managers, source, nightly, with a status on every entry |
+| `download.html` | Downloads by platform (links to the latest GitHub release), package managers, source, nightly, with a status on every entry |
 | `benchmarks.html` | Method, machine, chart, the full results table, the edit loop and caveats |
 | `community.html`, `community.js` | Community benchmark results: fetches `summary.json` from the `neoscad/benchmarks` repository (raw.githubusercontent.com, the only other origin any page contacts; the page's CSP allows only that) and renders it per release, platform and run |
 | `try/index.html` | Placeholder for the in-browser demo; the whole `try/` directory is replaced by the demo bundle |
@@ -33,12 +33,25 @@ which `community.html` needs to show its results.
 | `site.js` | Mobile navigation toggle; hero video Pause/Play button, and no autoplay under `prefers-reduced-motion` (the hero's and blog posts') |
 | `site.json` | Site name, home, theme and nav links, read by the `/try` bundle's top bar |
 | `favicon.png` | 32×32 icon |
+| `site.webmanifest` | Name, icons and colours for "Add to Home Screen" and browsers' tab colour; every page links it, with `theme-color` metas matching `theme.css`'s `--ns-bg` (light and dark) |
 | `assets/` | Images and video, copied unchanged from the NeoSCAD repo (below) |
 | `CNAME` | `neoscad.org`, the Pages custom domain |
 | `.nojekyll` | Tells Pages to serve the files as they are, without Jekyll |
 | `robots.txt` | Allows every crawler and agent, and points to `sitemap.xml` |
-| `sitemap.xml` | The site's pages, for crawlers; add a line for a new page (outside the "Blog" markers: the blog's lines are generated) |
+| `sitemap.xml` | The site's pages, for crawlers; add a line for a new page (outside the "Blog" markers: the blog's lines are generated, with a `lastmod` from the posts' dates). The hand-written pages carry no `lastmod`: release jobs edit `download.html` without touching this file, and a stale date is worse than none |
 | `donate/` | `neoscad.org/donate`, a redirect to the Givebutter campaign (givebutter.com/neoscad): a stable link for the README, release notes and apps |
+
+### Search engines and link previews
+
+Every page has a `<link rel="canonical">` to its `https://neoscad.org`
+address, so `/index.html`, `/download` (which Pages also serves) and
+`http://` or `www.` variants count as one page, and Open Graph and
+`twitter:card` tags for link previews; a new page needs the same set
+(copy the head of `benchmarks.html`). The home page carries JSON-LD
+structured data (`Organization`, `WebSite`, `SoftwareApplication`), whose
+facts must stay in step with the page's text; the blog generator writes
+`BlogPosting`, `Blog` and `BreadcrumbList` blocks. A JSON-LD block is data,
+not script, so the pages' CSP allows it.
 
 All internal links are root-relative (`/download.html`, `/try/`), which
 works on Pages at the apex domain and under `python3 -m http.server`, but
