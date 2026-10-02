@@ -8,7 +8,7 @@ authoring tool with its own lockfile): it turns Markdown posts into
 static HTML, which is committed like every other page (see
 [Writing a post](#writing-a-post)). The scripts are `site.js`, a mobile
 menu toggle, the hero video's Pause button and reduced-motion stop, and
-the home page's install picker, which the pages work without; `blog.js`, the blog's Copy buttons and
+tab groups with Copy buttons (the install boxes on the home and agents pages, and the agents page's setup per client), which the pages work without; `blog.js`, the blog's Copy buttons and
 click-to-load YouTube, which the posts work without; and `community.js`,
 which `community.html` needs to show its results.
 
@@ -30,8 +30,8 @@ which `community.html` needs to show its results.
 | `tools/blog/` | The blog's renderer (Node 20+, pinned in `package-lock.json`), its OpenSCAD grammar and tests; not part of the served site |
 | `.github/workflows/blog.yml` | CI: rebuilds the blog and fails if the committed pages differ |
 | `theme.css` | Design tokens (colours, fonts, sizes) as CSS custom properties, light and dark. **A contract with the `/try` bundle**: rename a token only together with the bundle |
-| `styles.css` | Layout and components; uses only `theme.css`'s properties |
-| `site.js` | Mobile navigation toggle; hero video Pause/Play button, and no autoplay under `prefers-reduced-motion` (the hero's and blog posts'); the home page's install picker: tabs per platform, the visitor's platform preselected (set as `data-install` on `<html>` before the first paint, so nothing shifts), and Copy buttons. Without scripts the picker shows every platform, stacked. Its commands are the ones `download.html` marks Available; keep the two in step |
+| `styles.css` | Layout and components; uses only `theme.css`'s properties. Its "Tabs" section is the tab groups' markup contract and their first-paint rules; `.tabs-box` is the dark install-box skin |
+| `site.js` | Mobile navigation toggle; hero video Pause/Play button, and no autoplay under `prefers-reduced-motion` (the hero's and blog posts'); tab groups and Copy buttons. A tab group is a `.tabs` element (markup in `site.js`'s comment) that becomes WAI-ARIA tabs: arrow keys wrap, Home and End, selection follows focus. The first tab is the default, shown by CSS before the script runs; with `data-detect="os"` the visitor's platform is chosen instead, or the one they last chose in this visit (sessionStorage, so a choice on the home page carries to the agents page), set as `data-os` on `<html>` before the first paint, so nothing shifts. A `button.copy-button[data-copy=ID]` copies element ID's text, or selects it where the clipboard isn't available. Without scripts every panel shows, stacked under its label, and the tabs and Copy buttons are hidden. The install boxes' commands (`index.html` and `agents.html`, `#install`) are the ones `download.html` marks Available; keep the three in step |
 | `site.json` | Site name, home, theme and nav links, read by the `/try` bundle's top bar |
 | `favicon.png` | 32×32 icon |
 | `site.webmanifest` | Name, icons and colours for "Add to Home Screen" and browsers' tab colour; every page links it, with `theme-color` metas matching `theme.css`'s `--ns-bg` (light and dark) |

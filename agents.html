@@ -149,9 +149,67 @@
           it can look at. It runs on your computer, on your
           <code>.scad</code> files and libraries.
         </p>
-        <p>Install NeoSCAD, then add the server to Claude Code:</p>
-<pre><code>brew install neoscad/tap/neoscad
-claude mcp add neoscad -- neoscad mcp</code></pre>
+        <p>Install <code>neoscad</code>, the command-line tool; the MCP server is part of it.</p>
+        <!-- The same install box as the home page's (tab groups: site.js
+             and styles.css, "Tabs"), with only the command-line tool, which
+             is what an agent needs. Keep its commands in step with the home
+             page's and with what download.html marks Available. The
+             visitor's platform is chosen before the page is drawn, or the
+             one they chose on the home page in this visit. The Browser
+             panel is honest that /try's agent bridge still needs neoscad on
+             a desktop computer (the #browser section below). -->
+        <div class="tabs tabs-box" id="install" data-tabs="install" data-detect="os">
+          <div class="tabs-list" role="tablist" aria-label="Install NeoSCAD on">
+            <button type="button" role="tab" id="install-tab-macos" aria-controls="install-macos" data-tab="macos" aria-selected="true">macOS</button>
+            <button type="button" role="tab" id="install-tab-linux" aria-controls="install-linux" data-tab="linux" aria-selected="false" tabindex="-1">Linux</button>
+            <button type="button" role="tab" id="install-tab-windows" aria-controls="install-windows" data-tab="windows" aria-selected="false" tabindex="-1">Windows</button>
+            <button type="button" role="tab" id="install-tab-browser" aria-controls="install-browser" data-tab="browser" aria-selected="false" tabindex="-1">Browser</button>
+          </div>
+          <div class="tabs-panels">
+            <div class="tabs-panel install-panel" id="install-macos" data-tab="macos">
+              <p class="tabs-label">macOS</p>
+              <div class="install-cmd">
+                <span class="install-what">Command-line tool</span>
+                <code id="install-cmd-mac-cli">brew install neoscad/tap/neoscad</code>
+                <button type="button" class="copy-button" data-copy="install-cmd-mac-cli" aria-describedby="install-cmd-mac-cli">Copy</button>
+              </div>
+              <p class="install-more">The app and more on the <a href="/download.html#macos">Download page</a></p>
+            </div>
+            <div class="tabs-panel install-panel" id="install-linux" data-tab="linux">
+              <p class="tabs-label">Linux</p>
+              <div class="install-cmd">
+                <span class="install-what">Command-line tool</span>
+                <code id="install-cmd-linux-cli">brew install neoscad/tap/neoscad</code>
+                <button type="button" class="copy-button" data-copy="install-cmd-linux-cli" aria-describedby="install-cmd-linux-cli">Copy</button>
+              </div>
+              <p class="install-more">.deb, .rpm and more on the <a href="/download.html#linux">Download page</a></p>
+            </div>
+            <div class="tabs-panel install-panel" id="install-windows" data-tab="windows">
+              <p class="tabs-label">Windows</p>
+              <div class="install-cmd">
+                <span class="install-what">Command-line tool</span>
+                <code id="install-cmd-win-bucket">scoop bucket add neoscad https://github.com/neoscad/scoop-bucket</code>
+                <button type="button" class="copy-button" data-copy="install-cmd-win-bucket" aria-describedby="install-cmd-win-bucket">Copy</button>
+              </div>
+              <div class="install-cmd">
+                <span class="install-what">then</span>
+                <code id="install-cmd-win-cli">scoop install neoscad</code>
+                <button type="button" class="copy-button" data-copy="install-cmd-win-cli" aria-describedby="install-cmd-win-cli">Copy</button>
+              </div>
+              <p class="install-more">MSIs and more on the <a href="/download.html#windows">Download page</a></p>
+            </div>
+            <div class="tabs-panel install-panel" id="install-browser" data-tab="browser">
+              <p class="tabs-label">In the browser</p>
+              <p class="install-try"><a href="/try/#agent">Connect your AI agent</a> at neoscad.org/try lets your agent work on the model open in that page. The agent still runs <code>neoscad</code> on a desktop computer, so install it there first (macOS, Linux or Windows, above) and add the server with <code>--browser</code>: <a href="#browser">In your browser</a> has the steps. Phones can't connect.</p>
+            </div>
+          </div>
+        </div>
+        <p>Then add the server to Claude Code, in your project (Cursor, VS Code
+          and other clients: <a href="#setup">Setup</a>):</p>
+        <div class="code-block hero-code">
+          <div class="code-bar"><span class="code-lang">shell</span><button type="button" class="copy-button" data-copy="hero-add" aria-describedby="hero-add">Copy</button></div>
+<pre><code id="hero-add">claude mcp add neoscad -- neoscad mcp</code></pre>
+        </div>
         <div class="hero-actions">
           <a class="button button-primary" href="/download.html">Download NeoSCAD</a>
           <a class="button button-agent" href="/try/#agent"><span class="agent-spark" aria-hidden="true">✦</span> <span class="grad">Connect your AI agent</span></a>
@@ -226,22 +284,39 @@ claude mcp add neoscad -- neoscad mcp</code></pre>
           Linux or Windows: see <a href="/download.html">downloads</a>. The MCP
           server is part of it. Then add it to your agent.
         </p>
-        <div class="grid-2">
-          <div>
-            <h3>Claude Code</h3>
-            <p>In a terminal, in your project:</p>
-<pre><code>claude mcp add neoscad -- neoscad mcp</code></pre>
-            <p>
-              <code>claude mcp list</code> then shows <code>neoscad</code> as
-              connected. Add <code>-s user</code> after <code>add</code> to have
-              it in every project.
-            </p>
+        <!-- One tab per client (site.js and styles.css, "Tabs"); Claude
+             Code, the first, is the default. Without scripts every client's
+             setup shows, stacked under its heading. With scripts the
+             headings stay in the page for screen readers and search but
+             aren't drawn, since the tab says the same. -->
+        <div class="tabs prose" id="setup-clients" data-tabs="client">
+          <div class="tabs-list" role="tablist" aria-label="Agent">
+            <button type="button" role="tab" id="setup-tab-claude" aria-controls="setup-claude" data-tab="claude" aria-selected="true">Claude Code</button>
+            <button type="button" role="tab" id="setup-tab-cursor" aria-controls="setup-cursor" data-tab="cursor" aria-selected="false" tabindex="-1">Cursor</button>
+            <button type="button" role="tab" id="setup-tab-vscode" aria-controls="setup-vscode" data-tab="vscode" aria-selected="false" tabindex="-1">VS Code</button>
+            <button type="button" role="tab" id="setup-tab-other" aria-controls="setup-other" data-tab="other" aria-selected="false" tabindex="-1">Other MCP clients</button>
           </div>
-          <div>
-            <h3>Cursor</h3>
-            <p>In <code>.cursor/mcp.json</code> in your project, or
-              <code>~/.cursor/mcp.json</code> for all of them:</p>
-<pre><code>{
+          <div class="tabs-panels">
+            <div class="tabs-panel" id="setup-claude" data-tab="claude">
+              <h3 class="tabs-label">Claude Code</h3>
+              <p>In a terminal, in your project:</p>
+              <div class="code-block">
+                <div class="code-bar"><span class="code-lang">shell</span><button type="button" class="copy-button" data-copy="setup-code-claude" aria-describedby="setup-code-claude">Copy</button></div>
+<pre><code id="setup-code-claude">claude mcp add neoscad -- neoscad mcp</code></pre>
+              </div>
+              <p>
+                <code>claude mcp list</code> then shows <code>neoscad</code> as
+                connected. Add <code>-s user</code> after <code>add</code> to have
+                it in every project.
+              </p>
+            </div>
+            <div class="tabs-panel" id="setup-cursor" data-tab="cursor">
+              <h3 class="tabs-label" id="setup-title-cursor">Cursor</h3>
+              <p>In <code>.cursor/mcp.json</code> in your project, or
+                <code>~/.cursor/mcp.json</code> for all of them:</p>
+              <div class="code-block">
+                <div class="code-bar"><span class="code-lang">json</span><button type="button" class="copy-button" data-copy="setup-code-cursor" aria-describedby="setup-title-cursor">Copy</button></div>
+<pre><code id="setup-code-cursor">{
   "mcpServers": {
     "neoscad": {
       "command": "neoscad",
@@ -249,13 +324,14 @@ claude mcp add neoscad -- neoscad mcp</code></pre>
     }
   }
 }</code></pre>
-          </div>
-        </div>
-        <div class="grid-2 setup-more">
-          <div>
-            <h3>VS Code</h3>
-            <p>In <code>.vscode/mcp.json</code>:</p>
-<pre><code>{
+              </div>
+            </div>
+            <div class="tabs-panel" id="setup-vscode" data-tab="vscode">
+              <h3 class="tabs-label" id="setup-title-vscode">VS Code</h3>
+              <p>In <code>.vscode/mcp.json</code>:</p>
+              <div class="code-block">
+                <div class="code-bar"><span class="code-lang">json</span><button type="button" class="copy-button" data-copy="setup-code-vscode" aria-describedby="setup-title-vscode">Copy</button></div>
+<pre><code id="setup-code-vscode">{
   "servers": {
     "neoscad": {
       "type": "stdio",
@@ -264,12 +340,15 @@ claude mcp add neoscad -- neoscad mcp</code></pre>
     }
   }
 }</code></pre>
-          </div>
-          <div>
-            <h3>Any MCP client</h3>
-            <p>Run <code>neoscad mcp</code> as a stdio server. Most clients take
-              this shape:</p>
-<pre><code>{
+              </div>
+            </div>
+            <div class="tabs-panel" id="setup-other" data-tab="other">
+              <h3 class="tabs-label" id="setup-title-other">Other MCP clients</h3>
+              <p>Run <code>neoscad mcp</code> as a stdio server. Most clients take
+                this shape:</p>
+              <div class="code-block">
+                <div class="code-bar"><span class="code-lang">json</span><button type="button" class="copy-button" data-copy="setup-code-other" aria-describedby="setup-title-other">Copy</button></div>
+<pre><code id="setup-code-other">{
   "mcpServers": {
     "neoscad": {
       "command": "neoscad",
@@ -277,6 +356,8 @@ claude mcp add neoscad -- neoscad mcp</code></pre>
     }
   }
 }</code></pre>
+              </div>
+            </div>
           </div>
         </div>
         <p class="small muted prose">

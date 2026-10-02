@@ -115,67 +115,69 @@
           about 3.8× faster than the OpenSCAD nightly (Manifold) on heavy models.
         </p>
 
-        <!-- Install, per platform. Only what download.html marks Available:
-             keep the two pages in step (winget stays off until its
-             manifest is merged). Without scripts every panel shows,
-             stacked under its own label, and the tabs stay hidden, since
-             they would do nothing. With scripts site.js picks the
-             visitor's platform before the page is drawn (as data-install
-             on <html>), so the choice moves nothing below it. The formula is
-             cargo-dist's, pushed to github.com/neoscad/homebrew-tap by
-             each release; the cask and the Scoop manifest are filled
-             from packaging/ in the NeoSCAD repo. -->
-        <div class="install-picker" id="install">
-          <div class="install-tabs" role="tablist" aria-label="Install NeoSCAD on">
-            <button type="button" role="tab" id="install-tab-macos" aria-controls="install-macos" aria-selected="true">macOS</button>
-            <button type="button" role="tab" id="install-tab-linux" aria-controls="install-linux" aria-selected="false" tabindex="-1">Linux</button>
-            <button type="button" role="tab" id="install-tab-windows" aria-controls="install-windows" aria-selected="false" tabindex="-1">Windows</button>
-            <button type="button" role="tab" id="install-tab-browser" aria-controls="install-browser" aria-selected="false" tabindex="-1">Browser</button>
+        <!-- Install, per platform: a tab group (site.js and styles.css,
+             "Tabs"). Only what download.html marks Available: keep the two
+             pages, and agents.html's install box, in step (winget stays off
+             until its manifest is merged). Without scripts every panel
+             shows, stacked under its own label, and the tabs stay hidden,
+             since they would do nothing. With scripts the visitor's
+             platform is chosen before the page is drawn (data-detect="os"),
+             so the choice moves nothing below it. The tabs'
+             aria-selected values are placeholders until site.js sets them.
+             The formula is cargo-dist's, pushed to
+             github.com/neoscad/homebrew-tap by each release; the cask and
+             the Scoop manifest are filled from packaging/ in the NeoSCAD
+             repo. -->
+        <div class="tabs tabs-box" id="install" data-tabs="install" data-detect="os">
+          <div class="tabs-list" role="tablist" aria-label="Install NeoSCAD on">
+            <button type="button" role="tab" id="install-tab-macos" aria-controls="install-macos" data-tab="macos" aria-selected="true">macOS</button>
+            <button type="button" role="tab" id="install-tab-linux" aria-controls="install-linux" data-tab="linux" aria-selected="false" tabindex="-1">Linux</button>
+            <button type="button" role="tab" id="install-tab-windows" aria-controls="install-windows" data-tab="windows" aria-selected="false" tabindex="-1">Windows</button>
+            <button type="button" role="tab" id="install-tab-browser" aria-controls="install-browser" data-tab="browser" aria-selected="false" tabindex="-1">Browser</button>
           </div>
-          <div class="install-panels">
-            <div class="install-panel" id="install-macos" data-platform="macos">
-              <p class="install-label">macOS</p>
+          <div class="tabs-panels">
+            <div class="tabs-panel install-panel" id="install-macos" data-tab="macos">
+              <p class="tabs-label">macOS</p>
               <div class="install-cmd">
                 <span class="install-what">Command-line tool</span>
                 <code id="install-cmd-mac-cli">brew install neoscad/tap/neoscad</code>
-                <button type="button" class="install-copy" aria-describedby="install-cmd-mac-cli">Copy</button>
+                <button type="button" class="copy-button" data-copy="install-cmd-mac-cli" aria-describedby="install-cmd-mac-cli">Copy</button>
               </div>
               <div class="install-cmd">
                 <span class="install-what">App</span>
                 <code id="install-cmd-mac-app">brew install --cask neoscad/tap/neoscad-app</code>
-                <button type="button" class="install-copy" aria-describedby="install-cmd-mac-app">Copy</button>
+                <button type="button" class="copy-button" data-copy="install-cmd-mac-app" aria-describedby="install-cmd-mac-app">Copy</button>
               </div>
               <p class="install-more">The .dmg and more on the <a href="/download.html#macos">Download page</a></p>
             </div>
-            <div class="install-panel" id="install-linux" data-platform="linux">
-              <p class="install-label">Linux</p>
+            <div class="tabs-panel install-panel" id="install-linux" data-tab="linux">
+              <p class="tabs-label">Linux</p>
               <div class="install-cmd">
                 <span class="install-what">Command-line tool</span>
                 <code id="install-cmd-linux-cli">brew install neoscad/tap/neoscad</code>
-                <button type="button" class="install-copy" aria-describedby="install-cmd-linux-cli">Copy</button>
+                <button type="button" class="copy-button" data-copy="install-cmd-linux-cli" aria-describedby="install-cmd-linux-cli">Copy</button>
               </div>
               <p class="install-more">Flatpak app, .deb and .rpm on the <a href="/download.html#linux">Download page</a></p>
             </div>
-            <div class="install-panel" id="install-windows" data-platform="windows">
-              <p class="install-label">Windows</p>
+            <div class="tabs-panel install-panel" id="install-windows" data-tab="windows">
+              <p class="tabs-label">Windows</p>
               <div class="install-cmd">
                 <span class="install-what">Command-line tool</span>
                 <code id="install-cmd-win-bucket">scoop bucket add neoscad https://github.com/neoscad/scoop-bucket</code>
-                <button type="button" class="install-copy" aria-describedby="install-cmd-win-bucket">Copy</button>
+                <button type="button" class="copy-button" data-copy="install-cmd-win-bucket" aria-describedby="install-cmd-win-bucket">Copy</button>
               </div>
               <div class="install-cmd">
                 <span class="install-what">then</span>
                 <code id="install-cmd-win-cli">scoop install neoscad</code>
-                <button type="button" class="install-copy" aria-describedby="install-cmd-win-cli">Copy</button>
+                <button type="button" class="copy-button" data-copy="install-cmd-win-cli" aria-describedby="install-cmd-win-cli">Copy</button>
               </div>
               <p class="install-more">The app and MSIs on the <a href="/download.html#windows">Download page</a></p>
             </div>
-            <div class="install-panel" id="install-browser" data-platform="browser">
-              <p class="install-label">In the browser</p>
+            <div class="tabs-panel install-panel" id="install-browser" data-tab="browser">
+              <p class="tabs-label">In the browser</p>
               <p class="install-try"><a href="/try/">OpenSCAD in your browser</a>, at neoscad.org/try: NeoSCAD compiled to WebAssembly. Nothing is uploaded.</p>
             </div>
           </div>
-          <p class="visually-hidden" aria-live="polite" id="install-status"></p>
         </div>
 
         <div class="hero-actions">
