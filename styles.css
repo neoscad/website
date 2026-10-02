@@ -1022,13 +1022,25 @@ tr.details > td {
   margin-bottom: 0;
 }
 
-/* A post with a cover: the picture beside the text, or above it on a
-   phone. The picture is cropped to one shape so the list lines up. */
+/* A post with a cover: a small picture to the right of the text, or
+   above it on a phone. The picture is cropped to one shape so the list
+   lines up; the markup puts it first, for the phone order. */
 .post-card.has-thumb {
   display: grid;
-  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
-  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1fr) 9rem;
+  gap: 1.5rem;
   align-items: start;
+}
+
+.post-card.has-thumb .post-card-thumb {
+  grid-column: 2;
+  grid-row: 1;
+  margin-top: 0.35rem;
+}
+
+.post-card.has-thumb .post-card-text {
+  grid-column: 1;
+  grid-row: 1;
 }
 
 .post-card-thumb {
@@ -1065,6 +1077,12 @@ tr.details > td {
   .post-card.has-thumb {
     grid-template-columns: minmax(0, 1fr);
     gap: 0.85rem;
+  }
+  .post-card.has-thumb .post-card-thumb,
+  .post-card.has-thumb .post-card-text {
+    grid-column: 1;
+    grid-row: auto;
+    margin-top: 0;
   }
 }
 
