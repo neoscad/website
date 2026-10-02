@@ -611,13 +611,24 @@ function postMeta(post, { link = true } = {}) {
 
 function postList(posts, empty) {
   if (!posts.length) return `      <p class="post-list-empty">${empty}</p>`;
-  const items = posts.map(
-    (p) => `        <li class="post-card">
-          <h2><a href="/blog/${p.slug}/">${esc(p.title)}</a></h2>
-          ${postMeta(p)}
-          <p>${esc(p.summary)}</p>
-        </li>`,
-  );
+  const items = posts.map((p, i) => {
+    // The cover repeats the title's link, so it is hidden from screen
+    // readers and the tab order; the title is the link that counts. The
+    // first card's picture is near the top of the page, so it loads at once.
+    const thumb = p.cover
+      ? `
+          <a class="post-card-thumb" href="/blog/${p.slug}/" tabindex="-1" aria-hidden="true">
+            <img src="${esc(p.cover.url)}" alt="" width="${p.cover.width}" height="${p.cover.height}" decoding="async"${i === 0 ? "" : ' loading="lazy"'}>
+          </a>`
+      : "";
+    return `        <li class="post-card${p.cover ? " has-thumb" : ""}">${thumb}
+          <div class="post-card-text">
+            <h2><a href="/blog/${p.slug}/">${esc(p.title)}</a></h2>
+            ${postMeta(p)}
+            <p>${esc(p.summary)}</p>
+          </div>
+        </li>`;
+  });
   return `      <ol class="post-list">\n${items.join("\n")}\n      </ol>`;
 }
 

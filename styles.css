@@ -1022,6 +1022,52 @@ tr.details > td {
   margin-bottom: 0;
 }
 
+/* A post with a cover: the picture beside the text, or above it on a
+   phone. The picture is cropped to one shape so the list lines up. */
+.post-card.has-thumb {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.post-card-thumb {
+  display: block;
+  border: 1px solid var(--ns-border);
+  border-radius: var(--ns-radius);
+  overflow: hidden;
+  background: var(--ns-surface);
+}
+
+.post-card-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.post-card-thumb:hover img {
+  transform: scale(1.03);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-card-thumb img {
+    transition: none;
+  }
+  .post-card-thumb:hover img {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .post-card.has-thumb {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.85rem;
+  }
+}
+
 .post-list-empty {
   color: var(--ns-text-muted);
 }
