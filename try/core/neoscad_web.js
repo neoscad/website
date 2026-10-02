@@ -37,65 +37,6 @@ export class Engine {
 if (Symbol.dispose) Engine.prototype[Symbol.dispose] = Engine.prototype.free;
 
 /**
- * The frame budget evaluations in this instance start with.
- * @returns {number}
- */
-export function frameLimit() {
-    const ret = wasm.frameLimit();
-    return ret >>> 0;
-}
-
-/**
- * The frame weights in effect: `[statement, expression, call,
- * comprehension, geometry]`.
- * @returns {Uint32Array}
- */
-export function frameWeights() {
-    try {
-        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-        wasm.frameWeights(retptr);
-        var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
-        var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
-        var v1 = getArrayU32FromWasm0(r0, r1).slice();
-        wasm.__wbindgen_export3(r0, r1 * 4, 4);
-        return v1;
-    } finally {
-        wasm.__wbindgen_add_to_stack_pointer(16);
-    }
-}
-
-/**
- * The frames in use at the evaluator's last recursion check. Read from an
- * instance whose stack overflowed: it is a load of one static, so it
- * touches nothing the trap could have left half-written.
- * @returns {number}
- */
-export function framesAtLastCheck() {
-    const ret = wasm.framesAtLastCheck();
-    return ret >>> 0;
-}
-
-/**
- * Whether this core runs statements and calls on the heap (the
- * evaluator's `heap-eval` feature): a recursion then takes no stack past
- * a few native call levels, and every one of the worker's stack probes
- * would only run to the counted depth limit, which in WebKit's cold
- * tiers took 40 s at start-up, so the worker skips them.
- *
- * It asks the evaluator (`eval::recursion::HEAP_EVAL`), not this crate's
- * own `heap-eval` feature. The two disagreed once: the evaluator had the
- * feature on by default and this crate had it off, so the worker ran
- * every probe against a heap evaluator, starting up 7 s late in WebKit,
- * with the first preview and a language-server request (which timed
- * out) queued behind it.
- * @returns {boolean}
- */
-export function heapStatements() {
-    const ret = wasm.heapStatements();
-    return ret !== 0;
-}
-
-/**
  * The message of the panic that crashed the instance, if one did.
  * @returns {string | undefined}
  */
@@ -114,32 +55,6 @@ export function lastPanic() {
     } finally {
         wasm.__wbindgen_add_to_stack_pointer(16);
     }
-}
-
-/**
- * Sets the evaluator's frame budget for this instance (0: the default,
- * `eval::recursion::DEFAULT_FRAME_LIMIT`), as the worker's stack probe
- * measured it; see `eval::recursion::set_default_frame_limit`.
- * @param {number} limit
- */
-export function setFrameLimit(limit) {
-    wasm.setFrameLimit(limit);
-}
-
-/**
- * Sets the frame weights (statement, expression, call, comprehension,
- * geometry;
- * 0 counts nothing for a kind, 4294967295 keeps its default) the worker's
- * stack probe calibrated; see
- * `eval::recursion::set_frame_weights`.
- * @param {number} statement
- * @param {number} expression
- * @param {number} call
- * @param {number} comprehension
- * @param {number} geometry
- */
-export function setFrameWeights(statement, expression, call, comprehension, geometry) {
-    wasm.setFrameWeights(statement, expression, call, comprehension, geometry);
 }
 
 /**
@@ -226,11 +141,6 @@ function dropObject(idx) {
     heap_next = idx;
 }
 
-function getArrayU32FromWasm0(ptr, len) {
-    ptr = ptr >>> 0;
-    return getUint32ArrayMemory0().subarray(ptr / 4, ptr / 4 + len);
-}
-
 function getArrayU8FromWasm0(ptr, len) {
     ptr = ptr >>> 0;
     return getUint8ArrayMemory0().subarray(ptr / 1, ptr / 1 + len);
@@ -246,14 +156,6 @@ function getDataViewMemory0() {
 
 function getStringFromWasm0(ptr, len) {
     return decodeText(ptr >>> 0, len);
-}
-
-let cachedUint32ArrayMemory0 = null;
-function getUint32ArrayMemory0() {
-    if (cachedUint32ArrayMemory0 === null || cachedUint32ArrayMemory0.byteLength === 0) {
-        cachedUint32ArrayMemory0 = new Uint32Array(wasm.memory.buffer);
-    }
-    return cachedUint32ArrayMemory0;
 }
 
 let cachedUint8ArrayMemory0 = null;
@@ -349,7 +251,6 @@ function __wbg_finalize_init(instance, module) {
     wasm = instance.exports;
     wasmModule = module;
     cachedDataViewMemory0 = null;
-    cachedUint32ArrayMemory0 = null;
     cachedUint8ArrayMemory0 = null;
     wasm.__wbindgen_start();
     return wasm;
