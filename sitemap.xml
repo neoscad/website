@@ -5,6 +5,7 @@
   <url><loc>https://neoscad.org/benchmarks.html</loc></url>
   <url><loc>https://neoscad.org/community.html</loc></url>
   <url><loc>https://neoscad.org/try/</loc></url>
+  <url><loc>https://neoscad.org/agents.html</loc></url>
   <!-- Blog: written by tools/blog/build.mjs; edit outside these markers. -->
   <url><loc>https://neoscad.org/blog/</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://neoscad.org/blog/neoscad-and-openscad/</loc><lastmod>2026-10-02</lastmod></url>

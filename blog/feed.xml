@@ -113,6 +113,8 @@ model.&lt;/li&gt;
 model stops with an error instead of filling the machine. Like
 OpenSCAD, NeoSCAD sets no limits by default.&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;&lt;a href=&quot;https://neoscad.org/agents.html&quot;&gt;Using NeoSCAD with AI agents&lt;/a&gt; has the setup for each
+agent, every tool and a worked example.&lt;/p&gt;
 &lt;h3 id=&quot;editor-support-formatting-and-tests&quot;&gt;Editor support, formatting and tests &lt;a class=&quot;heading-anchor&quot; href=&quot;https://neoscad.org/blog/neoscad-and-openscad/#editor-support-formatting-and-tests&quot; aria-label=&quot;Link to the section Editor support, formatting and tests&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;neoscad lsp&lt;/code&gt; is a language server: diagnostics and completion in any
@@ -130,8 +132,8 @@ so &lt;code&gt;check&lt;/code&gt; and &lt;code&gt;measure&lt;/code&gt; can repor
 extension, off by default, so files stay OpenSCAD-compatible unless
 you opt in.&lt;/p&gt;
 &lt;h3 id=&quot;in-the-browser&quot;&gt;In the browser &lt;a class=&quot;heading-anchor&quot; href=&quot;https://neoscad.org/blog/neoscad-and-openscad/#in-the-browser&quot; aria-label=&quot;Link to the section In the browser&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;https://neoscad.org/try/&quot;&gt;NeoSCAD in your browser&lt;/a&gt; runs the same engine compiled to
-WebAssembly, on your machine, with nothing to install. It includes
+&lt;p&gt;&lt;a href=&quot;https://neoscad.org/try/&quot;&gt;OpenSCAD in your browser&lt;/a&gt;, at neoscad.org/try, runs the same
+engine compiled to WebAssembly, on your machine, with nothing to install. It includes
 BOSL2 examples, and it can connect to your AI agent so the agent edits
 the model you have open while you watch.&lt;/p&gt;
 &lt;h2 id=&quot;where-neoscad-still-differs&quot;&gt;Where NeoSCAD still differs &lt;a class=&quot;heading-anchor&quot; href=&quot;https://neoscad.org/blog/neoscad-and-openscad/#where-neoscad-still-differs&quot; aria-label=&quot;Link to the section Where NeoSCAD still differs&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;

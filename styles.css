@@ -355,6 +355,38 @@ figcaption {
   max-width: 52rem;
 }
 
+/* A second figure in the same column. A class, not a style attribute:
+   pages with a strict CSP (style-src 'self') ignore inline styles. */
+.figure-next {
+  margin-top: 1.25rem;
+}
+
+/* A quoted request (agents.html's example), set as a card without the
+   browser's default 40px indent, which would narrow it on a phone. */
+blockquote.card {
+  margin: 0 0 1rem;
+}
+
+blockquote.card > p:first-child {
+  margin-top: 0;
+}
+
+blockquote.card > p:last-child {
+  margin-bottom: 0;
+}
+
+/* agents.html: a tool's name heads its row; broken mid-word
+   ("evaluat|e") on a narrow column it no longer reads as a name. */
+th.tool-name {
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+/* The second row of setup cards, spaced as a row of the same grid. */
+.setup-more {
+  margin-top: 2rem;
+}
+
 /* ---- Buttons ----------------------------------------------------------- */
 
 .button {

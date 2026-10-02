@@ -78,7 +78,8 @@
 <pre><code>powershell -ExecutionPolicy Bypass -c "irm https://github.com/neoscad/neoscad/releases/download/v0.2.1/neoscad-cli-installer.ps1 | iex"</code></pre>
         <p>
           <code>neoscad</code>, the command-line tool, includes the language server
-          (<code>neoscad lsp</code>), the MCP server (<code>neoscad mcp</code>) and
+          (<code>neoscad lsp</code>), the MCP server for AI agents
+          (<a href="/agents.html"><code>neoscad mcp</code></a>) and
           <code>neoscad serve</code> on every platform. The app runs on macOS (signed
           and notarized), and as a preview on Windows (MSI) and Linux (Flatpak).
           Fonts and MCAD are built in; BOSL2 and your other libraries load from
@@ -361,9 +362,11 @@
       <div class="wrap">
         <h2 id="browser-title">In the browser <span class="badge badge-exists">Available</span></h2>
         <p>
-          <a href="/try/">neoscad.org/try</a> runs NeoSCAD compiled to
-          WebAssembly: an editor with examples, rendering in your browser with
-          WebGPU, or WebGL 2 where WebGPU isn't available. Nothing is uploaded.
+          <a href="/try/">OpenSCAD in your browser</a>, at neoscad.org/try:
+          NeoSCAD compiled to WebAssembly, with an editor and examples,
+          rendering in your browser with WebGPU, or WebGL 2 where WebGPU isn't
+          available. There is nothing to install, nothing is uploaded, and it
+          exports STL, 3MF, OFF and SVG.
         </p>
       </div>
     </section>
@@ -414,6 +417,7 @@
             <li><a href="/benchmarks.html">Benchmarks</a></li>
             <li><a href="/blog/">Blog</a></li>
             <li><a href="/try/">Try it</a></li>
+            <li><a href="/agents.html">Agents</a></li>
             <li><a href="https://github.com/neoscad/neoscad">Source</a></li>
           </ul>
         </div>

@@ -19,6 +19,7 @@ which `community.html` needs to show its results.
 | `index.html` | Home: hero, numbers, one benchmark chart, three pillars, the printability check, "built in the open" (progress video and AI-authorship disclosure), coming from OpenSCAD, credits, FAQ |
 | `download.html` | Downloads by platform (links to the latest GitHub release), package managers, source, nightly, with a status on every entry |
 | `benchmarks.html` | Method, machine, chart, the full results table, the edit loop and caveats |
+| `agents.html` | Using NeoSCAD with AI agents: the MCP server's tools, setup per agent, the loop, limits, JSON output, the /try agent bridge, a worked example and a FAQ. Its claims follow the released CLI (`neoscad mcp --help` and its `tools/list`); the comment in its head says how to keep it current |
 | `community.html`, `community.js` | Community benchmark results: fetches `summary.json` from the `neoscad/benchmarks` repository (raw.githubusercontent.com, the only other origin any page contacts; the page's CSP allows only that) and renders it per release, platform and run |
 | `try/index.html` | Placeholder for the in-browser demo; the whole `try/` directory is replaced by the demo bundle |
 | `404.html` | GitHub Pages' not-found page (root-relative URLs only) |
@@ -49,7 +50,8 @@ address, so `/index.html`, `/download` (which Pages also serves) and
 `twitter:card` tags for link previews; a new page needs the same set
 (copy the head of `benchmarks.html`). The home page carries JSON-LD
 structured data (`Organization`, `WebSite`, `SoftwareApplication`), whose
-facts must stay in step with the page's text; the blog generator writes
+facts must stay in step with the page's text; `agents.html` carries `WebPage`, `BreadcrumbList` and a `FAQPage` whose
+answers are its FAQ's text; the blog generator writes
 `BlogPosting`, `Blog` and `BreadcrumbList` blocks. A JSON-LD block is data,
 not script, so the pages' CSP allows it.
 
@@ -120,8 +122,9 @@ What a post can use:
   script on the page). OpenSCAD (`openscad` or `scad`) has its own
   grammar, `tools/blog/openscad.mjs`. A misspelt language fails the
   build. `openscad try=<id>` adds an "Open in NeoSCAD" link to one of the
-  `/try` demo's bundled examples (`try/examples/manifest.json`); `/try`
-  can't open arbitrary code from a link yet.
+  `/try` demo's bundled examples (`try/examples/manifest.json`). `/try`
+  also opens any code from a `#code=` link (the engine's
+  `web/src/share.js`); the renderer doesn't emit those yet.
 - **Callouts**: `::: note`, `::: tip` or `::: warning` (with an optional
   title after it), closed by `:::`.
 - **Tables**, **footnotes** (`[^1]`) and **heading anchors** (on every

@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Nothing here loads from another origin and nothing runs inline: the
+       one script is site.js. The JSON-LD block is data, not script, so
+       script-src neither runs nor blocks it. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; media-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>OpenSCAD MCP server for AI agents · NeoSCAD</title>
+  <meta name="description" content="Use OpenSCAD with Claude Code, Cursor or any MCP agent: neoscad mcp lets it write a model, check it for printing, measure it, see it and export it.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f7f7fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0b14" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://neoscad.org/agents.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="NeoSCAD">
+  <meta property="og:title" content="An OpenSCAD MCP server for AI agents">
+  <meta property="og:description" content="Use OpenSCAD with Claude Code, Cursor or any MCP agent: neoscad mcp lets it write a model, check it for printing, measure it, see it and export it.">
+  <meta property="og:url" content="https://neoscad.org/agents.html">
+  <meta property="og:image" content="https://neoscad.org/assets/snapshot-adapter.png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="1280">
+  <meta property="og:image:alt" content="A NeoSCAD snapshot sheet of a threaded hose-barb adapter in four views, iso, front, top and right, with dimension lines: 34.64 by 30 by 45 mm.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/icon-512.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <!--
+    Every claim on this page is checked against the NeoSCAD 0.2.1 release
+    (the command-line tool from the GitHub release): `neoscad mcp --help`,
+    the MCP tools/list it answers (with and without --browser), and the
+    tool results quoted in the worked example, which are 0.2.1's output
+    for that model. Setup commands follow docs/mcp.md and the /try page's
+    "Connect your AI agent" dialog (web/src/ui/agent.js); Cursor's and VS
+    Code's config files follow their own documentation. The browser
+    bridge's security follows docs/agent-bridge.md. When a release changes
+    the tools or their defaults, update the tables and the limits here.
+    No agent-eval results belong on this page: it says what the tools do,
+    not how agents score with them.
+
+    The FAQ's text is also in the FAQPage block below; keep the two the
+    same. There is no HowTo block: Google stopped showing How-to rich
+    results in September 2023.
+  -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://neoscad.org/agents.html#webpage",
+        "url": "https://neoscad.org/agents.html",
+        "name": "OpenSCAD MCP server for AI agents",
+        "description": "Use OpenSCAD with Claude Code, Cursor or any MCP agent: neoscad mcp lets it write a model, check it for printing, measure it, see it and export it.",
+        "inLanguage": "en",
+        "isPartOf": { "@id": "https://neoscad.org/#website" },
+        "about": { "@id": "https://neoscad.org/#software" },
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://neoscad.org/assets/snapshot-adapter.png",
+          "width": 1280,
+          "height": 1280
+        },
+        "breadcrumb": { "@id": "https://neoscad.org/agents.html#breadcrumb" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://neoscad.org/agents.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "NeoSCAD", "item": "https://neoscad.org/" },
+          { "@type": "ListItem", "position": 2, "name": "AI agents", "item": "https://neoscad.org/agents.html" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://neoscad.org/agents.html#faq",
+        "isPartOf": { "@id": "https://neoscad.org/agents.html#webpage" },
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is there an MCP server for OpenSCAD?",
+            "acceptedAnswer": { "@type": "Answer", "text": "NeoSCAD, a new implementation of the OpenSCAD language, has one built in: neoscad mcp. It runs your .scad files and libraries such as BOSL2 and MCAD, and gives an agent tools to evaluate, render, check, measure and snapshot a model. It is not part of OpenSCAD itself, and NeoSCAD is not affiliated with the OpenSCAD project." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can Claude Code write OpenSCAD models?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Add the server with claude mcp add neoscad -- neoscad mcp and ask for a part. Claude Code writes the OpenSCAD, and the server's tools let it check its own work: errors and warnings, dimensions, printability, and a picture of the model, before it writes the file." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does it work with Cursor, VS Code or other agents?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. neoscad mcp is a standard MCP server on stdio, so any MCP client can start it: Cursor and VS Code read it from their mcp.json files, and other clients from their own configuration, with neoscad as the command and mcp as the argument." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can an agent see the model it makes?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. The snapshot tool returns a PNG of the model's standard views on a millimetre grid, with dimensions if asked, as image content the agent reads. The measure and render tools give the exact numbers to go with it, and check marks what would go wrong in printing." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does my model or code leave my computer?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not through NeoSCAD. neoscad mcp runs on your computer and talks to your agent over stdio, and the browser page connects to it on 127.0.0.1. What your agent sends to its own model provider is up to the agent." }
+          },
+          {
+            "@type": "Question",
+            "name": "What does it cost?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Nothing. NeoSCAD is free and open source under GPL-2.0-or-later, OpenSCAD's licence. Your agent may have its own costs." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="/theme.css">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/site.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/assets/icon-64.png" alt="" width="30" height="30">NeoSCAD</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/download.html">Download</a></li>
+          <li><a href="/benchmarks.html">Benchmarks</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/try/">Try it</a></li>
+          <li><a href="https://github.com/neoscad/neoscad">Source</a></li>
+            <li><a href="/donate/">Donate</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="agents-title">
+      <div class="wrap">
+        <p class="eyebrow">For AI agents</p>
+        <h1 id="agents-title">An OpenSCAD MCP server <span class="grad">for your AI agent.</span></h1>
+        <p class="lede">
+          <code>neoscad mcp</code> lets Claude Code, Cursor or any MCP agent
+          write OpenSCAD models and check its own work: errors with fixes,
+          exact dimensions, a printability check, and a picture of the model
+          it can look at. It runs on your computer, on your
+          <code>.scad</code> files and libraries.
+        </p>
+        <p>Install NeoSCAD, then add the server to Claude Code:</p>
+<pre><code>brew install neoscad/tap/neoscad
+claude mcp add neoscad -- neoscad mcp</code></pre>
+        <div class="hero-actions">
+          <a class="button button-primary" href="/download.html">Download NeoSCAD</a>
+          <a class="button button-agent" href="/try/#agent"><span class="agent-spark" aria-hidden="true">✦</span> <span class="grad">Connect your AI agent</span></a>
+        </div>
+        <p class="small muted">
+          Everything on this page is in NeoSCAD 0.2.1, the current release.
+          NeoSCAD is an independent project, not affiliated with the OpenSCAD project.
+        </p>
+        <ul class="toc" aria-label="On this page">
+          <li><a href="#tools">The tools</a></li>
+          <li><a href="#setup">Setup</a></li>
+          <li><a href="#loop">How an agent works</a></li>
+          <li><a href="#sees">What the agent sees</a></li>
+          <li><a href="#limits">Limits and files</a></li>
+          <li><a href="#json">JSON for scripts</a></li>
+          <li><a href="#browser">In your browser</a></li>
+          <li><a href="#example">An example</a></li>
+          <li><a href="#faq-title">Questions</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Tools: names, descriptions and arguments as 0.2.1's tools/list gives them. -->
+    <section class="section section-alt" id="tools" aria-labelledby="tools-title">
+      <div class="wrap">
+        <p class="eyebrow">The MCP server</p>
+        <h2 id="tools-title">Eight tools, one model at a time</h2>
+        <div class="prose">
+          <p>
+            <code>neoscad mcp</code> serves NeoSCAD's tools over the
+            <a href="https://modelcontextprotocol.io">Model Context Protocol</a>
+            on stdio. It keeps one warm session, with the same caches as
+            <code>neoscad serve</code>, so a small edit re-renders quickly.
+            Each tool takes a model as <code>path</code> (a <code>.scad</code>
+            file) or <code>source</code> (OpenSCAD text), so an agent can try
+            ideas without writing files.
+          </p>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <caption class="visually-hidden">The tools of neoscad mcp in NeoSCAD 0.2.1</caption>
+            <thead>
+              <tr><th scope="col">Tool</th><th scope="col">What it answers</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row" class="tool-name"><code>evaluate</code></th><td>Errors and warnings with fix hints, and <code>echo()</code> output, without building geometry: the fastest check after an edit.</td></tr>
+              <tr><th scope="row" class="tool-name"><code>render</code></th><td>Builds the geometry: bounding box, volume, area, whether it is manifold, and how many pieces. <code>export</code> writes it to a file (STL, 3MF, OBJ, OFF, SVG, DXF or PNG).</td></tr>
+              <tr><th scope="row" class="tool-name"><code>snapshot</code></th><td>A picture of the model: iso, front, top and right views on a millimetre grid, as an image the agent sees, with dimensions, findings or a diff against another version if asked.</td></tr>
+              <tr><th scope="row" class="tool-name"><code>check</code></th><td>A 3D-printing check: manifold, thin walls, overhangs, floating or tiny pieces, bed fit and intersecting parts, each finding with where it is and how to fix it.</td></tr>
+              <tr><th scope="row" class="tool-name"><code>measure</code></th><td>Exact numbers: bounding box, volume and centre of mass of the model and its parts, the distance between two parts, cross-sections and radius profiles.</td></tr>
+              <tr><th scope="row" class="tool-name"><code>test</code></th><td>Runs model tests: <code>module test_*()</code> in <code>*_test.scad</code> files, checked by <code>// @expect</code> lines (volume, bounding box, manifold, a clean check).</td></tr>
+              <tr><th scope="row" class="tool-name"><code>format</code></th><td>Formats OpenSCAD; only whitespace changes.</td></tr>
+              <tr><th scope="row" class="tool-name"><code>docs</code></th><td>The reference for a builtin (<code>cube</code>, <code>rotate_extrude</code>, <code>$fn</code> …) or a library module; with <code>path</code>, a file's definitions.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted">
+          With <code>--browser</code>, eight more tools work on the page you
+          have open in your browser (<a href="#browser">below</a>). The full
+          reference, with every argument, is
+          <a href="https://github.com/neoscad/neoscad/blob/v0.2.1/docs/mcp.md">docs/mcp.md</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="setup" aria-labelledby="setup-title">
+      <div class="wrap">
+        <p class="eyebrow">Setup</p>
+        <h2 id="setup-title">Add it to your agent</h2>
+        <p class="prose">
+          First install <code>neoscad</code>, the command-line tool, for macOS,
+          Linux or Windows: see <a href="/download.html">downloads</a>. The MCP
+          server is part of it. Then add it to your agent.
+        </p>
+        <div class="grid-2">
+          <div>
+            <h3>Claude Code</h3>
+            <p>In a terminal, in your project:</p>
+<pre><code>claude mcp add neoscad -- neoscad mcp</code></pre>
+            <p>
+              <code>claude mcp list</code> then shows <code>neoscad</code> as
+              connected. Add <code>-s user</code> after <code>add</code> to have
+              it in every project.
+            </p>
+          </div>
+          <div>
+            <h3>Cursor</h3>
+            <p>In <code>.cursor/mcp.json</code> in your project, or
+              <code>~/.cursor/mcp.json</code> for all of them:</p>
+<pre><code>{
+  "mcpServers": {
+    "neoscad": {
+      "command": "neoscad",
+      "args": ["mcp"]
+    }
+  }
+}</code></pre>
+          </div>
+        </div>
+        <div class="grid-2 setup-more">
+          <div>
+            <h3>VS Code</h3>
+            <p>In <code>.vscode/mcp.json</code>:</p>
+<pre><code>{
+  "servers": {
+    "neoscad": {
+      "type": "stdio",
+      "command": "neoscad",
+      "args": ["mcp"]
+    }
+  }
+}</code></pre>
+          </div>
+          <div>
+            <h3>Any MCP client</h3>
+            <p>Run <code>neoscad mcp</code> as a stdio server. Most clients take
+              this shape:</p>
+<pre><code>{
+  "mcpServers": {
+    "neoscad": {
+      "command": "neoscad",
+      "args": ["mcp"]
+    }
+  }
+}</code></pre>
+          </div>
+        </div>
+        <p class="small muted prose">
+          If the client cannot start <code>neoscad</code>, give its full path as
+          the command (<code>which neoscad</code> prints it). The server reads and
+          writes in its working directory; add <code>"--root", "DIR"</code> to the
+          arguments for another folder of models. Your library path
+          (<code>OPENSCADPATH</code>, where BOSL2 lives) is readable too.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="loop" aria-labelledby="loop-title">
+      <div class="wrap grid-2">
+        <div>
+          <p class="eyebrow">The loop</p>
+          <h2 id="loop-title">Write, check, measure, look, export</h2>
+          <p>
+            An agent writing OpenSCAD without tools is guessing: it can't see
+            that a hole missed the wall or that a part floats. With
+            <code>neoscad mcp</code> it works the way you would:
+          </p>
+          <ol>
+            <li><strong>Write</strong> the model as OpenSCAD, passed as
+              <code>source</code> while it iterates.</li>
+            <li><strong>Evaluate</strong> it: syntax errors and unknown modules come
+              back with their line and a hint (<em>did you mean
+              'cube'?</em>).</li>
+            <li><strong>Check</strong> it for printing with your nozzle, minimum
+              wall and bed size.</li>
+            <li><strong>Measure</strong> what the request specified: a hole's
+              diameter in a cross-section, the gap between two parts.</li>
+            <li><strong>Snapshot</strong> it when the shape is in doubt, and
+              look.</li>
+            <li><strong>Export</strong> with <code>render</code>'s
+              <code>export</code>, and write the <code>.scad</code> file.</li>
+          </ol>
+        </div>
+        <div>
+          <p>
+            Every result is a short text summary plus the same facts as
+            structured JSON, so the agent reads numbers, not prose. A model
+            that fails says why; a call that couldn't run says how to fix the
+            call. The server tells the agent, once, which tool to use when.
+          </p>
+          <p>
+            It is OpenSCAD's language, so the agent's model is an ordinary
+            <code>.scad</code> file: open it in OpenSCAD, in the NeoSCAD app or
+            <a href="/try/">in your browser</a>, and change it yourself.
+          </p>
+          <p>
+            With <code>--enable part</code> on the command line, or
+            <code>parts: true</code> in a call, <code>part("name") { … }</code>
+            names a piece of the model, so <code>check</code> and
+            <code>measure</code> report on it by name and
+            <code>measure</code> gives the distance between two parts.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sees" aria-labelledby="sees-title">
+      <div class="wrap grid-2">
+        <div>
+          <p class="eyebrow">What the agent sees</p>
+          <h2 id="sees-title">A dimensioned picture, and a printability report</h2>
+          <p>
+            <code>snapshot</code> draws the model's standard views on one sheet,
+            on a millimetre grid with the bounding box's dimensions, and returns
+            it as an image the agent reads. With <code>issues</code> it paints the
+            check's findings on: thin walls red, overhangs amber, floating pieces
+            purple, with a numbered marker at each one. With
+            <code>diff_against</code> it shows what an edit added and removed.
+          </p>
+          <p>
+            <code>check</code> renders the model and reports what would go wrong
+            on an FDM printer, each finding with where it is and how to fix it:
+          </p>
+<pre><code>#2 error thin-wall: a wall 0.3 mm thick, thinner than
+the 0.4 mm nozzle … Fix: thicken it to at least 1.2 mm
+(3 perimeters of a 0.4 mm nozzle), or remove it</code></pre>
+          <p>
+            It looks for a solid that isn't manifold, pieces floating above the
+            bed, walls thinner than the nozzle or your minimum, overhangs steeper
+            than your limit, parts that intersect, and a model that doesn't fit
+            your bed.
+          </p>
+        </div>
+        <div>
+          <figure>
+            <img src="/assets/snapshot-adapter.png" width="1280" height="1280" loading="lazy"
+                 alt="A NeoSCAD snapshot sheet of a yellow threaded hose-barb adapter in four views, iso, front, top and right, on a grid, with dimension lines: 34.64 by 30 by 45 mm, volume 12,123.82 cubic millimetres, 19,840 triangles.">
+            <figcaption>
+              A snapshot with dimensions: four views of a threaded hose-barb
+              adapter in one PNG.
+            </figcaption>
+          </figure>
+          <figure class="figure-next">
+            <img src="/assets/snapshot-issues.png" width="1600" height="1600" loading="lazy"
+                 alt="A NeoSCAD snapshot sheet with check findings marked on a phone stand in four views: the front lip drawn red as a wall 0.3 mm thick, a cable clip drawn purple as a piece floating above the bed, and numbered markers on the lip, the clip and an unsupported shelf. The header reads check: 2 errors, 2 warnings, with a legend for thin wall, overhang and floating.">
+            <figcaption>
+              A snapshot with the check's findings: a 0.3 mm lip (red), a
+              floating clip (purple) and an unsupported shelf (marker 3).
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="limits" aria-labelledby="limits-title">
+      <div class="wrap grid-2">
+        <div>
+          <p class="eyebrow">Safety</p>
+          <h2 id="limits-title">Limits for runaway models</h2>
+          <p>
+            An agent will sooner or later ask for <code>sphere(10, $fn=100000)</code>.
+            Every call of <code>neoscad mcp</code> runs under resource limits, so a
+            model like that fails at once with an error that names the limit and
+            how to raise it, instead of filling your machine's memory.
+          </p>
+          <div class="table-scroll">
+            <table>
+              <caption class="visually-hidden">The default limits of neoscad mcp</caption>
+              <thead><tr><th scope="col">Limit</th><th scope="col">Default</th></tr></thead>
+              <tbody>
+                <tr><th scope="row" class="tool-name"><code>time</code></th><td>60 s per call</td></tr>
+                <tr><th scope="row" class="tool-name"><code>memory</code></th><td>4 GiB</td></tr>
+                <tr><td><code>fragments</code>, <code>slices</code></td><td>10,000 per primitive or extrusion</td></tr>
+                <tr><td><code>list</code>, <code>rands</code></td><td>10 million elements</td></tr>
+                <tr><th scope="row" class="tool-name"><code>string</code></th><td>64 MiB</td></tr>
+                <tr><th scope="row" class="tool-name"><code>triangles</code></th><td>10 million per result</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small muted">
+            Change one with <code>neoscad mcp --limit fragments=50000</code>, or
+            <code>=off</code>. The command line takes the same
+            <code>--limit</code> flags; like OpenSCAD, it sets no limits unless asked.
+          </p>
+        </div>
+        <div>
+          <p class="eyebrow">Files</p>
+          <h2>What it may touch</h2>
+          <ul>
+            <li>It reads and writes only in its working directory and the folders
+              given with <code>--root</code>; library and font folders are
+              readable. A model's <code>include</code> or <code>import()</code>
+              can't reach outside them either.</li>
+            <li>It writes only when asked: <code>render</code>'s
+              <code>export</code>, <code>snapshot</code>'s <code>output</code>,
+              and <code>format</code> on a file. An export never replaces a file
+              of another type, such as your <code>.scad</code>, and replaces one
+              of its own type only with <code>overwrite</code>.</li>
+            <li>The tools evaluate OpenSCAD, which has no network access and runs
+              no commands.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="json" aria-labelledby="json-title">
+      <div class="wrap grid-2">
+        <div>
+          <p class="eyebrow">Scripts and CI</p>
+          <h2 id="json-title">The same answers as JSON, from the command line</h2>
+          <p>
+            The tools have command-line counterparts, and <code>--format json</code> prints
+            one JSON object describing the run, for scripts, CI jobs and agents
+            that would rather use a shell:
+          </p>
+<pre><code>neoscad check part.scad --nozzle 0.4 --min-wall 1.2 \
+  --format json
+neoscad measure part.scad --format json
+neoscad snapshot part.scad --dims -o part.png
+neoscad part.scad -o part.stl --format json</code></pre>
+        </div>
+        <div>
+          <p>
+            <code>neoscad serve</code> keeps a model's caches warm and answers
+            JSON-RPC requests, which is what <code>neoscad mcp</code> uses
+            inside. <code>neoscad lsp</code> gives editors diagnostics and
+            completion, and <code>neoscad test</code> runs model tests.
+          </p>
+          <p class="small muted">
+            The JSON schema is
+            <a href="https://github.com/neoscad/neoscad/blob/v0.2.1/docs/cli-json.md">docs/cli-json.md</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="browser" aria-labelledby="browser-title">
+      <div class="wrap grid-2">
+        <div>
+          <p class="eyebrow">In your browser</p>
+          <h2 id="browser-title">Connect your AI agent to the page you have open</h2>
+          <p>
+            <a href="/try/">OpenSCAD in your browser</a> at neoscad.org/try has a
+            <strong>Connect your AI agent</strong> button. Your agent then works on
+            the model open in that page while you watch: it reads and edits the
+            editor's text, sees the 3D view as you see it, and points at things
+            in it.
+          </p>
+          <ol>
+            <li>Add the server with <code>--browser</code>:
+<pre><code>claude mcp add neoscad -- neoscad mcp --browser</code></pre>
+              (or <code>"args": ["mcp", "--browser"]</code> in a JSON config).</li>
+            <li>Ask your agent to <em>connect to my NeoSCAD page</em>. It gives you
+              a link: open it, or paste it into the page's dialog.</li>
+            <li>Ask for changes. Each edit is one undo step, highlighted in the
+              editor; <strong>Ask me before applying</strong> makes each one wait
+              for your Apply.</li>
+          </ol>
+          <p>
+            Once a page is connected, the model tools work on its text when the
+            agent gives them no file, and these tools act on the page:
+            <code>browser_connect</code>, <code>editor_read</code>,
+            <code>editor_edit</code>, <code>editor_reveal</code>,
+            <code>view_camera</code>, <code>view_capture</code>,
+            <code>view_annotate</code> and <code>console_read</code>.
+          </p>
+        </div>
+        <div>
+          <h3>How it connects, and what stays local</h3>
+          <ul>
+            <li>The page is static. The bridge is the <code>neoscad mcp</code>
+              process your agent already runs, listening on
+              <code>127.0.0.1</code> only, so the connection never leaves your
+              computer.</li>
+            <li>The link carries a random 128-bit key in its fragment, which
+              browsers never send to a server; the page takes it out of the
+              address bar at once. Only the neoscad.org page with that key
+              may connect.</li>
+            <li>If the browser won't let the page reach <code>127.0.0.1</code>
+              directly (Chrome asks you first, and WebKit, Safari's engine, blocks it), the dialog
+              offers a small connection window, which must stay open while the
+              agent works.</li>
+            <li>Your model stays in the page; NeoSCAD sends it nowhere. What your
+              agent passes to its own model provider is up to the agent.</li>
+            <li>It needs <code>neoscad</code> on a desktop computer: phones can't
+              connect.</li>
+          </ul>
+          <p class="small muted">
+            The design and its security model are in
+            <a href="https://github.com/neoscad/neoscad/blob/v0.2.1/docs/agent-bridge.md">docs/agent-bridge.md</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- The example: a generic prompt and the calls it leads to. The quoted
+         results are what NeoSCAD 0.2.1's tools answer for this model; it is
+         not a transcript of an agent run. -->
+    <section class="section" id="example" aria-labelledby="example-title">
+      <div class="wrap grid-2">
+        <div>
+          <p class="eyebrow">An example</p>
+          <h2 id="example-title">From a request to an STL</h2>
+          <p>Say you ask:</p>
+          <blockquote class="card">
+            <p>Make an open-top box, 60 × 40 × 30 mm outside with 2 mm walls,
+              to print with a 0.4 mm nozzle. Save it as box.stl.</p>
+          </blockquote>
+          <p>An agent with <code>neoscad mcp</code> might write:</p>
+<pre><code>// An open-top box: 60 x 40 x 30 mm outside, 2 mm walls.
+size = [60, 40, 30];
+wall = 2;
+
+difference() {
+  cube(size);
+  translate([wall, wall, wall])
+    cube(size - [2 * wall, 2 * wall, 0]);
+}</code></pre>
+          <p>
+            <a href="/try/#code=Ly8gQW4gb3Blbi10b3AgYm94OiA2MCB4IDQwIHggMzAgbW0gb3V0c2lkZSwgMiBtbSB3YWxscy4Kc2l6ZSA9IFs2MCwgNDAsIDMwXTsKd2FsbCA9IDI7CgpkaWZmZXJlbmNlKCkgewogIGN1YmUoc2l6ZSk7CiAgdHJhbnNsYXRlKFt3YWxsLCB3YWxsLCB3YWxsXSkKICAgIGN1YmUoc2l6ZSAtIFsyICogd2FsbCwgMiAqIHdhbGwsIDBdKTsKfQo&amp;name=box.scad">Open this box in your browser</a>.
+          </p>
+        </div>
+        <div>
+          <p>and then call:</p>
+          <ol>
+            <li><code>evaluate</code> with the source: <code>ok</code>, no errors
+              or warnings.</li>
+            <li><code>check</code> with <code>nozzle: 0.4</code>,
+              <code>min_wall: 1.2</code> and its bed size: <code>manifold, 1
+              component, bbox 60 x 40 x 30, thinnest wall about 2 mm (sampled) —
+              printable: no findings</code>.</li>
+            <li><code>measure</code> with a section at <code>z=15</code>: an outline
+              of 2400 mm² and a hole of 2016 mm² (56 × 36 mm), so the walls are
+              2 mm all round.</li>
+            <li><code>snapshot</code> with <code>dims</code>, to look at it: four
+              views with 60, 40 and 30 mm marked.</li>
+            <li><code>render</code> with <code>export: "box.stl"</code>:
+              <code>volume 15552 mm³, manifold, 1 component; wrote box.stl</code>.
+              It writes <code>box.scad</code> beside it.</li>
+          </ol>
+          <p>
+            Had a wall come out at 0.3 mm, or the inner cube not reached the top,
+            <code>check</code> or the snapshot would have shown it, and the agent
+            would fix the model before you saw it.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt faq" aria-labelledby="faq-title">
+      <div class="wrap">
+        <h2 id="faq-title">Questions</h2>
+
+        <details>
+          <summary>Is there an MCP server for OpenSCAD?</summary>
+          <p>
+            NeoSCAD, a new implementation of the OpenSCAD language, has one built
+            in: <code>neoscad mcp</code>. It runs your <code>.scad</code> files and
+            libraries such as BOSL2 and MCAD, and gives an agent tools to evaluate,
+            render, check, measure and snapshot a model. It is not part of
+            OpenSCAD itself, and NeoSCAD is not affiliated with the OpenSCAD
+            project.
+          </p>
+        </details>
+
+        <details>
+          <summary>Can Claude Code write OpenSCAD models?</summary>
+          <p>
+            Yes. Add the server with
+            <code>claude mcp add neoscad -- neoscad mcp</code> and ask for a part.
+            Claude Code writes the OpenSCAD, and the server's tools let it check
+            its own work: errors and warnings, dimensions, printability, and a
+            picture of the model, before it writes the file.
+          </p>
+        </details>
+
+        <details>
+          <summary>Does it work with Cursor, VS Code or other agents?</summary>
+          <p>
+            Yes. <code>neoscad mcp</code> is a standard MCP server on stdio, so any
+            MCP client can start it: Cursor and VS Code read it from their
+            <code>mcp.json</code> files, and other clients from their own
+            configuration, with <code>neoscad</code> as the command and
+            <code>mcp</code> as the argument. See <a href="#setup">Setup</a>.
+          </p>
+        </details>
+
+        <details>
+          <summary>Can an agent see the model it makes?</summary>
+          <p>
+            Yes. The <code>snapshot</code> tool returns a PNG of the model's
+            standard views on a millimetre grid, with dimensions if asked, as
+            image content the agent reads. The <code>measure</code> and
+            <code>render</code> tools give the exact numbers to go with it, and
+            <code>check</code> marks what would go wrong in printing.
+          </p>
+        </details>
+
+        <details>
+          <summary>Does my model or code leave my computer?</summary>
+          <p>
+            Not through NeoSCAD. <code>neoscad mcp</code> runs on your computer and
+            talks to your agent over stdio, and the browser page connects to it on
+            <code>127.0.0.1</code>. What your agent sends to its own model provider
+            is up to the agent.
+          </p>
+        </details>
+
+        <details>
+          <summary>What does it cost?</summary>
+          <p>
+            Nothing. NeoSCAD is free and open source under GPL-2.0-or-later,
+            OpenSCAD's licence. Your agent may have its own costs.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="next-title">
+      <div class="wrap">
+        <div class="prose">
+        <h2 id="next-title">Next</h2>
+        <ul>
+          <li><a href="/download.html">Download NeoSCAD</a> for macOS, Linux or Windows.</li>
+          <li>Try <a href="/try/">OpenSCAD in your browser</a>, and connect your agent to it.</li>
+          <li>Read <a href="/blog/neoscad-and-openscad/">NeoSCAD and OpenSCAD: what's the same, and what NeoSCAD adds</a>.</li>
+          <li>The MCP server's reference: <a href="https://github.com/neoscad/neoscad/blob/v0.2.1/docs/mcp.md">docs/mcp.md</a> on GitHub.</li>
+        </ul>
+      </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="cols">
+        <div>
+          <h2>NeoSCAD</h2>
+          <p>A new implementation of the OpenSCAD language. GPL-2.0-or-later.
+            Not affiliated with the OpenSCAD project.</p>
+          <p>Built by Matt Robinson with Claude, supported by <a href="/#supporters">The Ned Workshop</a>.</p>
+        </div>
+        <div>
+          <h2>Site</h2>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/download.html">Download</a></li>
+            <li><a href="/benchmarks.html">Benchmarks</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/try/">Try it</a></li>
+            <li><a href="https://github.com/neoscad/neoscad">Source</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Upstream</h2>
+          <ul>
+            <li><a href="https://openscad.org/">OpenSCAD</a></li>
+            <li><a href="https://github.com/elalish/manifold">Manifold</a></li>
+            <li><a href="https://github.com/BelfrySCAD/BOSL2">BOSL2</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="small">No cookies, trackers or analytics.</p>
+    </div>
+  </footer>
+</body>
+</html>

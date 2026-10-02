@@ -108,6 +108,9 @@ NeoSCAD is built to be driven by AI coding agents as well as people:
   model stops with an error instead of filling the machine. Like
   OpenSCAD, NeoSCAD sets no limits by default.
 
+[Using NeoSCAD with AI agents](/agents.html) has the setup for each
+agent, every tool and a worked example.
+
 ### Editor support, formatting and tests
 
 - `neoscad lsp` is a language server: diagnostics and completion in any
@@ -128,8 +131,8 @@ you opt in.
 
 ### In the browser
 
-[NeoSCAD in your browser](/try/) runs the same engine compiled to
-WebAssembly, on your machine, with nothing to install. It includes
+[OpenSCAD in your browser](/try/), at neoscad.org/try, runs the same
+engine compiled to WebAssembly, on your machine, with nothing to install. It includes
 BOSL2 examples, and it can connect to your AI agent so the agent edits
 the model you have open while you watch.
 
