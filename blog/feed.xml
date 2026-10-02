@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>NeoSCAD blog</title>
+  <subtitle>Posts from the NeoSCAD project.</subtitle>
+  <link rel="alternate" type="text/html" href="https://neoscad.org/blog/"/>
+  <link rel="self" type="application/atom+xml" href="https://neoscad.org/blog/feed.xml"/>
+  <id>https://neoscad.org/blog/</id>
+  <updated>2026-10-02T00:00:00Z</updated>
+  <author><name>NeoSCAD</name></author>
+  <icon>https://neoscad.org/favicon.png</icon>
+  <entry>
+    <title>NeoSCAD and OpenSCAD: what's the same, and what NeoSCAD adds</title>
+    <link rel="alternate" type="text/html" href="https://neoscad.org/blog/neoscad-and-openscad/"/>
+    <id>https://neoscad.org/blog/neoscad-and-openscad/</id>
+    <published>2026-10-02T00:00:00Z</published>
+    <updated>2026-10-02T00:00:00Z</updated>
+    <author><name>The NeoSCAD project</name></author>
+    <category term="agents"/>
+    <category term="features"/>
+    <category term="openscad"/>
+    <summary>NeoSCAD runs OpenSCAD's language and libraries unchanged. Here is what stays the same, what NeoSCAD adds (printability checks, measurements, a warm render server, an MCP server for AI agents, an in-browser editor) and where it still differs from OpenSCAD.</summary>
+    <content type="html">&lt;p&gt;NeoSCAD is a new implementation of &lt;a href=&quot;https://openscad.org&quot;&gt;OpenSCAD&lt;/a&gt;’s
+language, written in Rust. If you write &lt;code&gt;.scad&lt;/code&gt; files today, the short
+version is: &lt;strong&gt;your models and libraries run as they are, and you get a
+set of tools around them that OpenSCAD doesn’t have.&lt;/strong&gt; This post goes
+through both halves, and through the places where NeoSCAD still
+differs.&lt;/p&gt;
+&lt;h2 id=&quot;what-stays-the-same&quot;&gt;What stays the same &lt;a class=&quot;heading-anchor&quot; href=&quot;https://neoscad.org/blog/neoscad-and-openscad/#what-stays-the-same&quot; aria-label=&quot;Link to the section What stays the same&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;The language.&lt;/strong&gt; NeoSCAD reads OpenSCAD’s language, and OpenSCAD’s
+own regression suite is its specification: 1,773 of its in-scope
+tests pass, and a change to NeoSCAD may not make a passing test fail.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Your libraries.&lt;/strong&gt; MCAD and OpenSCAD’s default Liberation fonts are
+built in. BOSL2 works from your library path as it does in OpenSCAD,
+and all 3,569 of BOSL2’s example and test files give the same echo
+output as the OpenSCAD nightly.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;The command line.&lt;/strong&gt; &lt;code&gt;neoscad model.scad -o model.stl&lt;/code&gt; works as you
+know it, with OpenSCAD’s export formats, &lt;code&gt;-D&lt;/code&gt; variables, customizer
+parameter files (&lt;code&gt;-p&lt;/code&gt;/&lt;code&gt;-P&lt;/code&gt;) and camera options for PNG export.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;code-block&quot;&gt;
+&lt;div class=&quot;code-bar&quot;&gt;&lt;span class=&quot;code-lang&quot;&gt;OpenSCAD&lt;/span&gt; &lt;a class=&quot;code-try&quot; href=&quot;https://neoscad.org/try/#example=csg&quot;&gt;Open in NeoSCAD&lt;/a&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class=&quot;hljs language-openscad&quot;&gt;&lt;span class=&quot;hljs-comment&quot;&gt;// CSG.scad - Basic example of CSG usage&lt;/span&gt;
+
+&lt;span class=&quot;hljs-built_in&quot;&gt;translate&lt;/span&gt;([-&lt;span class=&quot;hljs-number&quot;&gt;24&lt;/span&gt;,&lt;span class=&quot;hljs-number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;hljs-number&quot;&gt;0&lt;/span&gt;]) {
+    &lt;span class=&quot;hljs-built_in&quot;&gt;union&lt;/span&gt;() {
+        &lt;span class=&quot;hljs-built_in&quot;&gt;cube&lt;/span&gt;(&lt;span class=&quot;hljs-number&quot;&gt;15&lt;/span&gt;, center=&lt;span class=&quot;hljs-literal&quot;&gt;true&lt;/span&gt;);
+        &lt;span class=&quot;hljs-built_in&quot;&gt;sphere&lt;/span&gt;(&lt;span class=&quot;hljs-number&quot;&gt;10&lt;/span&gt;);
+    }
+}
+
+&lt;span class=&quot;hljs-built_in&quot;&gt;intersection&lt;/span&gt;() {
+    &lt;span class=&quot;hljs-built_in&quot;&gt;cube&lt;/span&gt;(&lt;span class=&quot;hljs-number&quot;&gt;15&lt;/span&gt;, center=&lt;span class=&quot;hljs-literal&quot;&gt;true&lt;/span&gt;);
+    &lt;span class=&quot;hljs-built_in&quot;&gt;sphere&lt;/span&gt;(&lt;span class=&quot;hljs-number&quot;&gt;10&lt;/span&gt;);
+}
+
+&lt;span class=&quot;hljs-built_in&quot;&gt;translate&lt;/span&gt;([&lt;span class=&quot;hljs-number&quot;&gt;24&lt;/span&gt;,&lt;span class=&quot;hljs-number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;hljs-number&quot;&gt;0&lt;/span&gt;]) {
+    &lt;span class=&quot;hljs-built_in&quot;&gt;difference&lt;/span&gt;() {
+        &lt;span class=&quot;hljs-built_in&quot;&gt;cube&lt;/span&gt;(&lt;span class=&quot;hljs-number&quot;&gt;15&lt;/span&gt;, center=&lt;span class=&quot;hljs-literal&quot;&gt;true&lt;/span&gt;);
+        &lt;span class=&quot;hljs-built_in&quot;&gt;sphere&lt;/span&gt;(&lt;span class=&quot;hljs-number&quot;&gt;10&lt;/span&gt;);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h2 id=&quot;what-neoscad-adds&quot;&gt;What NeoSCAD adds &lt;a class=&quot;heading-anchor&quot; href=&quot;https://neoscad.org/blog/neoscad-and-openscad/#what-neoscad-adds&quot; aria-label=&quot;Link to the section What NeoSCAD adds&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id=&quot;speed&quot;&gt;Speed &lt;a class=&quot;heading-anchor&quot; href=&quot;https://neoscad.org/blog/neoscad-and-openscad/#speed&quot; aria-label=&quot;Link to the section Speed&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;On the &lt;a href=&quot;https://neoscad.org/benchmarks.html&quot;&gt;benchmark&lt;/a&gt;, 14 models rendered to STL on one
+Apple M4 Pro, NeoSCAD is about 3.8× faster than the OpenSCAD nightly
+with its Manifold backend once process startup is subtracted. The
+geometric mean with startup included is 4.9×. The page has the full
+table, the method and the caveats. You can also run the same benchmark
+on your own machine with &lt;code&gt;neoscad bench&lt;/code&gt;, and submit the result to the
+&lt;a href=&quot;https://neoscad.org/community.html&quot;&gt;community results&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;a-printability-check&quot;&gt;A printability check &lt;a class=&quot;heading-anchor&quot; href=&quot;https://neoscad.org/blog/neoscad-and-openscad/#a-printability-check&quot; aria-label=&quot;Link to the section A printability check&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;neoscad check&lt;/code&gt; renders the model and reports what would go wrong on an
+FDM printer. Each finding says where it is and how to fix it:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a solid that isn’t manifold, or breaks when written at STL’s 32-bit
+precision;&lt;/li&gt;
+&lt;li&gt;pieces floating above the bed, and surfaces that would print fused;&lt;/li&gt;
+&lt;li&gt;walls thinner than the nozzle or your minimum wall;&lt;/li&gt;
+&lt;li&gt;overhangs steeper than your limit;&lt;/li&gt;
+&lt;li&gt;parts that intersect, and a model that doesn’t fit your bed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;code-block&quot;&gt;
+&lt;div class=&quot;code-bar&quot;&gt;&lt;span class=&quot;code-lang&quot;&gt;Shell&lt;/span&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class=&quot;hljs language-sh&quot;&gt;neoscad check part.scad --nozzle 0.4 --min-wall 1.2 --bed 256x256x256
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;snapshots-and-measurements&quot;&gt;Snapshots and measurements &lt;a class=&quot;heading-anchor&quot; href=&quot;https://neoscad.org/blog/neoscad-and-openscad/#snapshots-and-measurements&quot; aria-label=&quot;Link to the section Snapshots and measurements&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;neoscad snapshot&lt;/code&gt; draws a model’s standard views as one dimensioned
+PNG sheet, and &lt;code&gt;--issues&lt;/code&gt; paints the check’s findings onto it.
+&lt;code&gt;neoscad measure&lt;/code&gt; reports volume, area, bounding box, centre of mass,
+distances between parts and cross-sections.&lt;/p&gt;
+&lt;figure class=&quot;post-figure&quot;&gt;
+&lt;img src=&quot;https://neoscad.org/blog/media/neoscad-and-openscad/snapshot-adapter.png&quot; alt=&quot;A NeoSCAD snapshot of a threaded hose-barb adapter: four views with dimensions on one sheet.&quot; width=&quot;1280&quot; height=&quot;1280&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
+&lt;figcaption&gt;neoscad snapshot: four views and their dimensions in one picture.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;a-warm-render-server&quot;&gt;A warm render server &lt;a class=&quot;heading-anchor&quot; href=&quot;https://neoscad.org/blog/neoscad-and-openscad/#a-warm-render-server&quot; aria-label=&quot;Link to the section A warm render server&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;neoscad serve&lt;/code&gt; keeps a model’s caches warm and re-renders only what an
+edit changed. On the gearbox model on the home page, an edit to one
+part re-renders in about 0.25 s. The macOS app is built on the same
+engine.&lt;/p&gt;
+&lt;h3 id=&quot;tools-for-ai-agents&quot;&gt;Tools for AI agents &lt;a class=&quot;heading-anchor&quot; href=&quot;https://neoscad.org/blog/neoscad-and-openscad/#tools-for-ai-agents&quot; aria-label=&quot;Link to the section Tools for AI agents&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;NeoSCAD is built to be driven by AI coding agents as well as people:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;An MCP server&lt;/strong&gt;, &lt;code&gt;neoscad mcp&lt;/code&gt;, which Claude Code, Cursor or any
+MCP client can use to evaluate, render, check, measure and snapshot a
+model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;JSON output&lt;/strong&gt; from every command (&lt;code&gt;--format json&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Resource limits&lt;/strong&gt;, &lt;code&gt;--limit time=…&lt;/code&gt; or &lt;code&gt;memory=…&lt;/code&gt;, so a runaway
+model stops with an error instead of filling the machine. Like
+OpenSCAD, NeoSCAD sets no limits by default.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;editor-support-formatting-and-tests&quot;&gt;Editor support, formatting and tests &lt;a class=&quot;heading-anchor&quot; href=&quot;https://neoscad.org/blog/neoscad-and-openscad/#editor-support-formatting-and-tests&quot; aria-label=&quot;Link to the section Editor support, formatting and tests&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;neoscad lsp&lt;/code&gt; is a language server: diagnostics and completion in any
+editor that speaks the Language Server Protocol.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;neoscad fmt&lt;/code&gt; formats &lt;code&gt;.scad&lt;/code&gt; files, keeping comments, and checks on
+every file that the program is unchanged.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;neoscad test&lt;/code&gt; runs model tests: &lt;code&gt;module test_*()&lt;/code&gt; in &lt;code&gt;*_test.scad&lt;/code&gt;
+files, with &lt;code&gt;// @expect&lt;/code&gt; lines.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;neoscad docs&lt;/code&gt; gives the reference for builtins, and for the modules
+and functions of a file.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;named-parts&quot;&gt;Named parts &lt;a class=&quot;heading-anchor&quot; href=&quot;https://neoscad.org/blog/neoscad-and-openscad/#named-parts&quot; aria-label=&quot;Link to the section Named parts&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;With &lt;code&gt;--enable part&lt;/code&gt;, &lt;code&gt;part(&amp;quot;name&amp;quot;) { ... }&lt;/code&gt; names a piece of a model,
+so &lt;code&gt;check&lt;/code&gt; and &lt;code&gt;measure&lt;/code&gt; can report on it by name. It is a NeoSCAD
+extension, off by default, so files stay OpenSCAD-compatible unless
+you opt in.&lt;/p&gt;
+&lt;h3 id=&quot;in-the-browser&quot;&gt;In the browser &lt;a class=&quot;heading-anchor&quot; href=&quot;https://neoscad.org/blog/neoscad-and-openscad/#in-the-browser&quot; aria-label=&quot;Link to the section In the browser&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://neoscad.org/try/&quot;&gt;NeoSCAD in your browser&lt;/a&gt; runs the same engine compiled to
+WebAssembly, on your machine, with nothing to install. It includes
+BOSL2 examples, and it can connect to your AI agent so the agent edits
+the model you have open while you watch.&lt;/p&gt;
+&lt;h2 id=&quot;where-neoscad-still-differs&quot;&gt;Where NeoSCAD still differs &lt;a class=&quot;heading-anchor&quot; href=&quot;https://neoscad.org/blog/neoscad-and-openscad/#where-neoscad-still-differs&quot; aria-label=&quot;Link to the section Where NeoSCAD still differs&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;div class=&quot;callout callout-note&quot; role=&quot;note&quot;&gt;
+&lt;p class=&quot;callout-title&quot;&gt;What’s not there yet&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Geometry uses Manifold only; there is no CGAL backend.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;text()&lt;/code&gt; uses the bundled Liberation fonts; system fonts aren’t found
+yet.&lt;/li&gt;
+&lt;li&gt;The macOS app has no Animate panel, and its customizer is partial.&lt;/li&gt;
+&lt;li&gt;The Windows and Linux apps are previews.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;p&gt;We don’t know of a model where NeoSCAD is slower than the OpenSCAD
+nightly, but we have measured only so many. If you find one, or a model
+that gives a different result, please
+&lt;a href=&quot;https://github.com/neoscad/neoscad/issues&quot;&gt;open an issue&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;try-it&quot;&gt;Try it &lt;a class=&quot;heading-anchor&quot; href=&quot;https://neoscad.org/blog/neoscad-and-openscad/#try-it&quot; aria-label=&quot;Link to the section Try it&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;div class=&quot;table-scroll&quot;&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Where&lt;/th&gt;
+&lt;th&gt;How&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;macOS (Homebrew)&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;brew install neoscad/tap/neoscad&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Everything else&lt;/td&gt;
+&lt;td&gt;the &lt;a href=&quot;https://neoscad.org/download.html&quot;&gt;download page&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Your browser&lt;/td&gt;
+&lt;td&gt;&lt;a href=&quot;https://neoscad.org/try/&quot;&gt;neoscad.org/try&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;NeoSCAD is open source under GPL-2.0-or-later, OpenSCAD’s licence, at
+&lt;a href=&quot;https://github.com/neoscad/neoscad&quot;&gt;github.com/neoscad/neoscad&lt;/a&gt;. It is
+an independent project, not affiliated with or endorsed by the OpenSCAD
+project, and it exists because of OpenSCAD’s language, examples and
+test suite.&lt;/p&gt;
+</content>
+  </entry>
+</feed>

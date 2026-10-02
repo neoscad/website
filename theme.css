@@ -43,6 +43,17 @@
   --ns-warn-text: #6b4a00;
   --ns-code-bg: #1f2238;
   --ns-code-text: #e8e9f5;
+  /* Syntax colours for highlighted code (the blog's, highlighted at build
+     time by tools/blog). Code blocks are dark in both schemes, so one set
+     serves both; each keeps at least 5.8:1 on either scheme's --ns-code-bg. */
+  --ns-syntax-comment: #9a9cc0;
+  --ns-syntax-keyword: #b3abff;
+  --ns-syntax-builtin: #4fd8e6;
+  --ns-syntax-string: #a6e3a1;
+  --ns-syntax-number: #ff9eb5;
+  --ns-syntax-variable: #ec7fdc;
+  --ns-syntax-title: #ffd97a;
+  --ns-syntax-meta: #8fb8ff;
 
   --ns-font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;

@@ -977,3 +977,414 @@ tr.details > td {
 .platform-cards[hidden] {
   display: none;
 }
+
+/* ---- Blog (blog/, written by tools/blog/build.mjs) ------------------------ */
+
+.blog-hero {
+  padding-bottom: 1rem;
+}
+
+.blog-list {
+  padding-top: 1rem;
+}
+
+.post-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.post-card {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--ns-border);
+}
+
+.post-card:first-child {
+  padding-top: 0;
+}
+
+.post-card h2 {
+  font-size: 1.45rem;
+  margin: 0 0 0.35rem;
+}
+
+.post-card h2 a {
+  color: var(--ns-text);
+  text-decoration: none;
+}
+
+.post-card h2 a:hover {
+  color: var(--ns-accent-strong);
+  text-decoration: underline;
+}
+
+.post-card p:last-child {
+  margin-bottom: 0;
+}
+
+.post-list-empty {
+  color: var(--ns-text-muted);
+}
+
+.post-meta {
+  color: var(--ns-text-muted);
+  font-size: 0.92rem;
+  margin: 0 0 0.6rem;
+}
+
+.post-tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-left: 0.35rem;
+  vertical-align: baseline;
+}
+
+.tag {
+  font-family: var(--ns-font-mono);
+  font-size: 0.78rem;
+  padding: 0.05rem 0.5rem;
+  border-radius: 999px;
+  background: var(--ns-surface-2);
+  border: 1px solid var(--ns-border);
+  color: var(--ns-text-muted);
+  text-decoration: none;
+}
+
+a.tag:hover {
+  color: var(--ns-accent-strong);
+  border-color: var(--ns-accent);
+}
+
+/* A post: one readable column (.prose's 46rem, about 75 characters at
+   this size), slightly larger and looser type than the landing pages. */
+.post-header {
+  padding-top: 3rem;
+}
+
+.post-header h1 {
+  font-size: clamp(2rem, 3.5vw + 0.75rem, 2.9rem);
+  margin-bottom: 0.6rem;
+}
+
+.post-header .notice {
+  margin: 1rem 0 0;
+}
+
+.post-body {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.post-body > * {
+  margin-top: 0;
+  margin-bottom: 1.15rem;
+}
+
+.post-body h2 {
+  font-size: 1.6rem;
+  margin: 2.6rem 0 0.9rem;
+}
+
+.post-body h3 {
+  font-size: 1.25rem;
+  margin: 2rem 0 0.7rem;
+}
+
+.post-body h4 {
+  font-size: 1.05rem;
+  margin: 1.6rem 0 0.5rem;
+}
+
+/* Headings, footnotes and their back-links are fragment targets: clear
+   the sticky top bar when the page jumps to one. */
+.post-body [id] {
+  scroll-margin-top: calc(var(--ns-topbar-height) + 1rem);
+}
+
+.heading-anchor {
+  color: var(--ns-text-muted);
+  font-weight: 400;
+  text-decoration: none;
+  opacity: 0.55;
+}
+
+.heading-anchor:hover,
+.heading-anchor:focus-visible {
+  color: var(--ns-accent);
+  opacity: 1;
+}
+
+.post-body li + li {
+  margin-top: 0.3rem;
+}
+
+.post-body li > p {
+  margin: 0.3rem 0;
+}
+
+.post-body blockquote {
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0.1rem 0 0.1rem 1.1rem;
+  border-left: 3px solid var(--ns-border);
+  color: var(--ns-text-muted);
+}
+
+.post-body hr {
+  border: 0;
+  border-top: 1px solid var(--ns-border);
+  margin: 2.5rem 0;
+}
+
+.post-figure {
+  margin: 2rem 0;
+}
+
+.post-cover {
+  margin: 1.5rem 0 0;
+}
+
+/* Code: the bar above each block carries the language, the "Open in
+   NeoSCAD" link and blog.js's Copy button. */
+.code-block {
+  margin: 1.5rem 0;
+}
+
+.code-block pre {
+  margin: 0;
+  border-radius: 0 0 var(--ns-radius) var(--ns-radius);
+  font-size: 0.86em;
+}
+
+.code-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-height: 2.3rem;
+  padding: 0.3rem 0.6rem 0.3rem 1.1rem;
+  background: var(--ns-code-bg);
+  color: var(--ns-syntax-comment);
+  border-bottom: 1px solid color-mix(in srgb, var(--ns-code-text) 14%, transparent);
+  border-radius: var(--ns-radius) var(--ns-radius) 0 0;
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.code-lang {
+  font-family: var(--ns-font-mono);
+  margin-right: auto;
+}
+
+.code-try {
+  color: var(--ns-syntax-builtin);
+  font-weight: 600;
+}
+
+.code-try:hover {
+  color: var(--ns-code-text);
+}
+
+.code-copy {
+  font: inherit;
+  color: var(--ns-code-text);
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--ns-code-text) 30%, transparent);
+  border-radius: var(--ns-radius-small);
+  padding: 0.2rem 0.65rem;
+  cursor: pointer;
+}
+
+.code-copy:hover {
+  border-color: var(--ns-code-text);
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: var(--ns-syntax-comment);
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-doctag {
+  color: var(--ns-syntax-keyword);
+}
+
+.hljs-built_in,
+.hljs-type,
+.hljs-selector-class {
+  color: var(--ns-syntax-builtin);
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-char.escape_ {
+  color: var(--ns-syntax-string);
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-symbol,
+.hljs-deletion {
+  color: var(--ns-syntax-number);
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-attr,
+.hljs-attribute {
+  color: var(--ns-syntax-variable);
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-name {
+  color: var(--ns-syntax-title);
+}
+
+.hljs-meta,
+.hljs-tag {
+  color: var(--ns-syntax-meta);
+}
+
+/* Callouts: a coloured rule, like .notice, one colour per kind. */
+.callout {
+  border-left: 4px solid var(--ns-accent);
+  background: var(--ns-surface-2);
+  padding: 0.8rem 1.1rem;
+  border-radius: 0 var(--ns-radius-small) var(--ns-radius-small) 0;
+  margin: 1.6rem 0;
+}
+
+.callout > :last-child {
+  margin-bottom: 0;
+}
+
+.callout > p {
+  margin: 0 0 0.6rem;
+}
+
+.callout-title {
+  font-weight: 700;
+}
+
+.callout-tip {
+  border-left-color: var(--ns-cyan);
+}
+
+.callout-warning {
+  border-left-color: var(--ns-warn-text);
+  background: var(--ns-warn-bg);
+  color: var(--ns-warn-text);
+}
+
+.callout-warning a {
+  color: inherit;
+}
+
+.post-body .table-scroll {
+  margin: 1.6rem 0;
+}
+
+.post-body th.align-left,
+.post-body td.align-left {
+  text-align: left;
+}
+
+.post-body th.align-center,
+.post-body td.align-center {
+  text-align: center;
+}
+
+.post-body th.align-right,
+.post-body td.align-right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.footnote-ref a {
+  text-decoration: none;
+  font-size: 0.8em;
+}
+
+.footnotes {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ns-border);
+  font-size: 0.92rem;
+  color: var(--ns-text-muted);
+}
+
+.footnotes-list {
+  padding-left: 1.3rem;
+}
+
+.footnote-backref {
+  text-decoration: none;
+}
+
+/* YouTube, click to load: a 16:9 placeholder that becomes the player. */
+.youtube-load,
+.youtube-frame {
+  display: flex;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--ns-radius);
+  border: 1px solid var(--ns-border);
+}
+
+.youtube-load {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1rem;
+  background: var(--ns-code-bg);
+  color: var(--ns-code-text);
+  text-align: center;
+  text-decoration: none;
+}
+
+.youtube-load:hover {
+  color: var(--ns-code-text);
+}
+
+.youtube-play {
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: var(--ns-gradient);
+  color: var(--ns-code-text);
+  font-size: 1.5rem;
+}
+
+.youtube-label {
+  font-weight: 600;
+}
+
+.youtube-note {
+  display: block;
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: var(--ns-syntax-comment);
+}
+
+.youtube-frame {
+  background: var(--ns-code-bg);
+}
+
+.post-footer {
+  padding-bottom: 3rem;
+}
+
+.post-footer p {
+  border-top: 1px solid var(--ns-border);
+  padding-top: 1.2rem;
+  margin: 1rem 0 0;
+}

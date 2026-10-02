@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <!-- A placeholder figure for the example post: three flat shapes on the
+       site's code background, so it reads the same in light and dark. -->
+  <rect width="960" height="540" fill="#1f2238"/>
+  <g stroke="#e8e9f5" stroke-width="4" stroke-linejoin="round">
+    <rect x="130" y="170" width="200" height="200" rx="8" fill="#19c3d6"/>
+    <circle cx="480" cy="270" r="110" fill="#6a5cf2"/>
+    <path d="M630 370 L730 170 L830 370 Z" fill="#d04fc4"/>
+  </g>
+</svg>

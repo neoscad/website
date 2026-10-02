@@ -1,11 +1,16 @@
 # neoscad.org
 
 The NeoSCAD website: hand-written static HTML and CSS, served by GitHub
-Pages at the apex domain `neoscad.org`. There is no build step, no
-framework and no package manager. The scripts are `site.js`, a mobile
+Pages at the apex domain `neoscad.org`. Pages serves the files as they
+are: there is no deploy-time build step, no framework and no package
+manager for the site. The one generator is the blog's (`tools/blog/`, an
+authoring tool with its own lockfile): it turns Markdown posts into
+static HTML, which is committed like every other page (see
+[Writing a post](#writing-a-post)). The scripts are `site.js`, a mobile
 menu toggle and the hero video's Pause button and reduced-motion stop,
-which the pages work without; and `community.js`, which
-`community.html` needs to show its results.
+which the pages work without; `blog.js`, the blog's Copy buttons and
+click-to-load YouTube, which the posts work without; and `community.js`,
+which `community.html` needs to show its results.
 
 ## Structure
 
@@ -17,16 +22,22 @@ which the pages work without; and `community.js`, which
 | `community.html`, `community.js` | Community benchmark results: fetches `summary.json` from the `neoscad/benchmarks` repository (raw.githubusercontent.com, the only other origin any page contacts; the page's CSP allows only that) and renders it per release, platform and run |
 | `try/index.html` | Placeholder for the in-browser demo; the whole `try/` directory is replaced by the demo bundle |
 | `404.html` | GitHub Pages' not-found page (root-relative URLs only) |
+| `blog/posts/` | Blog posts in Markdown, `YYYY-MM-DD-slug.md` (template and rules in `blog/posts/README.md`) |
+| `blog/media/<slug>/` | A post's images and video |
+| `blog/index.html`, `blog/<slug>/`, `blog/tags/`, `blog/feed.xml` | **Generated** by `tools/blog/build.mjs` and committed; never edit by hand |
+| `blog.js` | The blog's Copy button on code blocks and click-to-load YouTube player |
+| `tools/blog/` | The blog's renderer (Node 20+, pinned in `package-lock.json`), its OpenSCAD grammar and tests; not part of the served site |
+| `.github/workflows/blog.yml` | CI: rebuilds the blog and fails if the committed pages differ |
 | `theme.css` | Design tokens (colours, fonts, sizes) as CSS custom properties, light and dark. **A contract with the `/try` bundle**: rename a token only together with the bundle |
 | `styles.css` | Layout and components; uses only `theme.css`'s properties |
-| `site.js` | Mobile navigation toggle; hero video Pause/Play button, and no autoplay under `prefers-reduced-motion` |
+| `site.js` | Mobile navigation toggle; hero video Pause/Play button, and no autoplay under `prefers-reduced-motion` (the hero's and blog posts') |
 | `site.json` | Site name, home, theme and nav links, read by the `/try` bundle's top bar |
 | `favicon.png` | 32×32 icon |
 | `assets/` | Images and video, copied unchanged from the NeoSCAD repo (below) |
 | `CNAME` | `neoscad.org`, the Pages custom domain |
 | `.nojekyll` | Tells Pages to serve the files as they are, without Jekyll |
 | `robots.txt` | Allows every crawler and agent, and points to `sitemap.xml` |
-| `sitemap.xml` | The site's pages, for crawlers; add a line for a new page |
+| `sitemap.xml` | The site's pages, for crawlers; add a line for a new page (outside the "Blog" markers: the blog's lines are generated) |
 | `donate/` | `neoscad.org/donate`, a redirect to the Givebutter campaign (givebutter.com/neoscad): a stable link for the README, release notes and apps |
 
 All internal links are root-relative (`/download.html`, `/try/`), which
@@ -54,6 +65,78 @@ and the claims follow `docs/audits/final.md`. The quoted means are the file's
 each binary's `cold_start` time subtracted from both sides. When the
 benchmark is re-run, replace the chart, the table and every quoted mean
 (on `index.html` too) together, from one run.
+
+## Writing a post
+
+Posts are Markdown files in `blog/posts/`, named `YYYY-MM-DD-slug.md`;
+the slug is the URL, `neoscad.org/blog/<slug>/`. Start from
+`blog/posts/README.md`, which has the template and every syntax, and
+from the example post `2026-10-02-example-post.md` (a draft, so never
+published), which uses each feature once.
+
+Front matter, between `---` lines at the top:
+
+| Key | |
+|---|---|
+| `title`, `date`, `summary` | Required. `date` is `YYYY-MM-DD` and must match the file name; `summary` is the index's blurb, the meta description and the feed's summary |
+| `author` | Optional; shown under the title and in the feed |
+| `tags` | Optional, `[one, two]`: lowercase letters, digits and hyphens; each gets a page at `/blog/tags/<tag>/` |
+| `cover`, `cover_alt` | Optional picture at the top of the post and in link previews (`og:image`); use a PNG or JPEG, about 1200×630. `cover_alt` is required with it |
+| `updated` | Optional `YYYY-MM-DD`, for the feed and sitemap |
+| `draft` | `true` keeps the post out of every output: index, tags, feed and sitemap |
+
+What a post can use:
+
+- **Media** goes in `blog/media/<slug>/` (or beside the post), referenced
+  by a path relative to the `.md` file, e.g.
+  `![Alt text](../media/<slug>/picture.png "Caption")`, so it previews
+  on GitHub too. An image alone on its line becomes a figure, its title
+  the caption; it is lazy-loaded and gets its width and height from the
+  file. **Alt text is required**: the build fails without it.
+- **Video**: the same syntax with a `.mp4` or `.webm`. It needs a poster,
+  a `.webp`/`.jpg`/`.png` of the same name beside it or
+  `{poster=path}` after the link. It has controls and doesn't play by
+  itself; `{autoplay}` makes it autoplay muted and looping, except for
+  readers who ask for reduced motion (`site.js`, as for the hero).
+- **Code**: fenced blocks are highlighted when the blog is built (no
+  script on the page). OpenSCAD (`openscad` or `scad`) has its own
+  grammar, `tools/blog/openscad.mjs`. A misspelt language fails the
+  build. `openscad try=<id>` adds an "Open in NeoSCAD" link to one of the
+  `/try` demo's bundled examples (`try/examples/manifest.json`); `/try`
+  can't open arbitrary code from a link yet.
+- **Callouts**: `::: note`, `::: tip` or `::: warning` (with an optional
+  title after it), closed by `:::`.
+- **Tables**, **footnotes** (`[^1]`) and **heading anchors** (on every
+  `##`; the title is the page's only `#`).
+- **YouTube**: `::: youtube VIDEO_ID`, the video's title, `:::`. The page
+  shows a placeholder and contacts YouTube (youtube-nocookie.com) only
+  when it is clicked; that post's CSP allows that one frame origin.
+- No raw HTML: it is escaped. The pages' CSP allows nothing inline.
+
+Links to other pages on the site (`/download.html`, `/try/`) and to
+other posts (`2026-10-02-other.md`) are checked when the blog is built,
+as are all media paths.
+
+### Build and preview
+
+    cd tools/blog && npm ci && cd ../..      # once: the pinned renderer
+    node tools/blog/build.mjs --drafts       # preview, drafts included
+    python3 -m http.server 8000              # http://localhost:8000/blog/
+    node tools/blog/build.mjs                # before committing: no drafts
+    (cd tools/blog && npm test)              # the renderer's own tests
+
+Commit the post, its media and the generated pages together. A
+`--drafts` build marks drafts "noindex" and banners them, but must not be
+committed: the CI check (`.github/workflows/blog.yml`) rebuilds without
+drafts and fails if `blog/` or `sitemap.xml` differ. The pages copy
+their header and footer from `index.html`, so after changing the nav
+there, rebuild the blog too.
+
+The renderer's dependencies, all exact versions in
+`tools/blog/package-lock.json`: `markdown-it` (CommonMark), its
+`markdown-it-footnote` plugin, and `highlight.js` (only its core and the
+listed grammars; its own OpenSCAD grammar mis-highlights ordinary code,
+see `tools/blog/openscad.mjs`). None of them reaches the served pages.
 
 ## Preview locally
 

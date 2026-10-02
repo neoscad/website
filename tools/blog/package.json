@@ -1,0 +1,17 @@
+{
+  "name": "neoscad-website-blog",
+  "private": true,
+  "description": "Renders blog/posts/*.md into the static blog pages. Not served; the site itself has no build step.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "node build.mjs",
+    "drafts": "node build.mjs --drafts",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "highlight.js": "11.12.0",
+    "markdown-it": "15.0.2",
+    "markdown-it-footnote": "4.0.0"
+  }
+}

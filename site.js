@@ -17,15 +17,26 @@
   });
 })();
 
-// The home page's hero video autoplays, muted and looping. Motion that
-// starts on its own and runs past five seconds needs a way to stop it
-// (WCAG 2.2.2), so a Pause/Play button goes over it. For readers who ask
-// for reduced motion it never plays on its own: autoplay is removed and
-// the video reloaded, which brings back its poster, the still image; the
-// button can still start it. Without scripts the video simply plays (and
-// the reduced-motion case with scripts off is the one this can't cover).
+// The home page's hero video autoplays, muted and looping, and so may a
+// blog post's (`{autoplay}`, tools/blog/build.mjs). Motion that starts on
+// its own and runs past five seconds needs a way to stop it (WCAG 2.2.2),
+// so a Pause/Play button goes over the hero, which has no controls; a
+// post's video has its own. For readers who ask for reduced motion none
+// plays on its own: autoplay is removed and the video reloaded, which
+// brings back its poster, the still image; the button or the controls can
+// still start it. Without scripts the video simply plays (and the
+// reduced-motion case with scripts off is the one this can't cover).
 (function () {
   document.addEventListener("DOMContentLoaded", function () {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      document.querySelectorAll(".post-media video[autoplay]").forEach(function (video) {
+        video.removeAttribute("autoplay");
+        video.preload = "none";
+        video.pause();
+        video.load();
+      });
+    }
     var video = document.querySelector(".hero-media video");
     if (!video) return;
     var button = document.createElement("button");
@@ -41,7 +52,6 @@
       button.textContent = p ? "Pause" : "Play";
       button.setAttribute("aria-label", (p ? "Pause" : "Play") + " the gearbox animation");
     }
-    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
       // preload="none" too, so a video that won't play isn't downloaded.
       video.removeAttribute("autoplay");
