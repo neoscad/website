@@ -596,10 +596,39 @@ th.tool-name {
 
 .js .tabs-list {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0 0.25rem;
   margin-bottom: 1.25rem;
   border-bottom: 1px solid var(--ns-border);
+  /* One row: on a screen too narrow for every tab, the row scrolls
+     sideways rather than wrapping a tab under the others. */
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.js .tabs-list::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs-list [role="tab"] {
+  flex: none;
+  white-space: nowrap;
+}
+
+/* A long tab label's tail (.tab-more), dropped on a phone; the button's
+   aria-label keeps the whole name. */
+@media (max-width: 34rem) {
+  .tab-more {
+    display: none;
+  }
+  .js .tabs-list {
+    gap: 0;
+  }
+  .tabs-list [role="tab"] {
+    font-size: 0.875rem;
+    padding-left: 0.45rem;
+    padding-right: 0.45rem;
+  }
 }
 
 .tabs-list [role="tab"] {
