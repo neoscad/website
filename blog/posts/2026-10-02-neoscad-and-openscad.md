@@ -59,7 +59,7 @@ translate([24,0,0]) {
 On the [benchmark](/benchmarks.html), 14 models rendered to STL on one
 Apple M4 Pro, NeoSCAD is about 3.8× faster than the OpenSCAD nightly
 with its Manifold backend once process startup is subtracted. The
-geometric mean with startup included is 4.9×. The page has the full
+geometric mean with startup included is 5.0×. The page has the full
 table, the method and the caveats. You can also run the same benchmark
 on your own machine with `neoscad bench`, and submit the result to the
 [community results](/community.html).
