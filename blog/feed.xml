@@ -19,7 +19,21 @@
     <category term="open-source"/>
     <category term="performance"/>
     <summary>NeoSCAD builds its geometry on manifold-rust, a pure-Rust port of the Manifold library. Along the way we patched it in a few places. Here is what each change does, what it is worth, and the pull requests that offer it back upstream.</summary>
-    <content type="html">&lt;p&gt;NeoSCAD’s geometry runs on &lt;a href=&quot;https://github.com/larsbrubaker/manifold-rust&quot;&gt;manifold-rust&lt;/a&gt;,
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Update, 3 October:&lt;/strong&gt; all six pull requests have landed. They’re in
+&lt;a href=&quot;https://crates.io/crates/manifold-rust/0.16.0&quot;&gt;manifold-rust 0.16.0&lt;/a&gt;,
+and in its C# twin manifold-sharp 0.5.0. Lars Brubaker reviewed each one
+against Manifold’s C++ library, and fixed or tightened what the review
+found:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a C+±style fix for mesh IDs in disjoint unions, which made our
+renumbering unnecessary;&lt;/li&gt;
+&lt;li&gt;a narrower safe window for the bounding-box cull;&lt;/li&gt;
+&lt;li&gt;CI that also tests the &lt;code&gt;parallel&lt;/code&gt; feature.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The commits are in the table at the end.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;NeoSCAD’s geometry runs on &lt;a href=&quot;https://github.com/larsbrubaker/manifold-rust&quot;&gt;manifold-rust&lt;/a&gt;,
 a pure-Rust port of &lt;a href=&quot;https://github.com/elalish/manifold&quot;&gt;Manifold&lt;/a&gt;, the
 C++ geometry kernel the OpenSCAD nightly uses with &lt;code&gt;--backend=manifold&lt;/code&gt;. The
 port follows the same Manifold release, 3.5.2.
@@ -149,32 +163,39 @@ to see it render with the right volume, about 85,017 mm³ (85,024 with the bug).
 &lt;tr&gt;
 &lt;th&gt;Change&lt;/th&gt;
 &lt;th&gt;Pull request&lt;/th&gt;
+&lt;th&gt;Landed in 0.16.0&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
 &lt;td&gt;Ear clipper: visit loops in place&lt;/td&gt;
 &lt;td&gt;&lt;a href=&quot;https://github.com/larsbrubaker/manifold-rust/pull/6&quot;&gt;#6&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/larsbrubaker/manifold-rust/commit/c15d4ad&quot;&gt;&lt;code&gt;c15d4ad&lt;/code&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;Ear clipper: skip outlines by bounding box&lt;/td&gt;
-&lt;td&gt;&lt;a href=&quot;https://github.com/larsbrubaker/manifold-rust/pull/9&quot;&gt;#9&lt;/a&gt; (draft, after #6)&lt;/td&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/larsbrubaker/manifold-rust/pull/9&quot;&gt;#9&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/larsbrubaker/manifold-rust/commit/bc0a64d&quot;&gt;&lt;code&gt;bc0a64d&lt;/code&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;Parallel boolean kernels&lt;/td&gt;
 &lt;td&gt;&lt;a href=&quot;https://github.com/larsbrubaker/manifold-rust/pull/8&quot;&gt;#8&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/larsbrubaker/manifold-rust/commit/6e127b5&quot;&gt;&lt;code&gt;6e127b5&lt;/code&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;Parallel batch-union rounds&lt;/td&gt;
 &lt;td&gt;&lt;a href=&quot;https://github.com/larsbrubaker/manifold-rust/pull/7&quot;&gt;#7&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/larsbrubaker/manifold-rust/commit/fb1a52e&quot;&gt;&lt;code&gt;fb1a52e&lt;/code&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;Cancellation during the edge-intersection step (AddNewEdgeVerts)&lt;/td&gt;
-&lt;td&gt;&lt;a href=&quot;https://github.com/larsbrubaker/manifold-rust/pull/10&quot;&gt;#10&lt;/a&gt; (draft, after #8)&lt;/td&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/larsbrubaker/manifold-rust/pull/10&quot;&gt;#10&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/larsbrubaker/manifold-rust/commit/e81b00f&quot;&gt;&lt;code&gt;e81b00f&lt;/code&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;Regression test for the concave-corner fix&lt;/td&gt;
 &lt;td&gt;&lt;a href=&quot;https://github.com/larsbrubaker/manifold-rust/pull/5&quot;&gt;#5&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/larsbrubaker/manifold-rust/commit/9989b92&quot;&gt;&lt;code&gt;9989b92&lt;/code&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;

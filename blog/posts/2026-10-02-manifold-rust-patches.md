@@ -9,6 +9,18 @@ cover: ../media/manifold-rust-patches/text-cover.png
 cover_alt: Rows of extruded 3D text rendered by NeoSCAD, the kind of model whose many letter outlines the ear-clipper changes speed up.
 ---
 
+> **Update, 3 October:** all six pull requests have landed. They're in
+> [manifold-rust 0.16.0](https://crates.io/crates/manifold-rust/0.16.0),
+> and in its C# twin manifold-sharp 0.5.0. Lars Brubaker reviewed each one
+> against Manifold's C++ library, and fixed or tightened what the review
+> found:
+> - a C++-style fix for mesh IDs in disjoint unions, which made our
+>   renumbering unnecessary;
+> - a narrower safe window for the bounding-box cull;
+> - CI that also tests the `parallel` feature.
+>
+> The commits are in the table at the end.
+
 NeoSCAD's geometry runs on [manifold-rust](https://github.com/larsbrubaker/manifold-rust),
 a pure-Rust port of [Manifold](https://github.com/elalish/manifold), the
 C++ geometry kernel the OpenSCAD nightly uses with `--backend=manifold`. The
@@ -110,14 +122,14 @@ to see it render with the right volume, about 85,017 mm³ (85,024 with the bug).
 
 ## The pull requests
 
-| Change | Pull request |
-|---|---|
-| Ear clipper: visit loops in place | [#6](https://github.com/larsbrubaker/manifold-rust/pull/6) |
-| Ear clipper: skip outlines by bounding box | [#9](https://github.com/larsbrubaker/manifold-rust/pull/9) (draft, after #6) |
-| Parallel boolean kernels | [#8](https://github.com/larsbrubaker/manifold-rust/pull/8) |
-| Parallel batch-union rounds | [#7](https://github.com/larsbrubaker/manifold-rust/pull/7) |
-| Cancellation during the edge-intersection step (AddNewEdgeVerts) | [#10](https://github.com/larsbrubaker/manifold-rust/pull/10) (draft, after #8) |
-| Regression test for the concave-corner fix | [#5](https://github.com/larsbrubaker/manifold-rust/pull/5) |
+| Change | Pull request | Landed in 0.16.0 |
+|---|---|---|
+| Ear clipper: visit loops in place | [#6](https://github.com/larsbrubaker/manifold-rust/pull/6) | [`c15d4ad`](https://github.com/larsbrubaker/manifold-rust/commit/c15d4ad) |
+| Ear clipper: skip outlines by bounding box | [#9](https://github.com/larsbrubaker/manifold-rust/pull/9) | [`bc0a64d`](https://github.com/larsbrubaker/manifold-rust/commit/bc0a64d) |
+| Parallel boolean kernels | [#8](https://github.com/larsbrubaker/manifold-rust/pull/8) | [`6e127b5`](https://github.com/larsbrubaker/manifold-rust/commit/6e127b5) |
+| Parallel batch-union rounds | [#7](https://github.com/larsbrubaker/manifold-rust/pull/7) | [`fb1a52e`](https://github.com/larsbrubaker/manifold-rust/commit/fb1a52e) |
+| Cancellation during the edge-intersection step (AddNewEdgeVerts) | [#10](https://github.com/larsbrubaker/manifold-rust/pull/10) | [`e81b00f`](https://github.com/larsbrubaker/manifold-rust/commit/e81b00f) |
+| Regression test for the concave-corner fix | [#5](https://github.com/larsbrubaker/manifold-rust/pull/5) | [`9989b92`](https://github.com/larsbrubaker/manifold-rust/commit/9989b92) |
 
 Two NeoSCAD patches aren't on the list: a size threshold tuned to NeoSCAD's
 own workloads, and the exact shape of its cancellation API. They are

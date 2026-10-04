@@ -64,6 +64,20 @@
         </figure>
       </header>
       <div class="post-body wrap prose">
+<blockquote>
+<p><strong>Update, 3 October:</strong> all six pull requests have landed. They’re in
+<a href="https://crates.io/crates/manifold-rust/0.16.0">manifold-rust 0.16.0</a>,
+and in its C# twin manifold-sharp 0.5.0. Lars Brubaker reviewed each one
+against Manifold’s C++ library, and fixed or tightened what the review
+found:</p>
+<ul>
+<li>a C+±style fix for mesh IDs in disjoint unions, which made our
+renumbering unnecessary;</li>
+<li>a narrower safe window for the bounding-box cull;</li>
+<li>CI that also tests the <code>parallel</code> feature.</li>
+</ul>
+<p>The commits are in the table at the end.</p>
+</blockquote>
 <p>NeoSCAD’s geometry runs on <a href="https://github.com/larsbrubaker/manifold-rust">manifold-rust</a>,
 a pure-Rust port of <a href="https://github.com/elalish/manifold">Manifold</a>, the
 C++ geometry kernel the OpenSCAD nightly uses with <code>--backend=manifold</code>. The
@@ -194,32 +208,39 @@ to see it render with the right volume, about 85,017 mm³ (85,024 with the bug).
 <tr>
 <th>Change</th>
 <th>Pull request</th>
+<th>Landed in 0.16.0</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Ear clipper: visit loops in place</td>
 <td><a href="https://github.com/larsbrubaker/manifold-rust/pull/6">#6</a></td>
+<td><a href="https://github.com/larsbrubaker/manifold-rust/commit/c15d4ad"><code>c15d4ad</code></a></td>
 </tr>
 <tr>
 <td>Ear clipper: skip outlines by bounding box</td>
-<td><a href="https://github.com/larsbrubaker/manifold-rust/pull/9">#9</a> (draft, after #6)</td>
+<td><a href="https://github.com/larsbrubaker/manifold-rust/pull/9">#9</a></td>
+<td><a href="https://github.com/larsbrubaker/manifold-rust/commit/bc0a64d"><code>bc0a64d</code></a></td>
 </tr>
 <tr>
 <td>Parallel boolean kernels</td>
 <td><a href="https://github.com/larsbrubaker/manifold-rust/pull/8">#8</a></td>
+<td><a href="https://github.com/larsbrubaker/manifold-rust/commit/6e127b5"><code>6e127b5</code></a></td>
 </tr>
 <tr>
 <td>Parallel batch-union rounds</td>
 <td><a href="https://github.com/larsbrubaker/manifold-rust/pull/7">#7</a></td>
+<td><a href="https://github.com/larsbrubaker/manifold-rust/commit/fb1a52e"><code>fb1a52e</code></a></td>
 </tr>
 <tr>
 <td>Cancellation during the edge-intersection step (AddNewEdgeVerts)</td>
-<td><a href="https://github.com/larsbrubaker/manifold-rust/pull/10">#10</a> (draft, after #8)</td>
+<td><a href="https://github.com/larsbrubaker/manifold-rust/pull/10">#10</a></td>
+<td><a href="https://github.com/larsbrubaker/manifold-rust/commit/e81b00f"><code>e81b00f</code></a></td>
 </tr>
 <tr>
 <td>Regression test for the concave-corner fix</td>
 <td><a href="https://github.com/larsbrubaker/manifold-rust/pull/5">#5</a></td>
+<td><a href="https://github.com/larsbrubaker/manifold-rust/commit/9989b92"><code>9989b92</code></a></td>
 </tr>
 </tbody>
 </table>
