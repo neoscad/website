@@ -7,14 +7,16 @@
   <url><loc>https://neoscad.org/try/</loc></url>
   <url><loc>https://neoscad.org/agents.html</loc></url>
   <!-- Blog: written by tools/blog/build.mjs; edit outside these markers. -->
-  <url><loc>https://neoscad.org/blog/</loc><lastmod>2026-10-02</lastmod></url>
+  <url><loc>https://neoscad.org/blog/</loc><lastmod>2026-10-06</lastmod></url>
+  <url><loc>https://neoscad.org/blog/clipper2-rust-patches/</loc><lastmod>2026-10-06</lastmod></url>
   <url><loc>https://neoscad.org/blog/manifold-rust-patches/</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://neoscad.org/blog/neoscad-and-openscad/</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://neoscad.org/blog/tags/agents/</loc><lastmod>2026-10-02</lastmod></url>
+  <url><loc>https://neoscad.org/blog/tags/clipper2/</loc><lastmod>2026-10-06</lastmod></url>
   <url><loc>https://neoscad.org/blog/tags/features/</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://neoscad.org/blog/tags/manifold/</loc><lastmod>2026-10-02</lastmod></url>
-  <url><loc>https://neoscad.org/blog/tags/open-source/</loc><lastmod>2026-10-02</lastmod></url>
+  <url><loc>https://neoscad.org/blog/tags/open-source/</loc><lastmod>2026-10-06</lastmod></url>
   <url><loc>https://neoscad.org/blog/tags/openscad/</loc><lastmod>2026-10-02</lastmod></url>
-  <url><loc>https://neoscad.org/blog/tags/performance/</loc><lastmod>2026-10-02</lastmod></url>
+  <url><loc>https://neoscad.org/blog/tags/performance/</loc><lastmod>2026-10-06</lastmod></url>
   <!-- /Blog -->
 </urlset>
