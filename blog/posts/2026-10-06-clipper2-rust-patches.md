@@ -105,9 +105,15 @@ changes no output; NeoSCAD's per-line union reads it to know when its
 result would differ from one big union's. It serves only that NeoSCAD
 code, so it stays in NeoSCAD.
 
-C++ Clipper2 has the same sweep, so the sort shortcut should carry over
-there as well. We haven't measured it yet; the clipper2-rust maintainer
-suggested proposing it upstream to Clipper2, which we'd like to do.
+C++ Clipper2 has the same sweep, and the same sort shortcut is already
+proposed there: [Clipper2#1106](https://github.com/AngusJohnson/Clipper2/pull/1106),
+by avo-uxv, aiming to speed up KiCad's zone fills. In our local port to
+C++ it brings the text union from 291 ms to 174 ms (−40%). One more step
+would add to it: when the sort is skipped, keep the positions just
+computed instead of computing them again, as clipper2-rust now does. With
+both, it is 164 ms (−44%), with identical output (clang `-O3`, best of
+15 runs on the same machine). We'd like to offer that
+second step once #1106 lands.
 
 Thanks to Lars Brubaker for clipper2-rust, and to Angus Johnson for
 Clipper2. NeoSCAD is open source, under GPL-2.0-or-later, at
