@@ -1,40 +1,34 @@
 {
   "artifacts": {
     "linux-aarch64": {
-      "name": "NeoSCAD-0.4.3-linux-aarch64.flatpak",
-      "sha256": "5a17387c8c4118edcfa7b2f7902ab46050d1807d216bf1e8344bf7a3b4f6420f",
-      "size": 12189872,
-      "url": "https://github.com/neoscad/neoscad/releases/download/v0.4.3/NeoSCAD-0.4.3-linux-aarch64.flatpak"
+      "name": "NeoSCAD-0.5.0-linux-aarch64.flatpak",
+      "sha256": "828546876e5f60b3be1f7b1ced3c0eee9f4c3c7feb715d39e90d38e2af8ca66f",
+      "size": 12978800,
+      "url": "https://github.com/neoscad/neoscad/releases/download/v0.5.0/NeoSCAD-0.5.0-linux-aarch64.flatpak"
     },
     "linux-x86_64": {
-      "name": "NeoSCAD-0.4.3-linux-x86_64.flatpak",
-      "sha256": "107c0199f572f467d8f8fb98c6fad3f64b3f69c26af44acb53fbbb3763a84ac9",
-      "size": 13617032,
-      "url": "https://github.com/neoscad/neoscad/releases/download/v0.4.3/NeoSCAD-0.4.3-linux-x86_64.flatpak"
-    },
-    "macos": {
-      "name": "NeoSCAD-0.4.3-291.dmg",
-      "sha256": "1f3b7df7bca640cad925e735e4349c8aed6a87385af5dfd518ef4e3a2eb271f1",
-      "size": 40550743,
-      "url": "https://github.com/neoscad/neoscad/releases/download/v0.4.3/NeoSCAD-0.4.3-291.dmg"
+      "name": "NeoSCAD-0.5.0-linux-x86_64.flatpak",
+      "sha256": "26f511072dd3225181fee69dc8501126cb15afcc4ad98fc6c09a6f86e374c55f",
+      "size": 14558936,
+      "url": "https://github.com/neoscad/neoscad/releases/download/v0.5.0/NeoSCAD-0.5.0-linux-x86_64.flatpak"
     },
     "windows-arm64": {
-      "name": "NeoSCAD-0.4.3-windows-arm64.msi",
-      "sha256": "9e291c7eda417ad1304e287f13861921b1cb4f7d7857c0fcd8da6c8c4b02912f",
-      "size": 85109310,
-      "url": "https://github.com/neoscad/neoscad/releases/download/v0.4.3/NeoSCAD-0.4.3-windows-arm64.msi"
+      "name": "NeoSCAD-0.5.0-windows-arm64.msi",
+      "sha256": "7b6a2d9bba199787ba4f1075780f4fe66b72a2ad5e53d83bc0ec0a059e82fe94",
+      "size": 86080062,
+      "url": "https://github.com/neoscad/neoscad/releases/download/v0.5.0/NeoSCAD-0.5.0-windows-arm64.msi"
     },
     "windows-x64": {
-      "name": "NeoSCAD-0.4.3-windows-x64.msi",
-      "sha256": "e1c412814e9e5bdb79bb033af2bb793dc5c0fa68b30395aa8e64ac106c31867d",
-      "size": 90311650,
-      "url": "https://github.com/neoscad/neoscad/releases/download/v0.4.3/NeoSCAD-0.4.3-windows-x64.msi"
+      "name": "NeoSCAD-0.5.0-windows-x64.msi",
+      "sha256": "c3cf0cec4838c0a5e9c9c9bf15f62161f00dfdbd93bab2538e441cd916a7e5c0",
+      "size": 91454434,
+      "url": "https://github.com/neoscad/neoscad/releases/download/v0.5.0/NeoSCAD-0.5.0-windows-x64.msi"
     }
   },
   "channel": "rc",
-  "date": "2026-10-06",
+  "date": "2026-10-08",
   "schema": 1,
-  "serial": 14,
-  "url": "https://github.com/neoscad/neoscad/releases/tag/v0.4.3",
-  "version": "0.4.3"
+  "serial": 15,
+  "url": "https://github.com/neoscad/neoscad/releases/tag/v0.5.0",
+  "version": "0.5.0"
 }
