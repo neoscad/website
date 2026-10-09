@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "0.5.0",
-  "sha": "127be03c63",
+  "version": "0.6.0",
+  "sha": "1335a97e77",
   "engine": "wasm",
   "view": "wasm"
 }
