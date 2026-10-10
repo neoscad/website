@@ -1,40 +1,22 @@
 {
   "artifacts": {
     "linux-aarch64": {
-      "name": "NeoSCAD-0.6.0-linux-aarch64.flatpak",
-      "sha256": "983882f534ff37027c7a6f14e25accb4969955e27fad9c84b263a834917bcca4",
-      "size": 13479296,
-      "url": "https://github.com/neoscad/neoscad/releases/download/v0.6.0/NeoSCAD-0.6.0-linux-aarch64.flatpak"
+      "name": "NeoSCAD-0.6.1-linux-aarch64.flatpak",
+      "sha256": "3478bed9095bfe71b9cd7116e65c18d43b8722c9ca2e2c54d3531f1358f6a12f",
+      "size": 13551288,
+      "url": "https://github.com/neoscad/neoscad/releases/download/v0.6.1/NeoSCAD-0.6.1-linux-aarch64.flatpak"
     },
     "linux-x86_64": {
-      "name": "NeoSCAD-0.6.0-linux-x86_64.flatpak",
-      "sha256": "1737d3aee0fd188823e6c3035e2b949c39dde1e57263873a22579ef3fad56c92",
-      "size": 15168224,
-      "url": "https://github.com/neoscad/neoscad/releases/download/v0.6.0/NeoSCAD-0.6.0-linux-x86_64.flatpak"
-    },
-    "macos": {
-      "name": "NeoSCAD-0.6.0-335.dmg",
-      "sha256": "66032bfeaabb0e575a6775310b27072292e1b0ad996f4e314f3d0ec17cf8b1d1",
-      "size": 44084578,
-      "url": "https://github.com/neoscad/neoscad/releases/download/v0.6.0/NeoSCAD-0.6.0-335.dmg"
-    },
-    "windows-arm64": {
-      "name": "NeoSCAD-0.6.0-windows-arm64.msi",
-      "sha256": "de1fcd67ef59ed98df543135cc3f0652dd77765afdb1e6a89bee005aaaf5d02d",
-      "size": 86682174,
-      "url": "https://github.com/neoscad/neoscad/releases/download/v0.6.0/NeoSCAD-0.6.0-windows-arm64.msi"
-    },
-    "windows-x64": {
-      "name": "NeoSCAD-0.6.0-windows-x64.msi",
-      "sha256": "37d529d5d95cce60e590b2c304fcc5cfe8eaf29cf648fad46fd530e85479e694",
-      "size": 92195810,
-      "url": "https://github.com/neoscad/neoscad/releases/download/v0.6.0/NeoSCAD-0.6.0-windows-x64.msi"
+      "name": "NeoSCAD-0.6.1-linux-x86_64.flatpak",
+      "sha256": "a081ed41823f57c9c12d60e11e8a019f6dd0ead1d3e6c8766db67edd47fb4f31",
+      "size": 15246528,
+      "url": "https://github.com/neoscad/neoscad/releases/download/v0.6.1/NeoSCAD-0.6.1-linux-x86_64.flatpak"
     }
   },
   "channel": "rc",
-  "date": "2026-10-09",
+  "date": "2026-10-10",
   "schema": 1,
-  "serial": 18,
-  "url": "https://github.com/neoscad/neoscad/releases/tag/v0.6.0",
-  "version": "0.6.0"
+  "serial": 19,
+  "url": "https://github.com/neoscad/neoscad/releases/tag/v0.6.1",
+  "version": "0.6.1"
 }
