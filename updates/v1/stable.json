@@ -11,12 +11,18 @@
       "sha256": "a081ed41823f57c9c12d60e11e8a019f6dd0ead1d3e6c8766db67edd47fb4f31",
       "size": 15246528,
       "url": "https://github.com/neoscad/neoscad/releases/download/v0.6.1/NeoSCAD-0.6.1-linux-x86_64.flatpak"
+    },
+    "macos": {
+      "name": "NeoSCAD-0.6.1-354.dmg",
+      "sha256": "39664cc74da76804dc43b10aa2979d0db55716ccf4bb3651d766d36dd1ad1300",
+      "size": 44282801,
+      "url": "https://github.com/neoscad/neoscad/releases/download/v0.6.1/NeoSCAD-0.6.1-354.dmg"
     }
   },
   "channel": "stable",
   "date": "2026-10-10",
   "schema": 1,
-  "serial": 18,
+  "serial": 19,
   "url": "https://github.com/neoscad/neoscad/releases/tag/v0.6.1",
   "version": "0.6.1"
 }
