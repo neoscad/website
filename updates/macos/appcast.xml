@@ -6,18 +6,18 @@
     <description>Updates to the NeoSCAD app for macOS</description>
     <language>en</language>
     <item>
-      <title>NeoSCAD 0.6.1</title>
-      <pubDate>Sat, 10 Oct 2026 19:36:46 +0000</pubDate>
-      <link>https://github.com/neoscad/neoscad/releases/tag/v0.6.1</link>
-      <sparkle:version>354</sparkle:version>
-      <sparkle:shortVersionString>0.6.1</sparkle:shortVersionString>
+      <title>NeoSCAD 0.6.2</title>
+      <pubDate>Sat, 10 Oct 2026 23:07:26 +0000</pubDate>
+      <link>https://github.com/neoscad/neoscad/releases/tag/v0.6.2</link>
+      <sparkle:version>356</sparkle:version>
+      <sparkle:shortVersionString>0.6.2</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>15.0.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<h2>NeoSCAD 0.6.1</h2><p><a href="https://github.com/neoscad/neoscad/releases/tag/v0.6.1">Release notes</a></p>]]></description>
-      <enclosure url="https://github.com/neoscad/neoscad/releases/download/v0.6.1/NeoSCAD-0.6.1-354.dmg" length="44282801" type="application/x-apple-diskimage" sparkle:edSignature="ajkP+WkWisaO2Qfwley6+C3fj71et9FuA18lFy6aukOsGVfHR1q4tw6eK+qESY6USgn1fAC/mRDQlnl/4N2rBw=="/>
+      <description><![CDATA[<h2>NeoSCAD 0.6.2</h2><p><a href="https://github.com/neoscad/neoscad/releases/tag/v0.6.2">Release notes</a></p>]]></description>
+      <enclosure url="https://github.com/neoscad/neoscad/releases/download/v0.6.2/NeoSCAD-0.6.2-356.dmg" length="44244608" type="application/x-apple-diskimage" sparkle:edSignature="WTdwOgzU/ak73zYW4vNYKBbOHTpAlwVAMDlMu2bXxwu2G3OQLEzgQfa4qtg7ekEeN5bAskf9MggSN4WPRt8uDg=="/>
     </item>
   </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: XNU233z2H4ckfB/BbejW42M56sz1eaGt/cEIqQ0vRFs4N+w6ATcwpm67vaBle4TAihaXEnJObiR4c98cB4SrBA==
+edSignature: itwQj+hsBILXzk1S+ldZgZf0+eEFRmo/s02D7TGOPdFrL/4f4KeYY8b3p/bw1MLmI4iDYSGUWNbnvi66gPY/BQ==
 length: 1127
 -->
