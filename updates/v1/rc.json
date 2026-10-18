@@ -12,6 +12,12 @@
       "size": 15632488,
       "url": "https://github.com/neoscad/neoscad/releases/download/v0.7.0/NeoSCAD-0.7.0-linux-x86_64.flatpak"
     },
+    "macos": {
+      "name": "NeoSCAD-0.7.0-371.dmg",
+      "sha256": "7b28ede43dedfe1a676e2fa1d8286fc919b67b1224890dd69d82745f123981fd",
+      "size": 45225083,
+      "url": "https://github.com/neoscad/neoscad/releases/download/v0.7.0/NeoSCAD-0.7.0-371.dmg"
+    },
     "windows-arm64": {
       "name": "NeoSCAD-0.7.0-windows-arm64.msi",
       "sha256": "c91d0977629894e2f3822284a29a0b4b63852181e7bdb2a57b681a12770a3515",
@@ -28,7 +34,7 @@
   "channel": "rc",
   "date": "2026-10-18",
   "schema": 1,
-  "serial": 23,
+  "serial": 24,
   "url": "https://github.com/neoscad/neoscad/releases/tag/v0.7.0",
   "version": "0.7.0"
 }
