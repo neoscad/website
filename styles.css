@@ -311,12 +311,99 @@ main {
   margin: 2.5rem 0 0;
 }
 
-/* The hero video's Pause/Play button (added by site.js) sits in the
-   video's top-right corner, clear of the caption burned into its
-   bottom-left. Fixed light-on-dark colours, not theme tokens: it is drawn
-   over the video's dark backdrop in both themes. */
+/* The hero: the still, and over it the live 3D view hero.js adds (a
+   canvas filling the still's box, so the page never moves). The canvas
+   is invisible until its first frame and then fades in; the still stays
+   underneath as the box's size. The Pause/Play button and the status
+   line are hero.js's too, in the top corners, clear of the caption
+   burned into the still's bottom-left. Fixed light-on-dark colours,
+   not theme tokens: they are drawn over the dark backdrop in both
+   themes. */
 .hero-media {
   position: relative;
+}
+
+.hero-stage {
+  position: relative;
+}
+
+.hero-stage img {
+  display: block;
+}
+
+.hero-live {
+  /* Inside the still's 1px border, which stays drawn around it. */
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  border-radius: calc(var(--ns-radius) - 1px);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  cursor: grab;
+}
+
+.hero-live:active {
+  cursor: grabbing;
+}
+
+.is-live .hero-live {
+  opacity: 1;
+}
+
+/* The still's caption (scripts/apple/build-hero.sh), again over the live
+   view: sized to the hero's width as the burned-in text is, on the same
+   darkening band. */
+.hero-stage {
+  container-type: inline-size;
+}
+
+.hero-claim {
+  display: none;
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  bottom: 1px;
+  margin: 0;
+  padding: 6cqw 3cqw 3cqw;
+  border-radius: 0 0 calc(var(--ns-radius) - 1px) calc(var(--ns-radius) - 1px);
+  background: linear-gradient(to top, rgba(4, 5, 10, 0.75), rgba(4, 5, 10, 0));
+  color: #fff;
+  pointer-events: none;
+  line-height: 1.25;
+  /* Over the canvas, which hero.js adds after it. */
+  z-index: 1;
+}
+
+.is-live .hero-claim {
+  display: block;
+}
+
+.hero-claim strong {
+  display: block;
+  font-size: 2.5cqw;
+  font-weight: 600;
+}
+
+.hero-claim span {
+  display: block;
+  margin-top: 0.4em;
+  font-size: 1.3cqw;
+  color: rgba(232, 233, 245, 0.8);
+}
+
+.hero-status {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.6rem;
+  margin: 0;
+  font-size: 0.8rem;
+  color: #e8e9f5;
+  background: rgba(10, 11, 20, 0.7);
+  border-radius: var(--ns-radius-small);
+  padding: 0.2rem 0.6rem;
+  pointer-events: none;
 }
 
 .hero-motion {
@@ -339,6 +426,12 @@ main {
 
 figure {
   margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-live {
+    transition: none;
+  }
 }
 
 figure img,
@@ -577,7 +670,7 @@ th.tool-name {
 
    Which panel shows must be right at the first paint, or the page would
    move under the reader once site.js runs at DOMContentLoaded (the home
-   page's hero video sits under its install box). So until site.js marks
+   page's hero sits under its install box). So until site.js marks
    the group ready (data-ready), CSS chooses: the first tab and panel, or
    for a group with data-detect="os", the ones named by the data-os that
    site.js sets on <html> while the head is still loading. Such a group
@@ -881,7 +974,7 @@ th.tool-name {
 
 /* Where there is room, the "Download page" line sits at the right of the
    tab row instead of under the commands: the box is then a row shorter
-   and pushes the hero video down less. Each panel's line is positioned
+   and pushes the hero down less. Each panel's line is positioned
    against the box (.tabs is positioned), and only the shown panel's is
    drawn. */
 @media (min-width: 56rem) {

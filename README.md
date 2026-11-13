@@ -22,6 +22,7 @@ which `community.html` needs to show its results.
 | `agents.html` | Using NeoSCAD with AI agents: the MCP server's tools, setup per agent, the loop, limits, JSON output, the /try agent bridge, a worked example and a FAQ. Its claims follow the released CLI (`neoscad mcp --help` and its `tools/list`); the comment in its head says how to keep it current |
 | `community.html`, `community.js` | Community benchmark results: fetches `summary.json` from the `neoscad/benchmarks` repository (raw.githubusercontent.com, the only other origin any page contacts; the page's CSP allows only that) and renders it per release, platform and run |
 | `try/index.html` | Placeholder for the in-browser demo; the whole `try/` directory is replaced by the demo bundle |
+| `hero.js`, `viewer/`, `assets/hero.scad` | The home page's live hero: the gearbox rendered in the visitor's browser by `@neoscad/viewer`, self-hosted in `viewer/` (see "The live hero") |
 | `404.html` | GitHub Pages' not-found page (root-relative URLs only) |
 | `blog/posts/` | Blog posts in Markdown, `YYYY-MM-DD-slug.md` (template and rules in `blog/posts/README.md`) |
 | `blog/media/<slug>/` | A post's images and video |
@@ -31,7 +32,7 @@ which `community.html` needs to show its results.
 | `.github/workflows/blog.yml` | CI: rebuilds the blog and fails if the committed pages differ |
 | `theme.css` | Design tokens (colours, fonts, sizes) as CSS custom properties, light and dark. **A contract with the `/try` bundle**: rename a token only together with the bundle |
 | `styles.css` | Layout and components; uses only `theme.css`'s properties. Its "Tabs" section is the tab groups' markup contract and their first-paint rules; `.tabs-box` is the dark install-box skin |
-| `site.js` | Mobile navigation toggle; hero video Pause/Play button, and no autoplay under `prefers-reduced-motion` (the hero's and blog posts'); tab groups and Copy buttons. A tab group is a `.tabs` element (markup in `site.js`'s comment) that becomes WAI-ARIA tabs: arrow keys wrap, Home and End, selection follows focus. The first tab is the default, shown by CSS before the script runs; with `data-detect="os"` the visitor's platform is chosen instead, or the one they last chose in this visit (sessionStorage, so a choice on the home page carries to the agents page), set as `data-os` on `<html>` before the first paint, so nothing shifts. A `button.copy-button[data-copy=ID]` copies element ID's text, or selects it where the clipboard isn't available. Without scripts every panel shows, stacked under its label, and the tabs and Copy buttons are hidden. The install boxes' commands (`index.html` and `agents.html`, `#install`) are the ones `download.html` marks Available; keep the three in step |
+| `site.js` | Mobile navigation toggle; no autoplay for blog posts' videos under `prefers-reduced-motion`; tab groups and Copy buttons. A tab group is a `.tabs` element (markup in `site.js`'s comment) that becomes WAI-ARIA tabs: arrow keys wrap, Home and End, selection follows focus. The first tab is the default, shown by CSS before the script runs; with `data-detect="os"` the visitor's platform is chosen instead, or the one they last chose in this visit (sessionStorage, so a choice on the home page carries to the agents page), set as `data-os` on `<html>` before the first paint, so nothing shifts. A `button.copy-button[data-copy=ID]` copies element ID's text, or selects it where the clipboard isn't available. Without scripts every panel shows, stacked under its label, and the tabs and Copy buttons are hidden. The install boxes' commands (`index.html` and `agents.html`, `#install`) are the ones `download.html` marks Available; keep the three in step |
 | `site.json` | Site name, home, theme and nav links, read by the `/try` bundle's top bar |
 | `favicon.png` | 32×32 icon |
 | `site.webmanifest` | Name, icons and colours for "Add to Home Screen" and browsers' tab colour; every page links it, with `theme-color` metas matching `theme.css`'s `--ns-bg` (light and dark) |
@@ -67,9 +68,10 @@ not from `file://`.
 | `assets/icon-512.png`, `icon-128.png`, `favicon.png` | `apple/Icon/build/concept-c/art-512.png`, `art-128.png`, `art-32.png` (`scripts/apple/build-icon.sh c`): the manifest's and touch icons |
 | `assets/icon-64.png` | The header's brand icon, drawn at 30 px (64 for 2x screens): `apple/Icon/build/icon-tool resize apple/Icon/build/concept-c/art-4096.png 64 icon-64.png`, the resize `build-icon.sh` uses for its other sizes (it doesn't make a 64) |
 | `assets/hero-gearbox.png` | The poster's PNG source (`apple/Icon/build/hero/hero.png`, 1.38 MB). No page uses it any more; it stays so that links to it from before the WebP (earlier link previews, the blog's first cover) keep working |
-| `assets/hero-gearbox.webp` | The hero video's poster, the page's largest paint: `apple/Icon/build/hero/hero.png` (2026-10-01, `NEOSCAD=` the v0.2.0 release binary; times in `hero/times.txt`), 2400×1350, as WebP: `cwebp -q 94 -m 6 -sharp_yuv hero.png -o hero-gearbox.webp` (libwebp 1.6.0; 1.38 MB to 193 KB). At 94 the dark gradient shows no banding; lower qualities flatten its dither into steps. Not AVIF: older Safari releases can't decode it, and `poster` takes one URL, so there is no fallback |
+| `assets/hero-gearbox.webp` | The hero's still, the page's largest paint and the live view's placeholder: `apple/Icon/build/hero/hero.png` (2026-10-01, `NEOSCAD=` the v0.2.0 release binary; times in `hero/times.txt`), 2400×1350, as WebP: `cwebp -q 94 -m 6 -sharp_yuv hero.png -o hero-gearbox.webp` (libwebp 1.6.0; 1.38 MB to 193 KB). At 94 the dark gradient shows no banding; lower qualities flatten its dither into steps. Not AVIF: older Safari releases can't decode it (it was a video's `poster`, which takes one URL, so there was no fallback). Its burned-in caption is repeated as text over the live view (`.hero-claim` in `index.html`): change both together |
 | `assets/hero-gearbox.jpg` | The same PNG as JPEG, for `og:image` and the home page's JSON-LD (link-preview crawlers don't all read WebP): `ffmpeg -i hero.png hero.ppm && cjpeg -quality 90 -optimize -progressive -outfile hero-gearbox.jpg hero.ppm` (libjpeg-turbo 3.1; 239 KB) |
-| `assets/hero-gearbox.mp4`, `hero-share.mp4` | `apple/Icon/build/hero-video/` (`scripts/apple/build-hero-video.sh`; caption times from the same `hero/times.txt`): the page's 120 s loop, and the 4.8 s `og:video` clip for link previews |
+| `assets/hero-gearbox.mp4`, `hero-share.mp4` | `apple/Icon/build/hero-video/` (`scripts/apple/build-hero-video.sh`; caption times from the same `hero/times.txt`): the 120 s loop the hero used to play, which no page uses now (it stays so that links to it keep working), and the 4.8 s `og:video` clip for link previews |
+| `assets/hero.scad` | `apple/Icon/hero.scad`, copied by `scripts/web/sync-viewer.sh` (see "The live hero") |
 | `assets/bench-20261003-v0.3.1.png` | `conformance bench-chart` on a copy of `progress/bench/20261003T130440Z-199d5b4.json` whose `short_sha` and `subject` say `v0.3.1` and "NeoSCAD 0.3.1 release binary (PGO build), arm64", since the binary measured is the release's, not a build of the checkout the file name carries |
 | `assets/progress.mp4` | `progress/video/progress.mp4` (`conformance video`, default options: no agent-eval interlude, since eval results are not published), re-encoded smaller: `ffmpeg -i progress.mp4 -an -c:v libx264 -profile:v high -level:v 4.0 -preset slow -crf 26 -pix_fmt yuv420p -threads 4 -map_metadata -1 -fflags +bitexact -flags:v +bitexact -movflags +faststart out.mp4` (9.9 MB to 6.5 MB; luma SSIM 0.998 against the CRF 20 original, text unchanged to the eye) |
 | `assets/snapshot-adapter.png`, `blog/media/neoscad-and-openscad/snapshot-adapter.png` | `neoscad snapshot examples/site/hose_adapter.scad --dims --size 1280x1280`, as a 256-colour PNG: `ffmpeg -i in.png -vf "split[a][b];[a]palettegen=max_colors=256:stats_mode=full[p];[b][p]paletteuse=dither=none" -compression_level 100 out.png` (64 KB to 37 KB; SSIMULACRA2 94, no difference visible at 2x) |
@@ -193,6 +195,45 @@ To update it:
 Commit the unpacked bundle; Pages serves `.wasm` as `application/wasm`.
 The bundle's `SOURCE.txt` (the GPL source offer) and
 `THIRD-PARTY-LICENSES.txt` must stay in `try/`.
+
+## The live hero
+
+The home page's hero is NeoSCAD's gearbox rendered live in the
+visitor's browser by `@neoscad/viewer` (the npm package, built in the
+NeoSCAD repo: `docs/js-package.md`), self-hosted in `viewer/`. `hero.js`
+renders each rigid body of `assets/hero.scad` once (`body` = sun, the
+four planets, carrier, static) and turns them on every frame: the sun
+turns, the carrier and planets orbit, the ring and plinth stay still.
+The tooth counts and pin positions come from the model's
+`hero_kinematics` echo. The still (`hero-gearbox.webp`) is the
+placeholder until the live view's first frame, then it fades out, and it
+stays wherever the live view is skipped (no scripts, Save-Data, less
+than 4 GB of device memory, neither WebGPU nor WebGL 2) or fails. Under
+`prefers-reduced-motion` the live view starts paused. The animation also
+stops while the hero is off screen or the tab is hidden. Apart from
+`hero.js` itself (a deferred module), the page fetches nothing for it
+before its `load` event and before the hero is on screen.
+
+To update it, build the package in the NeoSCAD repo and sync it here:
+
+    # in the NeoSCAD repo
+    scripts/web/build-core.sh
+    scripts/web/build-view.sh --no-webgl --out dist/web-view/webgpu
+    scripts/web/build-view.sh --out dist/web-view/webgl
+    scripts/web/build-package.sh
+    scripts/web/sync-viewer.sh dist/npm/neoscad-viewer-<version> [path to this repo]
+    # in this repo
+    python3 -m http.server 8000       # check the hero before committing
+
+`sync-viewer.sh` replaces `viewer/` with the package's `dist/` (the
+bundles, the core, both viewers, fonts and BOSL2), its `LICENSE`,
+`THIRD-PARTY-LICENSES.txt` and `SOURCE.txt` (the GPL source offer, which
+must stay), and writes `viewer/VIEWER.txt`, the pin. It also copies
+`apple/Icon/hero.scad` to `assets/hero.scad`. Build the package from a
+committed checkout, so `SOURCE.txt` names a published commit and not
+`-dirty`. A browser with WebGPU downloads about 4.3 MB gzipped for the
+hero (the core, 3.0 MB; BOSL2, 1.0 MB; the WebGPU viewer, 0.2 MB). One
+without it also downloads the WebGL viewer (1.1 MB).
 
 ## Deploy on GitHub Pages
 

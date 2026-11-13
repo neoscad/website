@@ -1,0 +1,17 @@
+@neoscad/viewer 0.7.1, built from NeoSCAD commit 551bfcea09e63a202cac3f201439a7c86f922889.
+
+NeoSCAD is free software under the GNU General Public License, version 2
+or (at your option) any later version; this package's NeoSCAD code is
+also under the Classpath exception (LICENSE). The complete corresponding
+source code of this package, including the scripts used to build it
+(scripts/web/build-package.sh, web/package/build.mjs), is NeoSCAD at that
+commit:
+
+    https://github.com/neoscad/neoscad/tree/551bfcea09e63a202cac3f201439a7c86f922889
+
+dist/assets/bosl2.tar.gz is BOSL2 at commit 9948313433166f58701a41f6e03cf19d6a70f42a
+(https://github.com/BelfrySCAD/BOSL2/tree/9948313433166f58701a41f6e03cf19d6a70f42a).
+
+If you cannot obtain it there, write to source@neoscad.org, and the
+NeoSCAD project will provide it for three years from the date of this
+build, for no more than the cost of distribution.

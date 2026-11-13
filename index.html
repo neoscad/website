@@ -80,6 +80,8 @@
   <link rel="stylesheet" href="/theme.css">
   <link rel="stylesheet" href="/styles.css">
   <script src="/site.js"></script>
+  <!-- A module: deferred, so it never holds up the first paint. -->
+  <script type="module" src="/hero.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -208,22 +210,27 @@
         </p>
 
         <figure class="hero-media">
-          <!-- A two-minute seamless loop, rendered by NeoSCAD's --animate
-               (scripts/apple/build-hero-video.sh). The poster is the still,
-               as WebP: it is the page's largest paint, and poster takes one
-               URL, so it can't offer a PNG fallback; every current browser
-               decodes WebP. Link previews use the JPEG copy (og:image),
-               since not every crawler reads WebP. site.js adds a Pause
-               button and, under prefers-reduced-motion, stops the autoplay so the still is what shows. One H.264
-               MP4, which every browser plays: at the chosen quality AV1
-               was no smaller. -->
-          <video autoplay muted loop playsinline poster="/assets/hero-gearbox.webp"
-                 width="1920" height="1080"
-                 aria-label="A herringbone planetary gearbox turning: a red sun gear drives four teal planet gears, spinning on fixed pins, and a blue ring gear on a grey plinth with a gyroid core. Text in the video: Rendered in 1.77 s by NeoSCAD, OpenSCAD nightly: 5.89 s.">
-            <source src="/assets/hero-gearbox.mp4" type='video/mp4; codecs="avc1.640032"'>
+          <!-- The still, as WebP, is the page's largest paint and the
+               placeholder for the live 3D view that hero.js draws over it:
+               the gearbox rendered in the visitor's browser by
+               @neoscad/viewer (self-hosted in /viewer/), faded in after its
+               first frame, in the same box, so nothing moves. Without
+               scripts, on a small device, saving data, or where the live
+               view fails, the still is what stays. Every current browser
+               decodes WebP; link previews use the JPEG copy (og:image),
+               since not every crawler reads WebP. -->
+          <div class="hero-stage">
             <img src="/assets/hero-gearbox.webp" width="2400" height="1350"
                  alt="A herringbone planetary gearbox: a blue ring gear, four teal planet gears and a red sun gear on a grey plinth with a gyroid core. Text in the image: Rendered in 1.77 s by NeoSCAD, OpenSCAD nightly: 5.89 s.">
-          </video>
+            <!-- The still's burned-in caption, set over the live view once
+                 it replaces the still (styles.css shows it only then); the
+                 figcaption below says the same, so it is hidden from
+                 screen readers. Keep it in step with the still. -->
+            <p class="hero-claim" aria-hidden="true">
+              <strong>Rendered in 1.77 s by NeoSCAD — OpenSCAD nightly: 5.89 s</strong>
+              <span>BOSL2 herringbone planetary gearbox on a gyroid plinth; full render to STL, best of 3, Apple M4 Pro</span>
+            </p>
+          </div>
           <figcaption>
             A BOSL2 herringbone planetary gearbox on a gyroid plinth, rendered
             to STL in <strong>1.77 s</strong> by NeoSCAD and <strong>5.89 s</strong>
